@@ -666,13 +666,15 @@ figcaption,
 .figure-caption,
 .quarto-float-caption,
 p.caption {
-  color: var(--text-5) !important;
+  color: #8b949e !important;
   font-size: 0.74rem !important;
   text-align: center !important;
   margin-top: 0.6rem !important;
   font-style: normal !important;
   line-height: 1.5 !important;
-  opacity: 0.78 !important;
+  opacity: 1 !important;
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+  padding-top: 0.5rem !important;
 }
 
 .quarto-float-caption {
