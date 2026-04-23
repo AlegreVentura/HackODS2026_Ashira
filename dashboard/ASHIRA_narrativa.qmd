@@ -865,6 +865,11 @@ fig.update_traces(marker=dict(size=14, line=dict(width=1.5, color="white")),
                       "<extra></extra>"
                   ),
                   selector=dict(mode="markers+text"))
+# Posición de etiqueta por punto (Baja California va abajo para evitar choque)
+for trace in fig.data:
+    if hasattr(trace, "text") and trace.text is not None and len(trace.text) > 0:
+        positions = ["bottom center" if t == "Baja California" else "top center" for t in trace.text]
+        trace.textposition = positions
 # Colorear cada línea de tendencia con el color de su región
 for trace in fig.data:
     if hasattr(trace, "mode") and trace.mode == "lines":
@@ -960,6 +965,11 @@ fig.update_traces(marker=dict(size=14, line=dict(width=1.5, color="white")),
                       "<extra></extra>"
                   ),
                   selector=dict(mode="markers+text"))
+# Posición de etiqueta por punto (Baja California va a la derecha)
+for trace in fig.data:
+    if hasattr(trace, "text") and trace.text is not None and len(trace.text) > 0:
+        positions = ["middle right" if t == "Baja California" else "top center" for t in trace.text]
+        trace.textposition = positions
 # Colorear trendlines por región
 for trace in fig.data:
     if hasattr(trace, "mode") and trace.mode == "lines":
@@ -1250,6 +1260,12 @@ fig.update_traces(marker=dict(size=14, line=dict(width=1.5, color="white")),
                       "<extra></extra>"
                   ),
                   selector=dict(mode="markers+text"))
+# Posición de etiqueta por punto
+for trace in fig.data:
+    if hasattr(trace, "text") and trace.text is not None and len(trace.text) > 0:
+        _pos_map = {"Veracruz": "bottom center", "Oaxaca": "bottom center", "Michoacán": "bottom center"}
+        positions = [_pos_map.get(t, "top center") for t in trace.text]
+        trace.textposition = positions
 # Colorear trendlines por región
 for trace in fig.data:
     if hasattr(trace, "mode") and trace.mode == "lines":
@@ -1266,11 +1282,13 @@ fig.add_trace(go.Scatter(
     hovertemplate="Tendencia nacional<extra></extra>",
     showlegend=True,
 ))
-fig.add_hline(y=0, line_dash="dot", line_color="white", opacity=0.3)
-fig.add_annotation(x=8, y=0.5, text="<b>↑ Recibe migrantes</b>", showarrow=False,
-                   font=dict(color=TEAL, size=11), xanchor="left")
-fig.add_annotation(x=8, y=-0.5, text="<b>↓ Pierde población</b>", showarrow=False,
-                   font=dict(color=ACCENT, size=11), xanchor="left")
+fig.add_hline(y=0, line_dash="solid", line_color="rgba(255,255,255,0.25)", line_width=2)
+fig.add_annotation(x=54, y=0.18, text="↑ Recibe migrantes",
+                   showarrow=False, font=dict(color="#0d1117", size=11, family="Inter, sans-serif"),
+                   xanchor="left", bgcolor=TEAL, borderpad=6)
+fig.add_annotation(x=54, y=-0.18, text="↓ Pierde población",
+                   showarrow=False, font=dict(color="white", size=11, family="Inter, sans-serif"),
+                   xanchor="left", bgcolor=ACCENT, borderpad=6)
 # r por región
 _r_mig = {}
 for _reg in df_pobreza_migracion["region"].dropna().unique():
