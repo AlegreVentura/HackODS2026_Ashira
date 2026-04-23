@@ -1400,7 +1400,9 @@ _html_globe = f"""
       Arrastra para rotar &nbsp;&#183;&nbsp; Scroll para zoom &nbsp;&#183;&nbsp; Hover sobre arcos y estados
     </p>
   </div>
-  <div id="globe-flujo-ashira" style="width:100%;height:660px;background:#000;"></div>
+  <div id="globe-flujo-ashira" style="width:100%;height:660px;background:#040c18;display:flex;align-items:center;justify-content:center;">
+    <span id="globe-loading-msg" style="color:#484f58;font-size:13px;font-family:Inter,sans-serif;">Cargando globo WebGL...</span>
+  </div>
   <div style="padding:10px 30px 18px;background:#000;display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
     <span style="display:flex;align-items:center;gap:7px;">
       <span style="width:11px;height:11px;border-radius:50%;background:#26c6da;display:inline-block;"></span>
@@ -1416,11 +1418,27 @@ _html_globe = f"""
   </div>
 </div>
 
+<!-- Paso 1: datos embebidos (sin dependencias externas) -->
+<script>
+var _gA={_arcs_js};
+var _gN={_nodes_js};
+var _gG={_geo_js};
+</script>
+
+<!-- Paso 2: librería Globe.gl (carga síncrona; el paso 3 espera a que esto termine) -->
+<script src="https://cdn.jsdelivr.net/npm/globe.gl/dist/globe.gl.min.js"></script>
+
+<!-- Paso 3: inicialización (Globe ya está disponible) -->
 <script>
 (function(){{
-  var ARCS={_arcs_js};
-  var NODES={_nodes_js};
-  var GEO={_geo_js};
+  var el=document.getElementById('globe-flujo-ashira');
+  var msg=document.getElementById('globe-loading-msg');
+  if(!el)return;
+  if(!window.Globe){{
+    if(msg)msg.textContent='Error: Globe.gl no se pudo cargar (verifica conexión a internet).';
+    return;
+  }}
+  if(msg){{msg.style.display='none';el.style.display='block';}}
   var ARC_COLORS=[
     ['rgba(30,100,255,0.22)','rgba(80,160,255,0.62)'],
     ['rgba(0,170,230,0.28)','rgba(0,210,255,0.68)'],
@@ -1428,24 +1446,20 @@ _html_globe = f"""
     ['rgba(255,155,0,0.38)','rgba(255,200,50,0.82)'],
     ['rgba(255,65,0,0.44)','rgba(255,110,40,0.94)']
   ];
-  function init(){{
-    var container=document.getElementById('globe-flujo-ashira');
-    if(!container||!window.Globe)return;
-    var cv=document.createElement('canvas');cv.width=2;cv.height=2;
-    var ctx=cv.getContext('2d');ctx.fillStyle='#040c18';ctx.fillRect(0,0,2,2);
-    var maxTot=Math.max.apply(null,NODES.map(function(n){{return n.tot;}}));
+  var maxTot=Math.max.apply(null,_gN.map(function(n){{return n.tot;}}));
+  try{{
     var g=Globe()
-      .globeImageUrl(cv.toDataURL())
-      .backgroundColor('#000000')
+      .globeImageUrl('')
+      .backgroundColor('#040c18')
       .showAtmosphere(true)
       .atmosphereColor('#0a2040')
       .atmosphereAltitude(0.16)
-      .polygonsData(GEO.features)
+      .polygonsData(_gG.features)
       .polygonCapColor(function(){{return '#0d1a26';}})
-      .polygonSideColor(function(){{return '#0d1a26';}})
-      .polygonStrokeColor(function(){{return '#1e3a50';}})
+      .polygonSideColor(function(){{return '#0a141e';}})
+      .polygonStrokeColor(function(){{return '#1e4060';}})
       .polygonAltitude(0.006)
-      .arcsData(ARCS)
+      .arcsData(_gA)
       .arcStartLat(function(d){{return d.srcLat;}})
       .arcStartLng(function(d){{return d.srcLng;}})
       .arcEndLat(function(d){{return d.dstLat;}})
@@ -1458,12 +1472,12 @@ _html_globe = f"""
       .arcDashInitialGap(function(d){{return Math.random();}})
       .arcDashAnimateTime(function(d){{return 1100+(4-d.q)*950;}})
       .arcLabel(function(d){{
-        return '<div style="background:rgba(8,14,24,0.95);padding:9px 13px;border-radius:8px;font-family:Inter,sans-serif;border:1px solid rgba(255,255,255,0.12);max-width:220px">'
+        return '<div style="background:rgba(4,12,24,0.96);padding:9px 13px;border-radius:8px;font-family:Inter,sans-serif;border:1px solid rgba(255,255,255,0.12);max-width:220px">'
           +'<b style="font-size:13px;color:#e6edf3">'+d.src+' → '+d.dst+'</b><br>'
           +'<span style="color:#8b949e;font-size:11px">Personas: <b style="color:#c9d1d9">'+d.pob.toLocaleString('es-MX')+'</b></span>'
           +'</div>';
       }})
-      .pointsData(NODES)
+      .pointsData(_gN)
       .pointLat(function(d){{return d.lat;}})
       .pointLng(function(d){{return d.lng;}})
       .pointColor(function(d){{return d.net>0?'#26c6da':'#ff5252';}})
@@ -1472,26 +1486,21 @@ _html_globe = f"""
       .pointLabel(function(d){{
         var sign=d.net>0?'+':'';
         var col=d.net>0?'#26c6da':'#ff5252';
-        return '<div style="background:rgba(8,14,24,0.95);padding:9px 13px;border-radius:8px;font-family:Inter,sans-serif;border:1px solid rgba(255,255,255,0.12)">'
+        return '<div style="background:rgba(4,12,24,0.96);padding:9px 13px;border-radius:8px;font-family:Inter,sans-serif;border:1px solid rgba(255,255,255,0.12)">'
           +'<b style="font-size:13px;color:#e6edf3">'+d.state+'</b><br>'
           +'<span style="color:#8b949e;font-size:11px">Flujo total: <b style="color:#c9d1d9">'+d.tot.toLocaleString('es-MX')+'</b></span><br>'
           +'<span style="color:#8b949e;font-size:11px">Balance: <b style="color:'+col+'">'+sign+d.net.toLocaleString('es-MX')+'</b></span>'
           +'</div>';
       }})
-      (container);
+      (el);
     g.pointOfView({{lat:23.5,lng:-102,altitude:1.22}},0);
     g.controls().enableZoom=true;
     g.controls().autoRotate=false;
     g.controls().enablePan=false;
     g.controls().minPolarAngle=Math.PI*0.15;
     g.controls().maxPolarAngle=Math.PI*0.85;
-  }}
-  if(window.Globe){{init();}}
-  else{{
-    var s=document.createElement('script');
-    s.src='https://unpkg.com/globe.gl@2';
-    s.onload=init;
-    document.head.appendChild(s);
+  }}catch(e){{
+    el.innerHTML='<p style="color:#ff5252;padding:20px;font-family:Inter">Error al inicializar el globo: '+e.message+'</p>';
   }}
 }})();
 </script>
