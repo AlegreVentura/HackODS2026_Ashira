@@ -1061,10 +1061,7 @@ nav a,
   gap: 10px;
 }
 .closing-eyebrow::before {
-  content: '';
-  width: 24px;
-  height: 2px;
-  background: var(--accent);
+  content: none;
   display: inline-block;
 }
 
@@ -1190,13 +1187,60 @@ nav a,
   color: var(--accent) !important;
 }
 
-.closing-footer {
-  color: var(--text-5) !important;
-  font-size: 0.78rem !important;
-  margin: 24px 0 0 0 !important;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  line-height: 1.6;
+.ashira-footer {
+  background: #030508;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 32px 40px;
+  margin-top: 0;
+}
+
+.ashira-footer-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.ashira-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ashira-footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+
+.ashira-footer-tag {
+  font-size: 0.75rem;
+  color: var(--text-4);
+  letter-spacing: 0.04em;
+}
+
+.ashira-footer-sources {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  font-size: 0.72rem;
+  color: var(--text-5);
+  text-align: right;
+}
+
+.ashira-footer-label {
+  font-weight: 700;
+  color: var(--text-4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.65rem;
+  margin-bottom: 2px;
 }
 
 /* ── Excepciones que confirman la regla ──────────────── */
@@ -1294,17 +1338,20 @@ nav a,
 }
 
 .que-sigue-card-icon {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
+  font-size: 2.2rem;
+  margin-bottom: 12px;
   display: block;
+  text-align: center;
 }
 
 .que-sigue-card-title {
   color: white;
   font-weight: 700;
   font-size: 0.95rem;
+  text-align: center;
   margin: 0 0 10px 0;
   font-family: var(--font-display);
+  min-height: 2.8em;
 }
 
 .que-sigue-card p {
@@ -1370,16 +1417,22 @@ nav a,
 .cta-share-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 13px 28px;
+  gap: 10px;
+  padding: 14px 32px;
   border-radius: 100px;
   font-weight: 700;
-  font-size: 0.9rem;
-  letter-spacing: 0.03em;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
   text-decoration: none !important;
-  border: none !important;
+  border: 1.5px solid rgba(255,255,255,0.15) !important;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.cta-share-btn:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.12);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.35);
 }
 
 .cta-share-btn.twitter {
