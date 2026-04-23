@@ -1,0 +1,40 @@
+# Archivos de datos grandes (descargar según instrucciones en datos/README.md)
+*.xlsx
+*.csv
+*.zip
+*.pdf
+
+# Excepción: shapefile de estados de México (180 KB — sí se commitea)
+!datos/shapefiles/*.geojson
+
+# Excepciones: metadatos pequeños que sí se commitean
+!datos/README.md
+!scripts/README.md
+!dashboard/README.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Carpetas de salida generadas
+imagenes/
+
+# Quarto: archivos intermedios generados durante render/preview
+*.quarto_ipynb
+*.quarto_ipynb_*
+.quarto/
+_freeze/
+*_files/
+dashboard/ASHIRA_narrativa.html
