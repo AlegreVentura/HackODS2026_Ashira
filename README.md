@@ -122,6 +122,33 @@ datos/censo2020/
 
 Solo se usan registros con Sexo = Total y Estimador = Valor.
 
+### Migración origen-destino entre entidades federativas 2015–2020 (INEGI)
+
+Tabulado complementario del Censo 2020 que registra la entidad y municipio de residencia en marzo de 2015 y en marzo de 2020 para la población de 5 años y más. Permite construir la matriz de flujos origen-destino a nivel estatal y municipal. Usamos este archivo para el mapa de flujos interestatales del Acto 5.
+
+| Campo | Valor |
+|---|---|
+| URL | https://www.inegi.org.mx/programas/ccpv/2020/#Tabulados |
+| Cobertura | 32 entidades · todos los municipios · corte censal 2020 |
+| Formato | CSV (separado por punto y coma, encoding UTF-8) |
+| Peso | 10.6 MB |
+| Licencia | Datos Abiertos de México — https://datos.gob.mx/libreusomx |
+
+**Variables usadas:** entidad de residencia en 2015, entidad de residencia en 2020, población de 5 años y más (total de personas por par origen-destino)
+
+**Archivo y ruta:**
+```
+datos/migracion_od/
+  cpv2020_migracion_municipios_2015_2020.csv  ← tabulado complementario de migración OD
+```
+
+**Descarga:**
+1. Ir a la URL (sección "Tabulados" → "Tabulados complementarios")
+2. Descargar "Migración origen-destino 2020" (xlsx → convertir a CSV con delimitador `;`)
+3. Colocar en `datos/migracion_od/cpv2020_migracion_municipios_2015_2020.csv`
+
+---
+
 ### Índice de Competitividad Estatal 2020 (IMCO)
 
 Permite vincular la pobreza con la calidad del mercado laboral. Usamos la hoja `Ind (18)` que corresponde a datos de 2018, el año más reciente disponible en formato Excel (las ediciones 2022 y 2023 solo existen como PDF).
@@ -194,6 +221,7 @@ Ashira/
 ├── .gitignore
 ├── datos/
 │   ├── shapefiles/                    ← GeoJSON de estados de México (incluido, 180 KB)
+│   ├── migracion_od/                  ← Migración origen-destino Censo 2020 (no incluido)
 │   └── [datos descargados]            ← No incluidos — ver instrucciones arriba
 ├── scripts/
 │   ├── parse_censo.py                 ← Parser de tabulados del Censo 2020
@@ -227,4 +255,4 @@ La combinación de las cuatro fuentes permite triangular: si la pobreza sube (CO
 ---
 
 *ASHIRA · HackODS UNAM 2026 · ODS 1 y ODS 10*
-*Fuentes: INEGI · CONEVAL · IMCO · Censo 2020 — todas oficiales y de acceso público*
+*Fuentes: INEGI · CONEVAL · IMCO · Censo 2020 · Migración OD Censo 2020 — todas oficiales y de acceso público*

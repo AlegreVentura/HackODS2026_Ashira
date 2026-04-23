@@ -48,7 +48,7 @@ jupyter: python3
 </div>
 <div class="ashira-hero-meta">
 <div class="ashira-team"><div class="ashira-team-label">Equipo ASHIRA</div><div class="ashira-team-names">Melisa Arano · Roberto Alegre · Israel Martínez</div></div>
-<div class="ashira-sources"><a href="https://www.inegi.org.mx/programas/enigh/nc/2024/" target="_blank" rel="noopener" class="hero-source-link">ENIGH</a> · <a href="https://www.coneval.org.mx/coordinacion/entidades/Paginas/inicioent.aspx" target="_blank" rel="noopener" class="hero-source-link">CONEVAL</a> · <a href="https://www.inegi.org.mx/programas/ccpv/2020/" target="_blank" rel="noopener" class="hero-source-link">Censo 2020</a> · <a href="https://imco.org.mx/indice-de-competitividad-estatal-2020/" target="_blank" rel="noopener" class="hero-source-link">IMCO</a></div>
+<div class="ashira-sources"><a href="https://www.inegi.org.mx/programas/enigh/nc/2024/" target="_blank" rel="noopener" class="hero-source-link">ENIGH</a> · <a href="https://www.coneval.org.mx/coordinacion/entidades/Paginas/inicioent.aspx" target="_blank" rel="noopener" class="hero-source-link">CONEVAL</a> · <a href="https://www.inegi.org.mx/programas/ccpv/2020/" target="_blank" rel="noopener" class="hero-source-link">Censo 2020</a> · <a href="https://imco.org.mx/indice-de-competitividad-estatal-2020/" target="_blank" rel="noopener" class="hero-source-link">IMCO</a> · <a href="https://www.inegi.org.mx/programas/ccpv/2020/#Tabulados" target="_blank" rel="noopener" class="hero-source-link">Migración OD</a></div>
 </div>
 </div>
 <div class="ashira-hero-date">Dashboard realizado en Abril de 2026</div>
@@ -1335,6 +1335,174 @@ fig.show()
 ```
 
 ```{=html}
+<p style="color:#c9d1d9; font-size:1.08em; line-height:1.78; margin:20px 0 14px 0;">La migración neta dice <em>cuántos se van</em>. El origen-destino dice <strong>adónde van</strong>. El patrón es consistente: el Sur alimenta al Norte y a los centros turísticos, los únicos mercados laborales que todavía absorben trabajadores sin credenciales universitarias.</p>
+```
+
+```{python}
+#| label: fig-flujo-migratorio
+#| fig-cap: "Flujos de migración interestatal en México, 2015–2020. Cada arco conecta el estado de residencia en 2015 con el de residencia en 2020; grosor y color reflejan el volumen del flujo. Se muestran los 80 flujos más grandes de los 992 pares interestatales registrados.<br><span class='fig-source'>Fuente: Censo de Población y Vivienda 2020, Tabulados Complementarios — Migración de origen y destino entre entidades federativas, Instituto Nacional de Estadística y Geografía (INEGI).</span>"
+
+# Centroids from mx_geo (already loaded)
+def _centroid(geom):
+    coords = (geom["coordinates"][0] if geom["type"] == "Polygon"
+              else max(geom["coordinates"], key=lambda p: len(p[0]))[0])
+    return sum(c[0] for c in coords) / len(coords), sum(c[1] for c in coords) / len(coords)
+
+_centroids = {f["properties"]["name"]: _centroid(f["geometry"]) for f in mx_geo["features"]}
+
+# INEGI full name → GeoJSON short name
+_nm = {n: n for n in _centroids}
+_nm.update({
+    "Coahuila de Zaragoza":          "Coahuila",
+    "Michoacán de Ocampo":           "Michoacán",
+    "Veracruz de Ignacio de la Llave": "Veracruz",
+})
+
+# Load & aggregate OD data
+_od_path = REPO / "datos" / "migracion_od" / "cpv2020_migracion_municipios_2015_2020.csv"
+_df_od = pd.read_csv(_od_path, encoding="utf-8", sep=";", skiprows=5)
+_df_od.columns = ["e_orig", "m_orig", "e_dest", "m_dest", "pob"]
+_df_od["pob"] = pd.to_numeric(_df_od["pob"].astype(str).str.replace(" ", ""), errors="coerce")
+_df_od["cve_o"] = _df_od["e_orig"].str[:3].str.strip()
+_df_od["nom_o"] = _df_od["e_orig"].str[4:].str.strip()
+_df_od["cve_d"] = _df_od["e_dest"].str[:2].str.strip().str.zfill(3)
+_df_od["nom_d"] = _df_od["e_dest"].str[3:].str.strip()
+
+_valid = [f"{i:03d}" for i in range(1, 33)]
+_od = (_df_od.groupby(["cve_o", "nom_o", "cve_d", "nom_d"])["pob"].sum().reset_index()
+       .pipe(lambda d: d[d["cve_o"].isin(_valid) & d["cve_d"].isin(_valid)])
+       .pipe(lambda d: d[d["cve_o"] != d["cve_d"]])
+       .dropna(subset=["pob"]).pipe(lambda d: d[d["pob"] > 0]))
+_od["geo_o"] = _od["nom_o"].map(_nm)
+_od["geo_d"] = _od["nom_d"].map(_nm)
+_od = (_od.dropna(subset=["geo_o", "geo_d"])
+       .pipe(lambda d: d[d["geo_o"].isin(_centroids) & d["geo_d"].isin(_centroids)])
+       .sort_values("pob", ascending=False).reset_index(drop=True))
+
+_od_top = _od.head(80).copy()
+_od_top["qg"] = pd.qcut(_od_top["pob"], q=5, labels=False)
+
+# Per-state balance
+_net, _tot = {}, {}
+for _s in _centroids:
+    _out = _od[_od["geo_o"] == _s]["pob"].sum()
+    _in  = _od[_od["geo_d"] == _s]["pob"].sum()
+    _net[_s] = _in - _out
+    _tot[_s] = _in + _out
+_max_tot = max(_tot.values())
+
+# Arc styles (glow outer + bright core per quintile)
+_glow = [
+    ("rgba(20,90,160,0.12)",  3.5),  # Q1
+    ("rgba(20,140,190,0.15)", 4.5),  # Q2
+    ("rgba(0,200,220,0.18)",  5.5),  # Q3
+    ("rgba(255,155,40,0.20)", 7.0),  # Q4
+    ("rgba(255,70,30,0.22)",  9.5),  # Q5
+]
+_core = [
+    ("rgba(40,120,190,0.32)",  0.7),
+    ("rgba(30,170,210,0.45)",  1.1),
+    ("rgba(0,220,230,0.62)",   1.8),
+    ("rgba(255,175,50,0.75)",  2.7),
+    ("rgba(255,90,40,0.92)",   4.0),
+]
+
+fig = go.Figure()
+
+# Choropleth base (dark states)
+fig.add_trace(go.Choropleth(
+    geojson=mx_geo,
+    locations=[f["properties"]["name"] for f in mx_geo["features"]],
+    featureidkey="properties.name",
+    z=[1] * 32,
+    colorscale=[[0, "#0e1a27"], [1, "#0e1a27"]],
+    showscale=False,
+    marker_line_color="#1d3548",
+    marker_line_width=0.9,
+    hoverinfo="skip",
+))
+
+# Flow arcs (glow then core, low → high so top flows render last)
+for _pass, _styles in [(_glow, "glow"), (_core, "core")]:
+    for _qg in range(5):
+        _sub = _od_top[_od_top["qg"] == _qg]
+        _lats, _lons = [], []
+        for _, _row in _sub.iterrows():
+            _o_lon, _o_lat = _centroids[_row["geo_o"]]
+            _d_lon, _d_lat = _centroids[_row["geo_d"]]
+            _lats += [_o_lat, _d_lat, None]
+            _lons += [_o_lon, _d_lon, None]
+        if _lats:
+            _col, _w = _pass[_qg]
+            fig.add_trace(go.Scattergeo(
+                lat=_lats, lon=_lons, mode="lines",
+                line=dict(width=_w, color=_col),
+                hoverinfo="skip", showlegend=False,
+            ))
+
+# State nodes
+_snames = list(_centroids.keys())
+_node_lons = [_centroids[s][0] for s in _snames]
+_node_lats = [_centroids[s][1] for s in _snames]
+_node_net  = [_net.get(s, 0) for s in _snames]
+_node_tot  = [_tot.get(s, 0) for s in _snames]
+_node_sz   = [7 + 16 * (_t / _max_tot) ** 0.4 for _t in _node_tot]
+_node_col  = [TEAL if _n > 0 else ACCENT for _n in _node_net]
+
+fig.add_trace(go.Scattergeo(
+    lat=_node_lats, lon=_node_lons,
+    mode="markers+text",
+    text=_snames,
+    textfont=dict(size=7, color="rgba(190,215,230,0.72)", family="Inter,sans-serif"),
+    textposition="top center",
+    marker=dict(
+        size=_node_sz, color=_node_col, opacity=0.9,
+        line=dict(width=1, color="rgba(255,255,255,0.4)"),
+    ),
+    customdata=[(f"{int(_node_tot[i]):,}", (f"+{int(_node_net[i]):,}" if _node_net[i] > 0 else f"{int(_node_net[i]):,}")) for i in range(len(_snames))],
+    hovertemplate=(
+        "<b style='font-size:14px'>%{text}</b><br>"
+        "Flujo total: <b>%{customdata[0]}</b><br>"
+        "Balance neto: <b>%{customdata[1]}</b>"
+        "<extra></extra>"
+    ),
+    showlegend=False,
+))
+
+fig.update_geos(
+    bgcolor="#080d14",
+    landcolor="#0e1a27",
+    showland=True,
+    showocean=True,
+    oceancolor="#060b12",
+    showrivers=False,
+    showcountries=False,
+    showlakes=False,
+    showframe=False,
+    showcoastlines=False,
+    lataxis_range=[13.5, 34],
+    lonaxis_range=[-119, -85],
+    projection_type="mercator",
+)
+fig.update_layout(
+    height=640,
+    margin=dict(l=0, r=0, t=100, b=0),
+    paper_bgcolor="#080d14",
+    title=dict(
+        text=(
+            "¿Adónde va la gente que se va? Flujos interestatales reales, 2015–2020<br>"
+            "<span style='font-size:13px;color:#8b949e;font-family:Inter,sans-serif;'>"
+            "Teal = recibe más de los que envía &nbsp;·&nbsp; Rojo = pierde más de los que recibe"
+            "</span>"
+        ),
+        y=0.98, yanchor="top",
+        font=dict(size=20, family="Fraunces,serif", color="#c9d1d9"),
+    ),
+)
+fig.show()
+```
+
+```{=html}
 <div class="ashira-paradoja">
 <h3>¿Por qué bajan los números pero no la pobreza?</h3>
 <p style="font-size:1.05em; line-height:1.75; margin:0 0 16px 0;">Los estados del Sur cambian porque pierden gente, no porque ganen oportunidades. Cuando alguien migra buscando trabajo, su pobreza simplemente se muda de casa.</p>
@@ -1522,7 +1690,7 @@ fig.show()
     </div>
     <div class="ashira-footer-sources">
       <span class="ashira-footer-label">Fuentes</span>
-      <span>ENIGH 2016–2024 · PM CONEVAL 2024 · Censo 2020 · ICE IMCO 2020</span>
+      <span>ENIGH 2016–2024 · PM CONEVAL 2024 · Censo 2020 · ICE IMCO 2020 · Migración OD Censo 2020</span>
       <span>INEGI · CONEVAL · IMCO · Licencia CC BY-SA 4.0</span>
     </div>
   </div>
