@@ -475,7 +475,7 @@ nav#TOC > h2,
 .toc-active-item ~ .sidebar-title,
 nav[role="doc-toc"] > h2 {
   color: var(--accent) !important;
-  font-size: 0.7rem !important;
+  font-size: 1.2rem !important;
   font-weight: 800 !important;
   letter-spacing: 0.22em !important;
   text-transform: uppercase !important;
@@ -581,8 +581,8 @@ nav[role="doc-toc"] ul li > a.active::before,
 body { padding-top: 0 !important; }
 
 main.content {
-  padding: 0 4rem 6rem 4rem !important;
-  max-width: 1180px;
+  padding: 0 2rem 6rem 2rem !important;
+  max-width: 1900px;
 }
 
 /* Margin space between hero and first section */
