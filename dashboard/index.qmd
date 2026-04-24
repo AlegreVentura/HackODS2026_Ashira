@@ -9,7 +9,7 @@ format:
     toc-depth: 2
     toc-location: left
     toc-expand: true
-    embed-resources: false
+    embed-resources: true
     page-layout: full
     smooth-scroll: true
     code-fold: true
@@ -29,28 +29,54 @@ jupyter: python3
 ---
 
 
-<div class="ashira-hero" id="inicio">
-<div class="ashira-hero-inner">
-<div class="ashira-hero-badge"><span class="badge-dot"></span> HackODS UNAM 2026 · Objetivos de Desarrollo Sostenible 1 y 10</div>
-<h1 class="ashira-hero-title">En México no se puede hablar de pobreza sin hablar de <em>dónde naciste.</em></h1>
-<p class="ashira-hero-tagline">Cuatro bases oficiales. Ocho años de datos. Una sola pregunta.</p>
-<div class="ashira-hero-hook">
-<p class="hook-question">¿Cuánto influye el estado donde naciste en tu probabilidad de vivir en pobreza?</p>
-<p class="hook-answer-short">La respuesta corta. <strong>Muchísimo.</strong></p>
-<p class="hook-answer-long">La respuesta larga. <strong>Esta historia.</strong></p>
-</div>
-<div class="ashira-hero-meta">
-<div class="ashira-team"><div class="ashira-team-label">Equipo ASHIRA</div><div class="ashira-team-names">Melisa Arano · Roberto Alegre · Israel Martínez</div></div>
-<div class="ashira-sources"><a href="https://www.inegi.org.mx/programas/enigh/nc/2024/" target="_blank" rel="noopener" class="hero-source-link">ENIGH</a> · <a href="https://www.coneval.org.mx/coordinacion/entidades/Paginas/inicioent.aspx" target="_blank" rel="noopener" class="hero-source-link">CONEVAL</a> · <a href="https://www.inegi.org.mx/programas/ccpv/2020/" target="_blank" rel="noopener" class="hero-source-link">Censo 2020</a> · <a href="https://imco.org.mx/indice-de-competitividad-estatal-2020/" target="_blank" rel="noopener" class="hero-source-link">IMCO</a> · <a href="https://www.inegi.org.mx/programas/ccpv/2020/#Tabulados" target="_blank" rel="noopener" class="hero-source-link">Migración OD</a></div>
-</div>
-</div>
-<div class="ashira-hero-date">Dashboard realizado en Abril de 2026</div>
-</div>
+::: {.ashira-hero #inicio}
+::: {.ashira-hero-inner}
+::: {.ashira-hero-badge}
+[]{.badge-dot} HackODS UNAM 2026 · Objetivos de Desarrollo Sostenible 1 y 10
+:::
 
-<div id="ashira-scroll-hint" class="ashira-scroll-hint" aria-hidden="true">
-    <span class="scroll-hint-label">Desliza</span>
-    <span class="scroll-hint-arrow">↓</span>
-</div>
+# En México no se puede hablar de pobreza sin hablar de *dónde naciste.* {.ashira-hero-title}
+
+::: {.ashira-hero-tagline}
+Cuatro bases oficiales. Ocho años de datos. Una sola pregunta.
+:::
+
+::: {.ashira-hero-hook}
+::: {.hook-question}
+¿Cuánto influye el estado donde naciste en tu probabilidad de vivir en pobreza?
+:::
+::: {.hook-answer-short}
+La respuesta corta. **Muchísimo.**
+:::
+::: {.hook-answer-long}
+La respuesta larga. **Esta historia.**
+:::
+:::
+
+::: {.ashira-hero-meta}
+::: {.ashira-team}
+::: {.ashira-team-label}
+Equipo ASHIRA
+:::
+::: {.ashira-team-names}
+Melisa Arano · Roberto Alegre · Israel Martínez
+:::
+:::
+::: {.ashira-sources}
+[ENIGH](https://www.inegi.org.mx/programas/enigh/nc/2024/){.hero-source-link} · [CONEVAL](https://www.coneval.org.mx/coordinacion/entidades/Paginas/inicioent.aspx){.hero-source-link} · [Censo 2020](https://www.inegi.org.mx/programas/ccpv/2020/){.hero-source-link} · [IMCO](https://imco.org.mx/indice-de-competitividad-estatal-2020/){.hero-source-link} · [Migración OD](https://www.inegi.org.mx/programas/ccpv/2020/#Tabulados){.hero-source-link}
+:::
+:::
+:::
+
+::: {.ashira-hero-date}
+Dashboard realizado en Abril de 2026
+:::
+:::
+
+::: {#ashira-scroll-hint .ashira-scroll-hint}
+[Desliza]{.scroll-hint-label}
+[↓]{.scroll-hint-arrow}
+:::
 
 
 ```{python}
@@ -338,9 +364,9 @@ brecha_pts = chiapas_pob - bc_pob
 
 ## El mapa de la pobreza
 
-<div class="ashira-insight accent-red">
-<p style="font-size:1.1em; line-height:1.7; margin:0;">Cada estado coloreado por su porcentaje de pobreza multidimensional en 2024. El patrón es inmediato: <strong style="color:#2ecc71;">el norte es verde</strong>, <strong style="color:#e94560;">el sur es rojo.</strong> No hay excepciones.</p>
-</div>
+::: {.ashira-insight .accent-red}
+Cada estado coloreado por su porcentaje de pobreza multidimensional en 2024. El patrón es inmediato: [**el norte es verde**]{style="color:#2ecc71;"}, [**el sur es rojo.**]{style="color:#e94560;"} No hay excepciones.
+:::
 
 ```{python}
 #| label: fig-mapa
@@ -397,9 +423,9 @@ fig.update_layout(
 fig.show()
 ```
 
-<div class="ashira-insight accent-blue" style="padding:28px 36px; margin:32px 0 16px 0;">
-<p style="font-size:1.05em; line-height:1.75; margin:0;">El mapa de pobreza muestra dónde están las carencias. El mapa de ingreso muestra cuánto cambió el dinero disponible. <strong style="color:#38bdf8;">Misma escala de color, ocho años de distancia.</strong> El patrón Norte–Sur se mantuvo: los estados que ya ganaban más en 2016 son los que más crecieron en términos absolutos.</p>
-</div>
+::: {.ashira-insight .accent-blue style="padding:28px 36px; margin:32px 0 16px 0;"}
+El mapa de pobreza muestra dónde están las carencias. El mapa de ingreso muestra cuánto cambió el dinero disponible. [**Misma escala de color, ocho años de distancia.**]{style="color:#38bdf8;"} El patrón Norte–Sur se mantuvo: los estados que ya ganaban más en 2016 son los que más crecieron en términos absolutos.
+:::
 
 ```{python}
 #| label: fig-ingreso-sidebyside
@@ -517,9 +543,9 @@ fig.show()
 
 ## Los dos Méxicos
 
-<div class="ashira-insight accent-red">
-<p style="font-size:1.15em; line-height:1.75; margin:0;">Chiapas y Baja California comparten bandera y constitución. No comparten el mismo México. En <strong style="color:#e94560;">Chiapas</strong>, 66 de cada 100 personas viven en pobreza. En <strong style="color:#0f9b8e;">Baja California</strong>, apenas 10. Esta diferencia no es mala suerte. Es estructura.</p>
-</div>
+::: {.ashira-insight .accent-red}
+Chiapas y Baja California comparten bandera y constitución. No comparten el mismo México. En [**Chiapas**]{style="color:#e94560;"}, 66 de cada 100 personas viven en pobreza. En [**Baja California**]{style="color:#0f9b8e;"}, apenas 10. Esta diferencia no es mala suerte. Es estructura.
+:::
 
 ```{python}
 #| label: fig-barras
@@ -637,9 +663,9 @@ Hablar de un "promedio nacional" en México es un error estadístico que oculta 
 
 ## La brecha que no cierra
 
-<div class="ashira-insight accent-gold">
-<p style="font-size:1.15em; line-height:1.75; margin:0;">En ocho años, el ingreso en México subió para todos, pero de forma profundamente desigual. El Sur no está estancado, pero su ritmo no alcanza para seguirle el paso al Norte. La brecha no se cierra: por cada paso que da el Sur, el Norte da dos. <strong style="color:#f5a623;">El código postal sigue pesando más que el esfuerzo.</strong></p>
-</div>
+::: {.ashira-insight .accent-gold}
+En ocho años, el ingreso en México subió para todos, pero de forma profundamente desigual. El Sur no está estancado, pero su ritmo no alcanza para seguirle el paso al Norte. La brecha no se cierra: por cada paso que da el Sur, el Norte da dos. [**El código postal sigue pesando más que el esfuerzo.**]{style="color:#f5a623;"}
+:::
 
 ```{python}
 #| label: fig-brecha
@@ -766,9 +792,9 @@ Entre 2020 y 2022, la pobreza en el Sur bajó, pero la estructura productiva no 
 
 ## Las raíces de la pobreza
 
-<div class="ashira-insight accent-purple">
-<p style="font-size:1.15em; line-height:1.75; margin:0;">La pobreza en México no es aleatoria. Tiene raíces en la historia, en la etnicidad, en el mercado de trabajo. <strong style="color:#7b68ee;">No es coincidencia. Es estructura.</strong></p>
-</div>
+::: {.ashira-insight .accent-purple}
+La pobreza en México no es aleatoria. Tiene raíces en la historia, en la etnicidad, en el mercado de trabajo. [**No es coincidencia. Es estructura.**]{style="color:#7b68ee;"}
+:::
 
 ::: {.panel-tabset}
 
@@ -1032,9 +1058,9 @@ Los gráficos revelan una verdad incómoda: la pobreza en México está ligada a
 
 ## De qué vive el sur
 
-<div class="ashira-insight accent-green">
-<p style="font-size:1.15em; line-height:1.75; margin:0;">Cuando el ingreso laboral no alcanza, el sur sobrevive de dos maneras: programas gubernamentales y remesas. La mejora es real, pero frágil. Descansa en transferencias, no en trabajo formal.</p>
-</div>
+::: {.ashira-insight .accent-green}
+Cuando el ingreso laboral no alcanza, el sur sobrevive de dos maneras: programas gubernamentales y remesas. La mejora es real, pero frágil. Descansa en transferencias, no en trabajo formal.
+:::
 
 ::: {.panel-tabset}
 
@@ -1163,9 +1189,9 @@ fig.show()
 
 ## La exportación de talento por necesidad: la paradoja del migrante
 
-<div class="ashira-insight accent-red">
-<p style="font-size:1.15em; line-height:1.75; margin:0;">El Sur está perdiendo lo más valioso que tiene: su gente. Los datos muestran una realidad cruda: a mayor pobreza, más emigración. Aunque el dinero que mandan los que se van <strong>(remesas)</strong> infla los números de ingreso y hace parecer que el estado mejora, la realidad es otra. <strong style="color:#e94560;">No es progreso, es el resultado de jóvenes abandonando su hogar porque en su tierra no hay futuro.</strong></p>
-</div>
+::: {.ashira-insight .accent-red}
+El Sur está perdiendo lo más valioso que tiene: su gente. Los datos muestran una realidad cruda: a mayor pobreza, más emigración. Aunque el dinero que mandan los que se van **(remesas)** infla los números de ingreso y hace parecer que el estado mejora, la realidad es otra. [**No es progreso, es el resultado de jóvenes abandonando su hogar porque en su tierra no hay futuro.**]{style="color:#e94560;"}
+:::
 
 ```{python}
 #| label: fig-migracion
@@ -1272,30 +1298,38 @@ fig.update_layout(
 fig.show()
 ```
 
-<p class="ashira-globe-intro" style="font-size:1.08em; line-height:1.78; margin:20px 0 14px 0;">La migración neta dice <em>cuántos se van</em>. El origen-destino dice <strong>adónde van</strong>. El patrón es consistente: el Sur alimenta al Norte y a los centros turísticos, los únicos mercados laborales que todavía absorben trabajadores sin credenciales universitarias.</p>
+::: {.ashira-globe-intro}
+La migración neta dice *cuántos se van*. El origen-destino dice **adónde van**. El patrón es consistente: el Sur alimenta al Norte y a los centros turísticos, los únicos mercados laborales que todavía absorben trabajadores sin credenciales universitarias.
+:::
 
-<div style="text-align:center; margin: 10px 0;">
-  <img src="untitled.GIF" alt="Flujos de migración interestatal 2015–2020" style="max-width:100%; border-radius:8px;" />
-  <p class="fig-caption" style="font-size:0.85em; color:#5a6e84; margin-top:8px;">
-    Figura 12: Flujos de migración interestatal 2015–2020 · Top 40 pares por volumen. Puntos: balance neto (azul = receptor, rojo = emisor).<br>
-    <span class='fig-source'>Fuente: Migración origen-destino, Censo de Población y Vivienda 2020, INEGI.</span>
-  </p>
-</div>
+::: {style="text-align:center; margin: 10px 0;"}
+![Flujos de migración interestatal 2015–2020](untitled.GIF){style="max-width:100%; border-radius:8px;"}
 
-<div class="ashira-paradoja">
-<h3>¿Por qué bajan los números pero no la pobreza?</h3>
-<p style="font-size:1.05em; line-height:1.75; margin:0 0 16px 0;">Los estados del Sur cambian porque pierden gente, no porque ganen oportunidades. Cuando alguien migra buscando trabajo, su pobreza simplemente se muda de casa.</p>
-<p style="font-size:1.03em; line-height:1.72; margin:0 0 10px 0;"><strong>La estadística engaña:</strong> El Sur parece mejorar porque su base poblacional se reduce.</p>
-<p style="font-size:1.03em; line-height:1.72; margin:0 0 10px 0;"><strong>La pobreza se esconde:</strong> En ciudades ricas, la pobreza del migrante se vuelve invisible frente al promedio general.</p>
-<p style="font-size:1.03em; line-height:1.72; margin:0;"><strong>La verdadera meta:</strong> No basta con "limpiar" las cifras de un estado; hay que generar riqueza donde la gente vive.</p>
-<p class="paradoja-quote">La estadística mide territorios. La dignidad se juega en personas.</p>
-</div>
+::: {.fig-caption style="font-size:0.85em; color:#5a6e84; margin-top:8px;"}
+Figura 12: Flujos de migración interestatal 2015–2020 · Top 40 pares por volumen. Puntos: balance neto (azul = receptor, rojo = emisor).
+[Fuente: Migración origen-destino, Censo de Población y Vivienda 2020, INEGI.]{.fig-source}
+:::
+:::
+
+::: {.ashira-paradoja}
+### ¿Por qué bajan los números pero no la pobreza?
+
+Los estados del Sur cambian porque pierden gente, no porque ganen oportunidades. Cuando alguien migra buscando trabajo, su pobreza simplemente se muda de casa.
+
+**La estadística engaña:** El Sur parece mejorar porque su base poblacional se reduce.
+
+**La pobreza se esconde:** En ciudades ricas, la pobreza del migrante se vuelve invisible frente al promedio general.
+
+**La verdadera meta:** No basta con "limpiar" las cifras de un estado; hay que generar riqueza donde la gente vive.
+
+[La estadística mide territorios. La dignidad se juega en personas.]{.paradoja-quote}
+:::
 
 ## El panorama completo
 
-<div class="ashira-insight accent-teal">
-<p style="font-size:1.15em; line-height:1.75; margin:0;">Cada indicador cuenta una parte. Juntos revelan el patrón: <strong style="color:#0f9b8e;">los mismos estados aparecen siempre arriba en pobreza, informalidad, remesas e inseguridad alimentaria.</strong> No es azar. Es estructura.</p>
-</div>
+::: {.ashira-insight .accent-teal}
+Cada indicador cuenta una parte. Juntos revelan el patrón: [**los mismos estados aparecen siempre arriba en pobreza, informalidad, remesas e inseguridad alimentaria.**]{style="color:#0f9b8e;"} No es azar. Es estructura.
+:::
 
 ```{python}
 #| label: fig-heatmap
@@ -1461,84 +1495,153 @@ Pobreza estructural
 
 ## ¿Qué sigue?
 
-<div class="que-sigue-intro">
-<h3>Esto no es inevitable</h3>
-<p style="font-size:1.05em; line-height:1.75; margin:0;">En los últimos 20 años, Aguascalientes y Querétaro lograron reducir su pobreza y subir su ingreso mediano. Brasil redujo la pobreza extrema un 58% entre 2003 y 2014 con Bolsa Família. Colombia redujo la pobreza multidimensional de 30% a 18% con Familias en Acción. <strong style="color:#38bdf8;">La convergencia es posible cuando las intervenciones son focalizadas, sostenidas y medidas públicamente.</strong></p>
-</div>
+::: {.que-sigue-intro}
+### Esto no es inevitable
 
-<div class="que-sigue-grid">
+En los últimos 20 años, Aguascalientes y Querétaro lograron reducir su pobreza y subir su ingreso mediano. Brasil redujo la pobreza extrema un 58% entre 2003 y 2014 con Bolsa Família. Colombia redujo la pobreza multidimensional de 30% a 18% con Familias en Acción. [**La convergencia es posible cuando las intervenciones son focalizadas, sostenidas y medidas públicamente.**]{style="color:#38bdf8;"}
+:::
 
-<div class="que-sigue-card">
+::: {.que-sigue-grid}
+::: {.que-sigue-card}
 <span class="que-sigue-card-icon"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-<div class="que-sigue-card-title">Si eres ciudadano</div>
-<p>Consulta <a href="https://datos.gob.mx" target="_blank" rel="noopener">Datos Abiertos</a>, <a href="https://imco.org.mx" target="_blank" rel="noopener">IMCO</a> y <a href="https://www.mejoratuescuela.org" target="_blank" rel="noopener">MejoraTuEscuela</a>. Escríbele a tu diputado federal sobre el presupuesto de transferencias sociales. Exige metas estatales públicas.</p>
-</div>
 
-<div class="que-sigue-card">
+::: {.que-sigue-card-title}
+Si eres ciudadano
+:::
+
+Consulta [Datos Abiertos](https://datos.gob.mx){target="_blank" rel="noopener"}, [IMCO](https://imco.org.mx){target="_blank" rel="noopener"} y [MejoraTuEscuela](https://www.mejoratuescuela.org){target="_blank" rel="noopener"}. Escríbele a tu diputado federal sobre el presupuesto de transferencias sociales. Exige metas estatales públicas.
+:::
+
+::: {.que-sigue-card}
 <span class="que-sigue-card-icon"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></span>
-<div class="que-sigue-card-title">Si eres investigador o estudiante</div>
-<p>Replica este análisis a nivel municipal. Explora el efecto intergeneracional de las remesas. El código y datos están disponibles en <a href="https://github.com" target="_blank" rel="noopener">GitHub del equipo ASHIRA</a> bajo CC BY 4.0.</p>
-</div>
 
-<div class="que-sigue-card">
+::: {.que-sigue-card-title}
+Si eres investigador o estudiante
+:::
+
+Replica este análisis a nivel municipal. Explora el efecto intergeneracional de las remesas. El código y datos están disponibles en [GitHub del equipo ASHIRA](https://github.com){target="_blank" rel="noopener"} bajo CC BY 4.0.
+:::
+
+::: {.que-sigue-card}
 <span class="que-sigue-card-icon"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></span>
-<div class="que-sigue-card-title">Si eres funcionario público</div>
-<p>Adopta metas estatales focalizadas. Diseña mecanismos de asignación asimétrica del gasto. Reporta trimestralmente los indicadores de convergencia Norte–Sur para cada entidad.</p>
-</div>
 
-<div class="que-sigue-card">
+::: {.que-sigue-card-title}
+Si eres funcionario público
+:::
+
+Adopta metas estatales focalizadas. Diseña mecanismos de asignación asimétrica del gasto. Reporta trimestralmente los indicadores de convergencia Norte–Sur para cada entidad.
+:::
+
+::: {.que-sigue-card}
 <span class="que-sigue-card-icon"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
-<div class="que-sigue-card-title">Si eres periodista o comunicador</div>
-<p>Descarga los gráficos en PNG y los datos en CSV desde nuestro repositorio. Los hallazgos clave están listos para citar. Cubre la brecha Norte–Sur como la historia estructural que es, no como dato puntual.</p>
-</div>
 
-</div>
+::: {.que-sigue-card-title}
+Si eres periodista o comunicador
+:::
 
-<div class="que-sigue-aliados">
-<h4>Aliados que trabajan en esto</h4>
-<ul>
-<li><a href="https://mexicoevalua.org" target="_blank" rel="noopener">México Evalúa</a></li>
-<li><a href="https://imco.org.mx" target="_blank" rel="noopener">IMCO</a></li>
-<li><a href="https://www.ciesas.edu.mx" target="_blank" rel="noopener">CIESAS</a></li>
-<li><a href="https://www.oxfammexico.org" target="_blank" rel="noopener">Oxfam México</a></li>
-<li><a href="https://www.fundacionidea.org.mx" target="_blank" rel="noopener">Fundación IDEA</a></li>
-<li><a href="https://www.coneval.org.mx" target="_blank" rel="noopener">CONEVAL</a></li>
-<li><a href="https://www.inegi.org.mx" target="_blank" rel="noopener">INEGI Datos Abiertos</a></li>
-</ul>
-</div>
+Descarga los gráficos en PNG y los datos en CSV desde nuestro repositorio. Los hallazgos clave están listos para citar. Cubre la brecha Norte–Sur como la historia estructural que es, no como dato puntual.
+:::
+:::
 
-<div class="que-sigue-compromiso">
-<h4>Compromiso del equipo ASHIRA</h4>
-<p style="font-size:0.97em; line-height:1.75; margin:0;">Este análisis se actualizará cuando INEGI publique ENIGH 2026. El código y los datos están disponibles en GitHub bajo licencia <strong>Creative Commons CC BY 4.0</strong>. Si detectas un error, quieres colaborar, o quieres usar estos datos como funcionario, investigador o periodista, escríbenos: <a href="mailto:asharet.b@gmail.com">equipo ASHIRA</a>.</p>
-</div>
+::: {.que-sigue-aliados}
+#### Aliados que trabajan en esto
 
-<div class="cta-share">
-<a href="https://twitter.com/intent/tweet?text=En+México+no+puedes+hablar+de+pobreza+sin+hablar+de+dónde+naciste.+El+análisis+de+@ASHIRA_HackODS+lo+demuestra+con+8+años+de+datos+oficiales." target="_blank" rel="noopener" class="cta-share-btn twitter"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.85L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Compartir en X</a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=https://ashira.github.io" target="_blank" rel="noopener" class="cta-share-btn linkedin"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Compartir en LinkedIn</a>
-</div>
+- [México Evalúa](https://mexicoevalua.org){target="_blank" rel="noopener"}
+- [IMCO](https://imco.org.mx){target="_blank" rel="noopener"}
+- [CIESAS](https://www.ciesas.edu.mx){target="_blank" rel="noopener"}
+- [Oxfam México](https://www.oxfammexico.org){target="_blank" rel="noopener"}
+- [Fundación IDEA](https://www.fundacionidea.org.mx){target="_blank" rel="noopener"}
+- [CONEVAL](https://www.coneval.org.mx){target="_blank" rel="noopener"}
+- [INEGI Datos Abiertos](https://www.inegi.org.mx){target="_blank" rel="noopener"}
+:::
+
+::: {.que-sigue-compromiso}
+#### Compromiso del equipo ASHIRA
+
+Este análisis se actualizará cuando INEGI publique ENIGH 2026. El código y los datos están disponibles en GitHub bajo licencia **Creative Commons CC BY 4.0**. Si detectas un error, quieres colaborar, o quieres usar estos datos como funcionario, investigador o periodista, escríbenos: [equipo ASHIRA](mailto:asharet.b@gmail.com).
+:::
+
+::: {.cta-share}
+[Compartir en X](https://twitter.com/intent/tweet?text=En+México+no+puedes+hablar+de+pobreza+sin+hablar+de+dónde+naciste.+El+análisis+de+@ASHIRA_HackODS+lo+demuestra+con+8+años+de+datos+oficiales.){.cta-share-btn .twitter target="_blank" rel="noopener"}
+[Compartir en LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https://ashira.github.io){.cta-share-btn .linkedin target="_blank" rel="noopener"}
+:::
 
 ---
 
 ## Hallazgos clave
 
-<div class="ashira-closing">
-<div class="closing-eyebrow">Lo que descubrimos</div>
-<h2 class="closing-title">El talento está en todo México.<br><span class="closing-title-accent">Lo que no está distribuido son las oportunidades.</span></h2>
-<div class="closing-pillars">
-<div class="pillar"><div class="pillar-num">01</div><div class="pillar-head">Historia</div><div class="pillar-body">La brecha Norte a Sur no es nueva. Lleva décadas. Lo que cambia son los nombres de los programas, no el mapa de la pobreza.</div></div>
-<div class="pillar"><div class="pillar-num">02</div><div class="pillar-head">Estructura</div><div class="pillar-body">La informalidad laboral, la baja cobertura educativa y la composición étnica del estado explican más de dos tercios de la variación entre entidades.</div></div>
-<div class="pillar"><div class="pillar-num">03</div><div class="pillar-head">Dependencia</div><div class="pillar-body">Las mejoras visibles en el Sur descansan en transferencias, programas y remesas, no en generación propia de ingreso. Son frágiles.</div></div>
-<div class="pillar"><div class="pillar-num">04</div><div class="pillar-head">Migración</div><div class="pillar-body">Los estados más pobres pierden a sus jóvenes. Esa fuga de talento convierte la desigualdad en un ciclo que se alimenta a sí mismo.</div></div>
-</div>
-<div class="closing-policy">
-<h3 class="closing-policy-title">¿Qué implica para la política pública?</h3>
-<p>Invertir en reducir pobreza sin desagregar por estado es ineficiente. Los recursos se diluyen donde ya hubo recuperación, mientras el sur permanece atrapado. La convergencia requiere intervenciones asimétricas, con metas estatales y rendición de cuentas pública.</p>
-<p>La Agenda 2030 no pide promedios. Pide que nadie se quede atrás. <strong class="closing-quote">Este análisis muestra que en México, el lugar donde naciste todavía decide si te quedas o te vas.</strong></p>
-</div>
-<div class="closing-cta">
-<a href="#inicio" class="closing-cta-btn">Volver al inicio</a>
-</div>
-</div>
+::: {.ashira-closing}
+::: {.closing-eyebrow}
+Lo que descubrimos
+:::
+
+::: {.closing-title}
+El talento está en todo México.\
+[Lo que no está distribuido son las oportunidades.]{.closing-title-accent}
+:::
+
+::: {.closing-pillars}
+::: {.pillar}
+::: {.pillar-num}
+01
+:::
+::: {.pillar-head}
+Historia
+:::
+::: {.pillar-body}
+La brecha Norte a Sur no es nueva. Lleva décadas. Lo que cambia son los nombres de los programas, no el mapa de la pobreza.
+:::
+:::
+
+::: {.pillar}
+::: {.pillar-num}
+02
+:::
+::: {.pillar-head}
+Estructura
+:::
+::: {.pillar-body}
+La informalidad laboral, la baja cobertura educativa y la composición étnica del estado explican más de dos tercios de la variación entre entidades.
+:::
+:::
+
+::: {.pillar}
+::: {.pillar-num}
+03
+:::
+::: {.pillar-head}
+Dependencia
+:::
+::: {.pillar-body}
+Las mejoras visibles en el Sur descansan en transferencias, programas y remesas, no en generación propia de ingreso. Son frágiles.
+:::
+:::
+
+::: {.pillar}
+::: {.pillar-num}
+04
+:::
+::: {.pillar-head}
+Migración
+:::
+::: {.pillar-body}
+Los estados más pobres pierden a sus jóvenes. Esa fuga de talento convierte la desigualdad en un ciclo que se alimenta a sí mismo.
+:::
+:::
+:::
+
+::: {.closing-policy}
+### ¿Qué implica para la política pública? {.closing-policy-title}
+
+Invertir en reducir pobreza sin desagregar por estado es ineficiente. Los recursos se diluyen donde ya hubo recuperación, mientras el sur permanece atrapado. La convergencia requiere intervenciones asimétricas, con metas estatales y rendición de cuentas pública.
+
+La Agenda 2030 no pide promedios. Pide que nadie se quede atrás. [**Este análisis muestra que en México, el lugar donde naciste todavía decide si te quedas o te vas.**]{.closing-quote}
+:::
+
+::: {.closing-cta}
+[Volver al inicio](#inicio){.closing-cta-btn}
+:::
+:::
 
 ::: {.ashira-footer}
 
@@ -1555,7 +1658,7 @@ Pobreza estructural
 [Melisa Arano]{.footer-member}
 [Roberto Alegre]{.footer-member}
 [Israel Martínez]{.footer-member}
-<a href="mailto:asharet.b@gmail.com" class="footer-contact">asharet.b@gmail.com</a>
+[asharet.b@gmail.com](mailto:asharet.b@gmail.com){.footer-contact}
 :::
 
 ::: {.ashira-footer-sources}
