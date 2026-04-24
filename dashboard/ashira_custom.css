@@ -1224,7 +1224,7 @@ nav a,
   color: #c9d1d9;
   font-size: 0.78em;
   line-height: 1.5;
-  text-align: left;
+  text-align: justify;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
