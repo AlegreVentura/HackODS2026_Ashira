@@ -1945,3 +1945,434 @@ nav a,
   color: var(--text-1) !important;
 }
 
+
+/* ═══════════════════════════════════════════════════════════
+   21. LIGHT MODE — body.quarto-light overrides
+   Estrategia: dark es el default (`:root`). Aquí solo
+   sobreescribimos lo que cambia en modo claro.
+   Las gráficas Plotly se mantienen en fondo oscuro
+   ("dark data island") porque sus textos internos son blancos.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Variables ── */
+body.quarto-light {
+  --bg-deep:         #dde3eb;
+  --bg-base:         #f6f8fa;
+  --bg-card:         #ffffff;
+  --bg-elev:         #edf1f6;
+  --border:          #cbd5e1;
+  --border-soft:     #dde3eb;
+  --text-1:          #0f172a;
+  --text-2:          #1e293b;
+  --text-3:          #475569;
+  --text-4:          #64748b;
+  --text-5:          #94a3b8;
+  --accent:          #be1a35;
+  --gold:            #92620a;
+  --teal:            #0a7067;
+  --green:           #166534;
+  --purple:          #5539b4;
+  --accent-glow:     rgba(190,26,53,0.2);
+  --accent-glow-soft:rgba(190,26,53,0.10);
+  --grid-line:       rgba(0,0,0,0.025);
+  --shadow-sm:       0 2px 8px rgba(0,0,0,0.07);
+  --shadow-md:       0 8px 32px rgba(0,0,0,0.11);
+  --shadow-lg:       0 20px 60px rgba(0,0,0,0.09);
+  color-scheme: light;
+}
+
+/* ── Base ── */
+body.quarto-light,
+body.quarto-light body {
+  background: var(--bg-base) !important;
+  color: var(--text-1) !important;
+}
+
+/* ── Botón toggle — visible aunque el navbar esté oculto ── */
+.quarto-color-scheme-toggle {
+  display: flex !important;
+  position: fixed !important;
+  top: 1rem !important;
+  right: 1.5rem !important;
+  z-index: 9999 !important;
+  width: 38px !important;
+  height: 38px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  background: rgba(22,27,34,0.88) !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  backdrop-filter: blur(10px) !important;
+  cursor: pointer !important;
+  color: var(--text-2) !important;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+.quarto-color-scheme-toggle:hover {
+  border-color: rgba(233,69,96,0.5) !important;
+  box-shadow: 0 0 12px rgba(233,69,96,0.25) !important;
+}
+body.quarto-light .quarto-color-scheme-toggle {
+  background: rgba(248,250,252,0.95) !important;
+  border-color: rgba(203,213,225,0.9) !important;
+  color: var(--text-2) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+body.quarto-light .quarto-color-scheme-toggle:hover {
+  border-color: rgba(190,26,53,0.4) !important;
+  box-shadow: 0 0 12px rgba(190,26,53,0.15) !important;
+}
+
+/* ── Scrollbar ── */
+body.quarto-light ::-webkit-scrollbar-track { background: var(--bg-base) !important; }
+body.quarto-light ::-webkit-scrollbar-thumb { background: var(--border) !important; }
+body.quarto-light ::-webkit-scrollbar-thumb:hover { background: var(--text-4) !important; }
+
+/* ── TOC Sidebar ── */
+body.quarto-light #quarto-sidebar,
+body.quarto-light .sidebar.sidebar-navigation,
+body.quarto-light nav#quarto-sidebar {
+  background: linear-gradient(180deg, #edf1f6 0%, #e8edf3 100%) !important;
+  border-right: 1px solid var(--border) !important;
+}
+body.quarto-light .sidebar-title,
+body.quarto-light nav[role="doc-toc"] > h2 {
+  color: var(--text-1) !important;
+  border-bottom-color: var(--border) !important;
+}
+body.quarto-light nav[role="doc-toc"] a {
+  color: var(--text-3) !important;
+}
+body.quarto-light nav[role="doc-toc"] ul li > a:hover {
+  color: var(--accent) !important;
+  background: rgba(190,26,53,0.05) !important;
+  border-left-color: rgba(190,26,53,0.35) !important;
+}
+body.quarto-light nav[role="doc-toc"] ul li > a.active,
+body.quarto-light nav[role="doc-toc"] ul li > a.active:hover {
+  color: var(--accent) !important;
+  background: linear-gradient(90deg, rgba(190,26,53,0.10), transparent) !important;
+  border-left-color: var(--accent) !important;
+}
+
+/* ── Tipografía general ── */
+body.quarto-light h1,
+body.quarto-light h2,
+body.quarto-light h3,
+body.quarto-light h4,
+body.quarto-light h5 { color: var(--text-1) !important; }
+
+body.quarto-light p { color: var(--text-2) !important; }
+
+body.quarto-light a {
+  color: var(--accent) !important;
+  border-bottom-color: rgba(190,26,53,0.3) !important;
+}
+body.quarto-light a:hover {
+  color: var(--accent) !important;
+  opacity: 0.8;
+}
+
+/* ── HR ── */
+body.quarto-light hr { border-color: var(--border) !important; }
+body.quarto-light hr::after { color: var(--text-4) !important; }
+
+/* ── Hero ── */
+body.quarto-light .ashira-hero {
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(190,26,53,0.07), transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(85,57,180,0.05), transparent 50%),
+    linear-gradient(160deg, #edf1f6 0%, #f6f8fa 50%, #e8eef5 100%) !important;
+}
+body.quarto-light .ashira-hero::after { display: none !important; }
+body.quarto-light .ashira-hero-title { color: var(--text-1) !important; text-shadow: none !important; }
+body.quarto-light .ashira-hero-title em {
+  color: var(--accent) !important;
+  background: linear-gradient(180deg, transparent 68%, rgba(190,26,53,0.15) 68%) !important;
+}
+body.quarto-light .ashira-hero-tagline,
+body.quarto-light .ashira-hero-sub { color: var(--text-3) !important; }
+body.quarto-light .ashira-hero-hook {
+  background: rgba(190,26,53,0.04) !important;
+  border-left-color: var(--accent) !important;
+  border-color: rgba(190,26,53,0.15) !important;
+}
+body.quarto-light .hook-question { color: var(--text-1) !important; }
+body.quarto-light .hook-answer-short { color: var(--accent) !important; }
+body.quarto-light .hook-answer-long { color: var(--text-2) !important; }
+body.quarto-light .ashira-hero-meta {
+  background: rgba(0,0,0,0.04) !important;
+  border-top-color: var(--border) !important;
+}
+body.quarto-light .ashira-team-label,
+body.quarto-light .ashira-team-names { color: var(--text-3) !important; }
+body.quarto-light .hero-source-link {
+  color: var(--text-4) !important;
+  border-bottom-color: rgba(0,0,0,0.15) !important;
+}
+body.quarto-light .hero-source-link:hover { color: var(--accent) !important; }
+body.quarto-light .ashira-hero-badge {
+  background: rgba(190,26,53,0.07) !important;
+  border-color: rgba(190,26,53,0.25) !important;
+  color: var(--accent) !important;
+}
+body.quarto-light .ashira-hero-date { color: var(--text-4) !important; }
+
+/* ── Gráficas Plotly — "dark island" en light mode ── */
+body.quarto-light .cell-output-display {
+  background: #0d1117 !important;
+  border-radius: 14px !important;
+  padding: 10px 10px 6px !important;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.18) !important;
+}
+body.quarto-light .cell-output-display:hover {
+  background: #0d1117 !important;
+}
+
+/* ── Panel tabset ── */
+body.quarto-light .panel-tabset .nav-tabs {
+  border-bottom-color: var(--border) !important;
+}
+body.quarto-light .panel-tabset .nav-tabs .nav-link {
+  color: var(--text-3) !important;
+  background: transparent !important;
+}
+body.quarto-light .panel-tabset .nav-tabs .nav-link:hover {
+  color: var(--accent) !important;
+  background: rgba(190,26,53,0.05) !important;
+  border-color: rgba(190,26,53,0.2) !important;
+}
+body.quarto-light .panel-tabset .nav-tabs .nav-link.active {
+  color: var(--accent) !important;
+  background: var(--bg-card) !important;
+  border-color: var(--border) var(--border) var(--bg-card) !important;
+}
+body.quarto-light .tab-content {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+
+/* ── Code fold ── */
+body.quarto-light details.code-fold > summary {
+  color: var(--text-4) !important;
+  border-color: var(--border) !important;
+}
+body.quarto-light details.code-fold > summary:hover {
+  color: var(--accent) !important;
+  background: rgba(190,26,53,0.04) !important;
+}
+
+/* ── Figcaptions ── */
+body.quarto-light figcaption,
+body.quarto-light .figure-caption,
+body.quarto-light .quarto-float-caption {
+  color: var(--text-4) !important;
+  border-top-color: var(--border) !important;
+}
+body.quarto-light .fig-source { color: var(--text-5) !important; }
+
+/* ── Callouts ── */
+body.quarto-light .callout-important {
+  background: linear-gradient(135deg, rgba(190,26,53,0.06), rgba(190,26,53,0.02)) !important;
+  border-color: rgba(190,26,53,0.3) !important;
+}
+body.quarto-light .callout-important .callout-header {
+  background-color: rgba(190,26,53,0.1) !important;
+  border-bottom-color: rgba(190,26,53,0.2) !important;
+}
+body.quarto-light .callout-warning {
+  background: linear-gradient(135deg, rgba(146,98,10,0.07), rgba(146,98,10,0.02)) !important;
+  border-color: rgba(146,98,10,0.3) !important;
+}
+body.quarto-light .callout-warning .callout-header {
+  background-color: rgba(146,98,10,0.1) !important;
+  border-bottom-color: rgba(146,98,10,0.2) !important;
+}
+body.quarto-light .callout-tip {
+  background: linear-gradient(135deg, rgba(10,112,103,0.07), rgba(10,112,103,0.02)) !important;
+  border-color: rgba(10,112,103,0.3) !important;
+}
+body.quarto-light .callout-tip .callout-header {
+  background-color: rgba(10,112,103,0.1) !important;
+  border-bottom-color: rgba(10,112,103,0.2) !important;
+}
+body.quarto-light .callout-body p { color: var(--text-2) !important; }
+
+/* ── Insight boxes ── */
+body.quarto-light .ashira-insight {
+  background: linear-gradient(135deg, #f0f5fa, #eaeff5) !important;
+  border-color: var(--border) !important;
+}
+body.quarto-light .ashira-insight p { color: var(--text-2) !important; }
+body.quarto-light .ashira-insight p strong { color: var(--text-1) !important; }
+
+/* ── Texto narrativo con estilos inline — forzar contraste ── */
+body.quarto-light .ashira-globe-intro { color: var(--text-2) !important; }
+
+/* ── Paradoja / Excepciones ── */
+body.quarto-light .ashira-paradoja {
+  background: linear-gradient(160deg, rgba(190,26,53,0.06), #f6f8fa) !important;
+  border-left-color: var(--accent) !important;
+}
+body.quarto-light .ashira-paradoja h3 { color: var(--text-1) !important; }
+body.quarto-light .ashira-paradoja p { color: var(--text-2) !important; }
+body.quarto-light .ashira-paradoja p strong { color: var(--text-1) !important; }
+body.quarto-light .paradoja-quote {
+  color: var(--accent) !important;
+  border-top-color: var(--border) !important;
+  border-bottom-color: var(--accent) !important;
+}
+body.quarto-light .ashira-excepciones {
+  background: linear-gradient(160deg, rgba(10,112,103,0.07), #f6f8fa) !important;
+  border-left-color: var(--teal) !important;
+}
+body.quarto-light .ashira-excepciones p { color: var(--text-2) !important; }
+body.quarto-light .ashira-excepciones p strong { color: var(--text-1) !important; }
+
+/* ── Ciclo que se perpetúa ── */
+body.quarto-light .ashira-ciclo {
+  background: linear-gradient(160deg, #edf1f6, #f0f4f9) !important;
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+body.quarto-light .ashira-ciclo-title { color: var(--text-1) !important; }
+body.quarto-light .ciclo-card {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+body.quarto-light .ciclo-card:hover { box-shadow: var(--shadow-md) !important; }
+body.quarto-light .ciclo-num {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text-3) !important;
+}
+body.quarto-light .ciclo-desc {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+  color: var(--text-2) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+body.quarto-light .ciclo-arrow { color: var(--text-4) !important; }
+body.quarto-light .ciclo-core {
+  background: radial-gradient(circle at center,
+    rgba(190,26,53,0.18), rgba(190,26,53,0.07), rgba(240,245,250,0.6)) !important;
+  border-color: rgba(190,26,53,0.4) !important;
+  color: var(--accent) !important;
+}
+
+/* ── ¿Qué sigue? ── */
+body.quarto-light .que-sigue-intro {
+  background: linear-gradient(135deg, rgba(14,116,144,0.07), #f6f8fa) !important;
+  border-left-color: #0e7490 !important;
+}
+body.quarto-light .que-sigue-intro h3 { color: var(--text-1) !important; }
+body.quarto-light .que-sigue-intro p { color: var(--text-2) !important; }
+body.quarto-light .que-sigue-card {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+body.quarto-light .que-sigue-card:hover {
+  border-color: rgba(190,26,53,0.35) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+body.quarto-light .que-sigue-card-title { color: var(--text-1) !important; }
+body.quarto-light .que-sigue-card p { color: var(--text-3) !important; }
+body.quarto-light .que-sigue-card-icon {
+  background: rgba(190,26,53,0.07) !important;
+  border-color: rgba(190,26,53,0.2) !important;
+}
+body.quarto-light .que-sigue-card:hover .que-sigue-card-icon {
+  background: rgba(190,26,53,0.13) !important;
+  box-shadow: 0 0 16px rgba(190,26,53,0.2) !important;
+}
+body.quarto-light .que-sigue-aliados,
+body.quarto-light .que-sigue-compromiso {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+body.quarto-light .que-sigue-aliados h4,
+body.quarto-light .que-sigue-compromiso h4 { color: var(--text-1) !important; }
+body.quarto-light .que-sigue-compromiso p { color: var(--text-2) !important; }
+body.quarto-light .que-sigue-aliados ul li a {
+  color: var(--gold) !important;
+  background: rgba(146,98,10,0.07) !important;
+  border-color: rgba(146,98,10,0.25) !important;
+}
+body.quarto-light .que-sigue-aliados ul li a:hover {
+  background: rgba(146,98,10,0.15) !important;
+}
+
+/* ── Hallazgos clave / Closing ── */
+body.quarto-light .ashira-closing {
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(85,57,180,0.05), transparent 55%),
+    radial-gradient(ellipse at 10% 100%, rgba(190,26,53,0.06), transparent 60%),
+    linear-gradient(160deg, #edf1f6 0%, #f6f8fa 50%, #e8eef4 100%) !important;
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+body.quarto-light .closing-eyebrow { color: var(--accent) !important; }
+body.quarto-light .closing-title { color: var(--text-1) !important; }
+body.quarto-light .closing-title-accent { color: var(--accent) !important; }
+body.quarto-light .pillar {
+  background: linear-gradient(160deg, #ffffff, #f6f8fa) !important;
+  border-color: var(--border) !important;
+}
+body.quarto-light .pillar::before {
+  background: linear-gradient(90deg, var(--accent), rgba(190,26,53,0.2)) !important;
+}
+body.quarto-light .pillar:hover { box-shadow: var(--shadow-md) !important; }
+body.quarto-light .pillar-num { color: rgba(190,26,53,0.5) !important; }
+body.quarto-light .pillar:hover .pillar-num {
+  color: rgba(190,26,53,0.85) !important;
+  text-shadow: 0 0 20px rgba(190,26,53,0.35), 0 0 40px rgba(190,26,53,0.15) !important;
+}
+body.quarto-light .pillar-head { color: var(--text-1) !important; }
+body.quarto-light .pillar-body { color: var(--text-3) !important; }
+body.quarto-light .closing-policy {
+  background: linear-gradient(135deg, rgba(146,98,10,0.07), #f6f8fa) !important;
+  border-color: var(--border) !important;
+  border-left-color: var(--gold) !important;
+}
+body.quarto-light .closing-policy p { color: var(--text-2) !important; }
+body.quarto-light .closing-quote {
+  color: var(--text-1) !important;
+  border-bottom-color: rgba(190,26,53,0.4) !important;
+}
+body.quarto-light .closing-cta-btn.secondary {
+  border-color: var(--border) !important;
+  color: var(--text-2) !important;
+}
+body.quarto-light .closing-cta-btn.secondary:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+/* ── Footer ── */
+body.quarto-light .ashira-footer {
+  background: #e8edf3 !important;
+  border-top-color: var(--border) !important;
+}
+body.quarto-light .ashira-footer::before { opacity: 0.35 !important; }
+body.quarto-light .ashira-footer-inner { border-bottom-color: var(--border) !important; }
+body.quarto-light .ashira-footer-logo { color: var(--accent) !important; }
+body.quarto-light .ashira-footer-desc { color: var(--text-3) !important; }
+body.quarto-light .ashira-footer-tag {
+  background: rgba(190,26,53,0.07) !important;
+  border-color: rgba(190,26,53,0.2) !important;
+  color: var(--text-3) !important;
+}
+body.quarto-light .ashira-footer-team,
+body.quarto-light .ashira-footer-sources { border-left-color: var(--border) !important; }
+body.quarto-light .ashira-footer-label { color: var(--text-4) !important; }
+body.quarto-light .footer-member { color: var(--text-2) !important; }
+body.quarto-light .footer-contact { color: var(--accent) !important; }
+body.quarto-light .source-line { color: var(--text-4) !important; }
+body.quarto-light .footer-ods-pill {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: var(--border) !important;
+  color: var(--text-3) !important;
+}
+body.quarto-light .footer-bottom-text { color: var(--text-4) !important; }

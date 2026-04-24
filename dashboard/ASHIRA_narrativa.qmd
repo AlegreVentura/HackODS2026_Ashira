@@ -3,7 +3,9 @@ title: "ASHIRA"
 lang: es
 format:
   html:
-    theme: flatly
+    theme:
+      light: flatly
+      dark: darkly
     toc: true
     toc-title: "El recorrido"
     toc-depth: 2
