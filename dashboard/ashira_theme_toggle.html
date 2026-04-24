@@ -26,8 +26,8 @@
     plot:           '#ffffff',
     font:           '#3d5068',
     title:          '#111318',
-    grid:           '#f1f4f9',
-    zero:           '#e4ecf4',
+    grid:           '#f5f7fb',
+    zero:           '#edf2f8',
     hover_bg:       '#ffffff',
     hover_fg:       '#111318',
     hover_border:   '#c8d5e8',
@@ -81,8 +81,13 @@
       var anns = el.layout && el.layout.annotations;
       if (!anns || !anns.length) return;
       var updated = anns.map(function(a) {
-        // Evitamos sobreescribir las anotaciones que tienen colores fijos (ej. el bloque de COVID)
-        if (a.bgcolor && (a.bgcolor.includes('#f5a623') || a.bgcolor.includes('166,35'))) {
+        // Evitamos sobreescribir anotaciones con colores fijos (COVID, etiquetas de región)
+        // Plotly normaliza hex a rgb(), por eso chequeamos ambos formatos
+        if (a.bgcolor && (
+            a.bgcolor.includes('#f5a623') || a.bgcolor.includes('166,35') ||  // COVID gold
+            a.bgcolor.includes('#0f9b8e') || a.bgcolor.includes('15,155') ||  // TEAL
+            a.bgcolor.includes('#e94560') || a.bgcolor.includes('233,69')     // ACCENT
+        )) {
           return a;
         }
         return Object.assign({}, a, {
