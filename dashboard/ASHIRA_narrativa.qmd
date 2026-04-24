@@ -427,10 +427,10 @@ fig = px.choropleth(
 )
 fig.update_traces(
     hovertemplate=(
-        "<b style='font-size:15px'>%{location}</b><br>"
-        "<span style='color:#8b949e'>Región: </span><b>%{customdata[0]}</b><br>"
-        "<span style='color:#8b949e'>Pobreza 2024: </span><b>%{customdata[1]}</b><br>"
-        "<span style='color:#8b949e'>Ingreso pc: </span><b>%{customdata[2]}</b>"
+        "<b style='font-size:15px;color:#e6edf3'>%{location}</b><br>"
+        "<span style='color:#a0aec0'>Región: </span><b style='color:#e6edf3'>%{customdata[0]}</b><br>"
+        "<span style='color:#a0aec0'>Pobreza 2024: </span><b style='color:#e6edf3'>%{customdata[1]}</b><br>"
+        "<span style='color:#a0aec0'>Ingreso pc: </span><b style='color:#e6edf3'>%{customdata[2]}</b>"
         "<extra></extra>"
     ),
     marker_line_color="rgba(13,17,23,0.4)",
@@ -506,9 +506,9 @@ for col_n, (df_y, year) in enumerate([(e16_map, 2016), (e24_map, 2024)], start=1
             marker_line_color="rgba(13,17,23,0.4)",
             marker_line_width=0.5,
             hovertemplate=(
-                f"<b style='font-size:14px'>%{{location}}</b><br>"
-                f"<span style='color:#8b949e'>Ingreso mediano {year}: </span>"
-                f"<b>${{customdata[1]:,.0f}}/mes</b>"
+                f"<b style='font-size:14px;color:#e6edf3'>%{{location}}</b><br>"
+                f"<span style='color:#a0aec0'>Ingreso mediano {year}: </span>"
+                f"<b style='color:#e6edf3'>${{customdata[1]:,.0f}}/mes</b>"
                 "<extra></extra>"
             ),
         ),
@@ -603,9 +603,9 @@ fig = px.bar(
 fig.update_traces(
     textposition="outside", textfont_size=12, marker_line_width=0,
     hovertemplate=(
-        "<b>%{y}</b><br>"
-        "Región: <b>%{customdata[0]}</b><br>"
-        "Pobreza 2024: <b>%{customdata[1]:.1f}%</b>"
+        "<b style='color:#e6edf3'>%{y}</b><br>"
+        "<span style='color:#a0aec0'>Región: </span><b style='color:#e6edf3'>%{customdata[0]}</b><br>"
+        "<span style='color:#a0aec0'>Pobreza 2024: </span><b style='color:#e6edf3'>%{customdata[1]:.1f}%</b>"
         "<extra></extra>"
     ),
 )
@@ -733,7 +733,7 @@ for region, color, visible in [("Norte", TEAL, True), ("Sur", ACCENT, True), ("C
                   dash="solid" if visible is True else "dot"),
         marker=dict(size=10 if visible is True else 8, line=dict(width=1.5, color="white")),
         visible=visible,
-        hovertemplate="<b>%{x}</b>: $%{y:,.0f} pesos mensuales<extra>" + region + "</extra>",
+        hovertemplate="<b style='color:#e6edf3'>%{x}</b><span style='color:#a0aec0'>: $%{y:,.0f} pesos mensuales</span><extra>" + region + "</extra>",
     ), row=1, col=1)
 
 # Área sombreada entre las dos curvas para visualizar la brecha
@@ -772,7 +772,7 @@ fig.add_trace(go.Scatter(
     marker=dict(size=12, symbol="diamond", line=dict(width=1.5, color="white")),
     text=[f"{r:.2f}x" for r in ratio_v],
     textposition="top center", textfont=dict(size=11, color="white"),
-    hovertemplate="<b>%{x}</b>: el Norte ganó <b>%{y:.2f}x</b> más que el Sur<extra></extra>",
+    hovertemplate="<b style='color:#e6edf3'>%{x}</b><span style='color:#a0aec0'>: el Norte ganó </span><b style='color:#e6edf3'>%{y:.2f}x</b><span style='color:#a0aec0'> más que el Sur</span><extra></extra>",
     showlegend=False,
 ), row=1, col=2)
 
@@ -865,10 +865,10 @@ fig.update_traces(marker=dict(size=14, line=dict(width=1.5, color="white")),
                   textposition="top center",
                   textfont=dict(size=11, color="#e6edf3", family="Inter,sans-serif"),
                   hovertemplate=(
-                      "<b style='font-size:15px'>%{hovertext}</b><br>"
-                      "<span style='color:#8b949e'>Región: </span><b>%{customdata[0]}</b><br>"
-                      "Población indígena: <b>%{customdata[1]:.1f}%</b><br>"
-                      "Pobreza multidimensional: <b>%{customdata[2]:.1f}%</b>"
+                      "<b style='font-size:15px;color:#e6edf3'>%{hovertext}</b><br>"
+                      "<span style='color:#a0aec0'>Región: </span><b style='color:#e6edf3'>%{customdata[0]}</b><br>"
+                      "<span style='color:#a0aec0'>Población indígena: </span><b style='color:#e6edf3'>%{customdata[1]:.1f}%</b><br>"
+                      "<span style='color:#a0aec0'>Pobreza multidimensional: </span><b style='color:#e6edf3'>%{customdata[2]:.1f}%</b>"
                       "<extra></extra>"
                   ),
                   selector=dict(mode="markers+text"))
@@ -965,10 +965,10 @@ fig.update_traces(marker=dict(size=14, line=dict(width=1.5, color="white")),
                   textposition="top center",
                   textfont=dict(size=11, color="#e6edf3", family="Inter,sans-serif"),
                   hovertemplate=(
-                      "<b style='font-size:15px'>%{hovertext}</b><br>"
-                      "<span style='color:#8b949e'>Región: </span><b>%{customdata[0]}</b><br>"
-                      "Informalidad laboral: <b>%{customdata[1]:.1f}%</b><br>"
-                      "Ingreso mediano: <b>$%{customdata[2]:,.0f}/mes</b>"
+                      "<b style='font-size:15px;color:#e6edf3'>%{hovertext}</b><br>"
+                      "<span style='color:#a0aec0'>Región: </span><b style='color:#e6edf3'>%{customdata[0]}</b><br>"
+                      "<span style='color:#a0aec0'>Informalidad laboral: </span><b style='color:#e6edf3'>%{customdata[1]:.1f}%</b><br>"
+                      "<span style='color:#a0aec0'>Ingreso mediano: </span><b style='color:#e6edf3'>$%{customdata[2]:,.0f}/mes</b>"
                       "<extra></extra>"
                   ),
                   selector=dict(mode="markers+text"))
@@ -1050,7 +1050,7 @@ fig = px.bar(
 fig.update_traces(
     textposition="outside", textfont_size=11, marker_line_width=0,
     cliponaxis=False,
-    hovertemplate="<b>%{y}</b><br>Región: <b>%{customdata[0]}</b><br>Inseguridad alimentaria: <b>%{customdata[1]:.1f}%</b><extra></extra>",
+    hovertemplate="<b style='color:#e6edf3'>%{y}</b><br><span style='color:#a0aec0'>Región: </span><b style='color:#e6edf3'>%{customdata[0]}</b><br><span style='color:#a0aec0'>Inseguridad alimentaria: </span><b style='color:#e6edf3'>%{customdata[1]:.1f}%</b><extra></extra>",
 )
 fig.add_vline(x=promedio_nacional_alim, line_dash="dash", line_color="#f5a623", opacity=0.85,
               line_width=2,
@@ -1114,7 +1114,7 @@ for region in ["Sur","Centro","Norte"]:
         x=serie["anio"], y=serie["pct_bene_gob"], name=region,
         mode="lines+markers", line=dict(color=REGION_COLORS[region], width=3.5),
         marker=dict(size=11, line=dict(width=1.5, color="white")),
-        hovertemplate="<b>%{x}</b>: <b>%{y:.1f}%</b> del ingreso corriente<extra>" + region + "</extra>",
+        hovertemplate="<b style='color:#e6edf3'>%{x}</b><span style='color:#a0aec0'>: </span><b style='color:#e6edf3'>%{y:.1f}%</b><span style='color:#a0aec0'> del ingreso corriente</span><extra>" + region + "</extra>",
     ))
 
 fig.update_layout(
@@ -1154,7 +1154,7 @@ fig = px.bar(
 fig.update_traces(
     textposition="outside", textfont_size=11, marker_line_width=0,
     cliponaxis=False,
-    hovertemplate="<b>%{y}</b><br>Región: <b>%{customdata[0]}</b><br>Remesas: <b>%{customdata[1]:.1f}%</b> del ingreso<extra></extra>",
+    hovertemplate="<b style='color:#e6edf3'>%{y}</b><br><span style='color:#a0aec0'>Región: </span><b style='color:#e6edf3'>%{customdata[0]}</b><br><span style='color:#a0aec0'>Remesas: </span><b style='color:#e6edf3'>%{customdata[1]:.1f}%</b><span style='color:#a0aec0'> del ingreso</span><extra></extra>",
 )
 fig.update_layout(
     height=950,
@@ -1198,7 +1198,7 @@ for col, label, color in comps:
         x=regiones_ord, y=vals, name=label, marker_color=color,
         text=[f"{v:.1f}%" if v > 1.5 else "" for v in vals],
         textposition="outside", textfont=dict(color="white"),
-        hovertemplate="<b>%{x}</b>: %{y:.1f}%<extra>" + label + "</extra>",
+        hovertemplate="<b style='color:#e6edf3'>%{x}</b><span style='color:#a0aec0'>: </span><b style='color:#e6edf3'>%{y:.1f}%</b><extra>" + label + "</extra>",
     ))
 
 fig.update_layout(
@@ -1260,10 +1260,10 @@ fig.update_traces(marker=dict(size=14, line=dict(width=1.5, color="white")),
                   textposition="top center",
                   textfont=dict(size=11, color="#e6edf3", family="Inter,sans-serif"),
                   hovertemplate=(
-                      "<b style='font-size:15px'>%{hovertext}</b><br>"
-                      "<span style='color:#8b949e'>Región: </span><b>%{customdata[0]}</b><br>"
-                      "Pobreza multidimensional: <b>%{customdata[1]:.1f}%</b><br>"
-                      "Migración neta: <b>%{customdata[2]:.2f}</b>"
+                      "<b style='font-size:15px;color:#e6edf3'>%{hovertext}</b><br>"
+                      "<span style='color:#a0aec0'>Región: </span><b style='color:#e6edf3'>%{customdata[0]}</b><br>"
+                      "<span style='color:#a0aec0'>Pobreza multidimensional: </span><b style='color:#e6edf3'>%{customdata[1]:.1f}%</b><br>"
+                      "<span style='color:#a0aec0'>Migración neta: </span><b style='color:#e6edf3'>%{customdata[2]:.2f}</b>"
                       "<extra></extra>"
                   ),
                   selector=dict(mode="markers+text"))
@@ -1384,7 +1384,7 @@ fig = go.Figure(data=go.Heatmap(
         [0.75, "#a04968"],
         [1.00, "#c9384f"],
     ],
-    hovertemplate="<b>%{y}</b><br>%{x}: %{text}<extra></extra>",
+    hovertemplate="<b style='color:#e6edf3'>%{y}</b><br><span style='color:#a0aec0'>%{x}: </span><b style='color:#e6edf3'>%{text}</b><extra></extra>",
     showscale=True,
     colorbar=dict(
         title=dict(text="Nivel", font=dict(color="white", size=12)),

@@ -1978,7 +1978,7 @@ nav a,
    .js-plotly-plot containers.
 */
 :root.light-mode .js-plotly-plot .bg {
-  fill: #ffffff !important;
+  fill: #f2f4f7 !important;
 }
 
 /* Plotly SVG text elements */
@@ -1999,3 +1999,19 @@ nav a,
   stroke: #dce6f0 !important;
 }
 
+
+/* ── 23. LIGHT MODE — FOOTER ────────────────────────────── */
+:root.light-mode .ashira-footer {
+  background: var(--bg-elev); /* Un fondo claro y elegante */
+  border-top: 1px solid var(--border);
+}
+
+:root.light-mode .ashira-footer-logo {
+  color: var(--accent);
+}
+
+:root.light-mode .ashira-footer-tag,
+:root.light-mode .ashira-footer-label,
+:root.light-mode .ashira-footer-sources {
+  color: var(--text-4);
+}
