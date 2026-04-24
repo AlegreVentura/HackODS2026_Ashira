@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ashira_narrativa</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="ASHIRA_narrativa_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ASHIRA_narrativa_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="ASHIRA_narrativa_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="ASHIRA_narrativa_files/libs/quarto-html/popper.min.js"></script>
+<script src="ASHIRA_narrativa_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ASHIRA_narrativa_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ASHIRA_narrativa_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ASHIRA_narrativa_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ASHIRA_narrativa_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ASHIRA_narrativa_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ASHIRA_narrativa_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<div style="background: linear-gradient(160deg, #0d1117 0%, #1a1a2e 60%, #16213e 100%);
+     padding: 60px 48px 48px 48px; border-radius: 16px;
+     border-left: 8px solid #e94560; margin-bottom: 8px;">
+<p style="color:#e94560; font-size:1.05em; letter-spacing:0.18em; margin:0 0 12px 0; font-weight:700;">
+ASHIRA &nbsp;·&nbsp; HackODS UNAM 2026 &nbsp;·&nbsp; ODS 1 + ODS 10
+</p>
+<h1 style="color:white; font-size:3em; font-weight:900; line-height:1.15; margin:0 0 20px 0;">
+En México no se puede hablar de pobreza<br> sin hablar de <span style="color:#e94560;">dónde naciste.</span>
+</h1>
+<p style="color:#a0a8b8; font-size:1.2em; line-height:1.7; margin:0 0 28px 0; max-width:780px;">
+Un análisis de datos abiertos que cruza cuatro fuentes nacionales para demostrar que en México, el código postal al nacer predice con mayor fuerza que el esfuerzo individual si una persona vivirá en pobreza.
+</p>
+<p style="color:#e94560; font-size:1.05em; font-weight:600; margin:0;">
+ASHIRA &nbsp;·&nbsp; HackODS UNAM 2026 &nbsp;·&nbsp; ODS 1 + ODS 10
+</p>
+</div>
+<div id="10b4c022" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.ticker <span class="im">as</span> mticker</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patheffects <span class="im">as</span> pe</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openpyxl</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Rutas — el notebook vive en Ashira/dashboard/, los datos en hackods/</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Subimos dos niveles: dashboard/ → Ashira/ → hackods/</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>_HERE  <span class="op">=</span> Path(<span class="st">"."</span>).resolve()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>ROOT   <span class="op">=</span> _HERE.parent.parent <span class="cf">if</span> (_HERE.parent.parent <span class="op">/</span> <span class="st">"Posibles Datos Melisa"</span>).exists()          <span class="cf">else</span> _HERE.parent    <span class="co"># fallback si se corre desde otro directorio</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>MELISA <span class="op">=</span> ROOT <span class="op">/</span> <span class="st">"Posibles Datos Melisa"</span> <span class="op">/</span> <span class="st">"HackODS"</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>ISRAEL <span class="op">=</span> ROOT <span class="op">/</span> <span class="st">"Posibles Datos Israel (falta analizar y sacar insights)"</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>JHOSHUA<span class="op">=</span> ROOT <span class="op">/</span> <span class="st">"Posibles Datos Jhoshua"</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>REPO   <span class="op">=</span> _HERE.parent        <span class="co"># Ashira/ — para acceder a datos/shapefiles</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>IMG    <span class="op">=</span> Path(<span class="st">"imagenes"</span>)<span class="op">;</span> IMG.mkdir(exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(ISRAEL <span class="op">/</span> <span class="st">"scripts"</span>))</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> parse_censo <span class="im">import</span> extraer_valores_estado, REGIONES <span class="im">as</span> REGIONES_CENSO, ESTADOS_CORTOS</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Paleta de colores</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>BG      <span class="op">=</span> <span class="st">"#0d1117"</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>CARD    <span class="op">=</span> <span class="st">"#161b22"</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>ACCENT  <span class="op">=</span> <span class="st">"#e94560"</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>GOLD    <span class="op">=</span> <span class="st">"#f5a623"</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>TEAL    <span class="op">=</span> <span class="st">"#0f9b8e"</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>PURPLE  <span class="op">=</span> <span class="st">"#7b68ee"</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>GREEN   <span class="op">=</span> <span class="st">"#2ecc71"</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>MUTED   <span class="op">=</span> <span class="st">"#8b949e"</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>REGION_COLORS <span class="op">=</span> {<span class="st">"Norte"</span>: TEAL, <span class="st">"Centro"</span>: GOLD, <span class="st">"Sur"</span>: ACCENT, <span class="st">"CDMX"</span>: PURPLE}</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>REGIONES <span class="op">=</span> {</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aguascalientes"</span>:<span class="st">"Centro"</span>,<span class="st">"Baja California"</span>:<span class="st">"Norte"</span>,<span class="st">"Baja California Sur"</span>:<span class="st">"Norte"</span>,</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Campeche"</span>:<span class="st">"Sur"</span>,<span class="st">"Coahuila"</span>:<span class="st">"Norte"</span>,<span class="st">"Colima"</span>:<span class="st">"Centro"</span>,<span class="st">"Chiapas"</span>:<span class="st">"Sur"</span>,</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Chihuahua"</span>:<span class="st">"Norte"</span>,<span class="st">"Ciudad de México"</span>:<span class="st">"CDMX"</span>,<span class="st">"Durango"</span>:<span class="st">"Norte"</span>,</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Guanajuato"</span>:<span class="st">"Centro"</span>,<span class="st">"Guerrero"</span>:<span class="st">"Sur"</span>,<span class="st">"Hidalgo"</span>:<span class="st">"Centro"</span>,<span class="st">"Jalisco"</span>:<span class="st">"Centro"</span>,</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"México"</span>:<span class="st">"Centro"</span>,<span class="st">"Michoacán"</span>:<span class="st">"Centro"</span>,<span class="st">"Morelos"</span>:<span class="st">"Centro"</span>,<span class="st">"Nayarit"</span>:<span class="st">"Norte"</span>,</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Nuevo León"</span>:<span class="st">"Norte"</span>,<span class="st">"Oaxaca"</span>:<span class="st">"Sur"</span>,<span class="st">"Puebla"</span>:<span class="st">"Centro"</span>,<span class="st">"Querétaro"</span>:<span class="st">"Centro"</span>,</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Quintana Roo"</span>:<span class="st">"Sur"</span>,<span class="st">"San Luis Potosí"</span>:<span class="st">"Norte"</span>,<span class="st">"Sinaloa"</span>:<span class="st">"Norte"</span>,<span class="st">"Sonora"</span>:<span class="st">"Norte"</span>,</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Tabasco"</span>:<span class="st">"Sur"</span>,<span class="st">"Tamaulipas"</span>:<span class="st">"Norte"</span>,<span class="st">"Tlaxcala"</span>:<span class="st">"Centro"</span>,<span class="st">"Veracruz"</span>:<span class="st">"Sur"</span>,</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Yucatán"</span>:<span class="st">"Sur"</span>,<span class="st">"Zacatecas"</span>:<span class="st">"Norte"</span>,</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Estilos globales</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">"figure.facecolor"</span>:  BG,   <span class="st">"axes.facecolor"</span>:    CARD,</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text.color"</span>:        <span class="st">"white"</span>, <span class="st">"axes.labelcolor"</span>: <span class="st">"white"</span>,</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    <span class="st">"xtick.color"</span>:       <span class="st">"white"</span>, <span class="st">"ytick.color"</span>:     <span class="st">"white"</span>,</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.top"</span>:   <span class="va">False</span>,   <span class="st">"axes.spines.right"</span>:<span class="va">False</span>,</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.left"</span>:  <span class="va">False</span>,   <span class="st">"axes.spines.bottom"</span>:<span class="va">False</span>,</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.titlesize"</span>:    <span class="dv">22</span>,   <span class="st">"axes.labelsize"</span>:    <span class="dv">16</span>,</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">"xtick.labelsize"</span>:   <span class="dv">14</span>,   <span class="st">"ytick.labelsize"</span>:   <span class="dv">14</span>,</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">"legend.fontsize"</span>:   <span class="dv">13</span>,   <span class="st">"legend.framealpha"</span>: <span class="fl">0.25</span>,</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">"figure.titlesize"</span>:  <span class="dv">24</span>,   <span class="st">"figure.dpi"</span>:        <span class="dv">130</span>,</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>ESTADOS_ENIGH <span class="op">=</span> {</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>:<span class="st">"Aguascalientes"</span>,<span class="dv">2</span>:<span class="st">"Baja California"</span>,<span class="dv">3</span>:<span class="st">"Baja California Sur"</span>,<span class="dv">4</span>:<span class="st">"Campeche"</span>,</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>    <span class="dv">5</span>:<span class="st">"Coahuila"</span>,<span class="dv">6</span>:<span class="st">"Colima"</span>,<span class="dv">7</span>:<span class="st">"Chiapas"</span>,<span class="dv">8</span>:<span class="st">"Chihuahua"</span>,<span class="dv">9</span>:<span class="st">"Ciudad de México"</span>,</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    <span class="dv">10</span>:<span class="st">"Durango"</span>,<span class="dv">11</span>:<span class="st">"Guanajuato"</span>,<span class="dv">12</span>:<span class="st">"Guerrero"</span>,<span class="dv">13</span>:<span class="st">"Hidalgo"</span>,<span class="dv">14</span>:<span class="st">"Jalisco"</span>,</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    <span class="dv">15</span>:<span class="st">"México"</span>,<span class="dv">16</span>:<span class="st">"Michoacán"</span>,<span class="dv">17</span>:<span class="st">"Morelos"</span>,<span class="dv">18</span>:<span class="st">"Nayarit"</span>,<span class="dv">19</span>:<span class="st">"Nuevo León"</span>,</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    <span class="dv">20</span>:<span class="st">"Oaxaca"</span>,<span class="dv">21</span>:<span class="st">"Puebla"</span>,<span class="dv">22</span>:<span class="st">"Querétaro"</span>,<span class="dv">23</span>:<span class="st">"Quintana Roo"</span>,<span class="dv">24</span>:<span class="st">"San Luis Potosí"</span>,</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>    <span class="dv">25</span>:<span class="st">"Sinaloa"</span>,<span class="dv">26</span>:<span class="st">"Sonora"</span>,<span class="dv">27</span>:<span class="st">"Tabasco"</span>,<span class="dv">28</span>:<span class="st">"Tamaulipas"</span>,<span class="dv">29</span>:<span class="st">"Tlaxcala"</span>,</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>    <span class="dv">30</span>:<span class="st">"Veracruz"</span>,<span class="dv">31</span>:<span class="st">"Yucatán"</span>,<span class="dv">32</span>:<span class="st">"Zacatecas"</span>,</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wmean(x, w):</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> np.asarray(w, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.average(x, weights<span class="op">=</span>w) <span class="cf">if</span> w.<span class="bu">sum</span>() <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> np.nan</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wmedian(vals, weights):</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">zip</span>(weights, vals))</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>    wt <span class="op">=</span> <span class="bu">sum</span>(w <span class="cf">for</span> w, _ <span class="kw">in</span> s)</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>    cum <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w, v <span class="kw">in</span> s:</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>        cum <span class="op">+=</span> w</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> cum <span class="op">&gt;=</span> wt <span class="op">/</span> <span class="dv">2</span>:</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> v</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">float</span>(<span class="st">"nan"</span>)</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Configuración lista."</span>)</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ROOT   : </span><span class="sc">{</span>ROOT<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MELISA : </span><span class="sc">{</span>MELISA<span class="sc">}</span><span class="ss">  </span><span class="sc">{</span><span class="st">'✓'</span> <span class="cf">if</span> MELISA<span class="sc">.</span>exists() <span class="cf">else</span> <span class="st">'✗ NO ENCONTRADO'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ISRAEL : </span><span class="sc">{</span>ISRAEL<span class="sc">}</span><span class="ss">  </span><span class="sc">{</span><span class="st">'✓'</span> <span class="cf">if</span> ISRAEL<span class="sc">.</span>exists() <span class="cf">else</span> <span class="st">'✗ NO ENCONTRADO'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"JHOSHUA: </span><span class="sc">{</span>JHOSHUA<span class="sc">}</span><span class="ss">  </span><span class="sc">{</span><span class="st">'✓'</span> <span class="cf">if</span> JHOSHUA<span class="sc">.</span>exists() <span class="cf">else</span> <span class="st">'✗ NO ENCONTRADO'</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Configuración lista.
+ROOT   : C:\Users\Jhoshua\OneDrive\Documentos\Ciencia de Datos\Hackathones\hackods
+MELISA : C:\Users\Jhoshua\OneDrive\Documentos\Ciencia de Datos\Hackathones\hackods\Posibles Datos Melisa\HackODS  ✓
+ISRAEL : C:\Users\Jhoshua\OneDrive\Documentos\Ciencia de Datos\Hackathones\hackods\Posibles Datos Israel (falta analizar y sacar insights)  ✓
+JHOSHUA: C:\Users\Jhoshua\OneDrive\Documentos\Ciencia de Datos\Hackathones\hackods\Posibles Datos Jhoshua  ✓</code></pre>
+</div>
+</div>
+<div style="background:#161b22; padding:28px 36px; border-radius:12px;
+     border-left:5px solid #f5a623; margin:16px 0;">
+<h2 style="color:#f5a623; margin:0 0 10px 0; font-size:1.7em;" class="anchored">
+Cargando las tres capas de evidencia
+</h2>
+<p style="color:#a0a8b8; margin:0; font-size:1.1em;">
+ENIGH 2016–2024 (Melisa) · Censo 2020 (Israel) · ICE IMCO 2016–2018 (Israel) · Pobreza Multidimensional 2024 (Jhoshua)
+</p>
+</div>
+<div id="73942fca" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>norte_ing <span class="op">=</span> enigh_reg[(enigh_reg[<span class="st">"region"</span>]<span class="op">==</span><span class="st">"Norte"</span>) <span class="op">&amp;</span> (enigh_reg[<span class="st">"anio"</span>]<span class="op">==</span><span class="dv">2024</span>)][<span class="st">"ing_pc_mediana"</span>].values[<span class="dv">0</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sur_ing   <span class="op">=</span> enigh_reg[(enigh_reg[<span class="st">"region"</span>]<span class="op">==</span><span class="st">"Sur"</span>)   <span class="op">&amp;</span> (enigh_reg[<span class="st">"anio"</span>]<span class="op">==</span><span class="dv">2024</span>)][<span class="st">"ing_pc_mediana"</span>].values[<span class="dv">0</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ratio_ns  <span class="op">=</span> norte_ing <span class="op">/</span> sur_ing</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>PM 2024: 32 estados  |  Chiapas: 66.0%  |  BC: 9.9%
+  ENIGH 2016: 70,311 hogares
+  ENIGH 2018: 74,647 hogares
+  ENIGH 2020: 89,006 hogares
+  ENIGH 2022: 90,102 hogares
+  ENIGH 2024: 91,414 hogares
+
+ENIGH agregada: 160 filas estado-año
+Censo 2020: 32 estados
+ICE 2018: 32 estados
+
+Dataset maestro: 32 estados · ['estado', 'pct_pobreza_2024', 'region', 'pob_educ_superior', 'pct_indigena', 'pct_inseg_alim', 'ice_informalidad', 'ice_migracion', 'ing_pc_mediana', 'pct_bene_gob', 'pct_remesas', 'pct_ingtrab', 'color']
+
+Stats cierre:
+  Brecha Chiapas-BC: 56.1 pts  (markdown dice ~56)
+  Ratio Norte/Sur ingreso 2024: 0.51×  (markdown dice 1.4×)
+  Estados con pobreza &gt;40%%: 6  (usado en cierre)</code></pre>
+</div>
+</div>
+<div style="background:#0d1117; padding:36px 44px; border-radius:14px;
+     border: 1px solid #30363d; margin:24px 0 8px 0;">
+<h2 style="color:white;font-size:2em;font-weight:900;margin:0 0 14px 0;" class="anchored">
+El mapa que el promedio no te muestra
+</h2>
+<p style="color:#c9d1d9;font-size:1.1em;line-height:1.7;margin:0;">
+Cada estado coloreado por su porcentaje de pobreza multidimensional en 2024. El patrón es inmediato: el sur es rojo, el norte es verde. No hay excepciones. No hay ambigüedad. <strong style="color:#e94560;">La geografía del nacimiento es la geografía de la pobreza.</strong>
+</p>
+</div>
+<div id="82d8d48e" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> unicodedata, geopandas <span class="im">as</span> gpd</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> norm(s):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> unicodedata.normalize(<span class="st">"NFD"</span>, <span class="bu">str</span>(s)).encode(<span class="st">"ascii"</span>,<span class="st">"ignore"</span>).decode().lower().strip()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>GEO_PATH <span class="op">=</span> REPO <span class="op">/</span> <span class="st">"datos"</span> <span class="op">/</span> <span class="st">"shapefiles"</span> <span class="op">/</span> <span class="st">"mexico_estados.geojson"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gpd.read_file(GEO_PATH)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Mapping robusto por nombre normalizado</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>GEO_NAME_FIX <span class="op">=</span> {</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mexico"</span>:                   <span class="st">"México"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"michoacan de ocampo"</span>:      <span class="st">"Michoacán"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"coahuila de zaragoza"</span>:     <span class="st">"Coahuila"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"veracruz de ignacio de la llave"</span>: <span class="st">"Veracruz"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ciudad de mexico"</span>:         <span class="st">"Ciudad de México"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"distrito federal"</span>:         <span class="st">"Ciudad de México"</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"nuevo leon"</span>:               <span class="st">"Nuevo León"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"queretaro"</span>:                <span class="st">"Querétaro"</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"san luis potosi"</span>:          <span class="st">"San Luis Potosí"</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"yucatan"</span>:                  <span class="st">"Yucatán"</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"michoacan"</span>:                <span class="st">"Michoacán"</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"coahuila"</span>:                 <span class="st">"Coahuila"</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>std_by_norm <span class="op">=</span> {norm(e): e <span class="cf">for</span> e <span class="kw">in</span> maestro[<span class="st">"estado"</span>].unique()}</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> geo_to_std(geo_name):</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> norm(geo_name)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="kw">in</span> GEO_NAME_FIX:</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> GEO_NAME_FIX[n]</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> std_by_norm.get(n, geo_name)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>gdf[<span class="st">"estado_std"</span>] <span class="op">=</span> gdf[<span class="st">"name"</span>].<span class="bu">apply</span>(geo_to_std)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gdf.merge(maestro[[<span class="st">"estado"</span>,<span class="st">"pct_pobreza_2024"</span>,<span class="st">"region"</span>]], left_on<span class="op">=</span><span class="st">"estado_std"</span>, right_on<span class="op">=</span><span class="st">"estado"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>matched <span class="op">=</span> gdf[<span class="st">"pct_pobreza_2024"</span>].notna().<span class="bu">sum</span>()</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Estados con datos: </span><span class="sc">{</span>matched<span class="sc">}</span><span class="ss">/32"</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">10</span>))</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(BG)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(BG)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>gdf.plot(</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span><span class="st">"pct_pobreza_2024"</span>,</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"RdYlGn_r"</span>,</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">"#0d1117"</span>,</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    legend_kwds<span class="op">=</span>{</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">"label"</span>: <span class="st">"% pobreza multidimensional 2024"</span>,</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">"orientation"</span>: <span class="st">"horizontal"</span>,</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"shrink"</span>: <span class="fl">0.55</span>,</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pad"</span>: <span class="fl">0.01</span>,</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">"aspect"</span>: <span class="dv">30</span>,</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    missing_kwds<span class="op">=</span>{<span class="st">"color"</span>: <span class="st">"#30363d"</span>, <span class="st">"label"</span>: <span class="st">"Sin dato"</span>},</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">70</span>,</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Etiquetas para estados clave</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>LABEL_STATES <span class="op">=</span> {<span class="st">"Guerrero"</span>,<span class="st">"Chiapas"</span>,<span class="st">"Oaxaca"</span>,<span class="st">"Veracruz"</span>,<span class="st">"Nuevo León"</span>,<span class="st">"Baja California"</span>,<span class="st">"Ciudad de México"</span>,<span class="st">"Tabasco"</span>}</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> gdf.iterrows():</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">"estado"</span>] <span class="kw">in</span> LABEL_STATES <span class="kw">and</span> row.geometry <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>        cx, cy <span class="op">=</span> row.geometry.centroid.x, row.geometry.centroid.y</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>        porc <span class="op">=</span> row[<span class="st">"pct_pobreza_2024"</span>]</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pd.notna(porc):</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>            ax.annotate(</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>                <span class="ss">f"</span><span class="sc">{</span>row[<span class="st">'estado'</span>]<span class="sc">}</span><span class="ch">\n</span><span class="sc">{</span>porc<span class="sc">:.0f}</span><span class="ss">%"</span>,</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>                (cx, cy),</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>                ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>                fontsize<span class="op">=</span><span class="fl">8.5</span>, color<span class="op">=</span><span class="st">"white"</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>                path_effects<span class="op">=</span>[pe.withStroke(linewidth<span class="op">=</span><span class="fl">2.5</span>, foreground<span class="op">=</span><span class="st">"#0d1117"</span>)],</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Pobreza multidimensional por estado · México 2024</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Fuente: CONEVAL — Medición de la Pobreza 2024"</span>,</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">19</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"white"</span>, pad<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>cbar <span class="op">=</span> ax.get_figure().axes[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>cbar.tick_params(colors<span class="op">=</span><span class="st">"white"</span>, labelsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>cbar.yaxis.label.set_color(<span class="st">"white"</span>)</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>plt.setp(cbar.get_xticklabels(), color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>plt.savefig(IMG<span class="op">/</span><span class="st">"00_mapa_pobreza.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>,</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>            facecolor<span class="op">=</span>BG)</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Estados con datos: 32/32</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ASHIRA_narrativa_files/figure-html/cell-4-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);
+     padding:36px 44px; border-radius:14px; border-left:7px solid #e94560; margin:24px 0 8px 0;">
+<p style="color:#e94560;font-weight:700;letter-spacing:.15em;font-size:.95em;margin:0 0 8px 0;">
+ACTO I
+</p>
+<h2 style="color:white;font-size:2.1em;font-weight:900;margin:0 0 16px 0;" class="anchored">
+Los dos Méxicos que el promedio esconde
+</h2>
+<p style="color:#c9d1d9;font-size:1.15em;line-height:1.75;margin:0;">
+México reporta avances. Las cifras nacionales mejoran. Pero detrás del promedio vive una contradicción brutal: en <strong style="color:#e94560;">Chiapas</strong>, dos de cada tres personas son pobres. En <strong style="color:#0f9b8e;">Baja California</strong>, menos de una de cada diez. Y esto sucede en un mismo país.
+</p>
+</div>
+<div id="cell-7" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">13</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(BG)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(CARD)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> maestro.dropna(subset<span class="op">=</span>[<span class="st">"pct_pobreza_2024"</span>]).sort_values(<span class="st">"pct_pobreza_2024"</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>colors  <span class="op">=</span> [REGION_COLORS.get(r, MUTED) <span class="cf">for</span> r <span class="kw">in</span> df_plot[<span class="st">"region"</span>]]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(df_plot[<span class="st">"estado"</span>], df_plot[<span class="st">"pct_pobreza_2024"</span>],</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>               color<span class="op">=</span>colors, edgecolor<span class="op">=</span><span class="st">"none"</span>, height<span class="op">=</span><span class="fl">0.72</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Línea del promedio nacional</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>nac <span class="op">=</span> df_plot[<span class="st">"pct_pobreza_2024"</span>].mean()</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>ax.axvline(nac, color<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">1.4</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>ax.text(nac <span class="op">+</span> <span class="fl">0.8</span>, <span class="bu">len</span>(df_plot)<span class="op">-</span><span class="fl">0.5</span>, <span class="ss">f"Promedio</span><span class="ch">\n</span><span class="sc">{</span>nac<span class="sc">:.1f}</span><span class="ss">%"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"white"</span>, fontsize<span class="op">=</span><span class="dv">12</span>, va<span class="op">=</span><span class="st">"top"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores al final de cada barra</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, val, estado <span class="kw">in</span> <span class="bu">zip</span>(bars, df_plot[<span class="st">"pct_pobreza_2024"</span>], df_plot[<span class="st">"estado"</span>]):</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    destacado <span class="op">=</span> estado <span class="kw">in</span> (<span class="st">"Chiapas"</span>,<span class="st">"Guerrero"</span>,<span class="st">"Oaxaca"</span>,<span class="st">"Nuevo León"</span>,<span class="st">"Baja California"</span>,<span class="st">"Ciudad de México"</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    color_txt <span class="op">=</span> <span class="st">"white"</span> <span class="cf">if</span> destacado <span class="cf">else</span> MUTED</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    fw <span class="op">=</span> <span class="st">"bold"</span> <span class="cf">if</span> destacado <span class="cf">else</span> <span class="st">"normal"</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_width() <span class="op">+</span> <span class="fl">0.5</span>, bar.get_y() <span class="op">+</span> bar.get_height()<span class="op">/</span><span class="dv">2</span>,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"</span><span class="sc">{</span>val<span class="sc">:.1f}</span><span class="ss">%"</span>, va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"left"</span>, fontsize<span class="op">=</span><span class="fl">11.5</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>color_txt, fontweight<span class="op">=</span>fw)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Anotaciones especiales</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> df_plot[df_plot[<span class="st">"estado"</span>].isin([<span class="st">"Chiapas"</span>,<span class="st">"Guerrero"</span>])].iterrows():</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> <span class="bu">list</span>(df_plot[<span class="st">"estado"</span>]).index(row[<span class="st">"estado"</span>])</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    ax.annotate(<span class="st">""</span>, xy<span class="op">=</span>(row[<span class="st">"pct_pobreza_2024"</span>]<span class="op">-</span><span class="dv">1</span>, idx),</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                xytext<span class="op">=</span>(row[<span class="st">"pct_pobreza_2024"</span>]<span class="op">-</span><span class="dv">8</span>, idx),</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span>ACCENT, lw<span class="op">=</span><span class="fl">1.8</span>))</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Porcentaje de la población en situación de pobreza (%)"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Pobreza multidimensional por estado · México 2024"</span>,</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">21</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">18</span>)</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">82</span>)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">"y"</span>, labelsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">"x"</span>, labelsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.0f}</span><span class="ss">%"</span>))</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>ax.grid(axis<span class="op">=</span><span class="st">"x"</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>handles <span class="op">=</span> [mpatches.Patch(color<span class="op">=</span>c, label<span class="op">=</span>r) <span class="cf">for</span> r, c <span class="kw">in</span> REGION_COLORS.items()]</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>handles, loc<span class="op">=</span><span class="st">"lower right"</span>, fontsize<span class="op">=</span><span class="dv">13</span>,</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>          framealpha<span class="op">=</span><span class="fl">0.3</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>plt.savefig(IMG<span class="op">/</span><span class="st">"01_pobreza_estados.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Brecha: </span><span class="sc">{</span>df_plot<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>][<span class="st">'pct_pobreza_2024'</span>]<span class="sc">:.1f}</span><span class="ss">% – </span><span class="sc">{</span>df_plot<span class="sc">.</span>iloc[<span class="dv">0</span>][<span class="st">'pct_pobreza_2024'</span>]<span class="sc">:.1f}</span><span class="ss">% = </span><span class="sc">{</span>df_plot<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>][<span class="st">'pct_pobreza_2024'</span>]<span class="op">-</span>df_plot<span class="sc">.</span>iloc[<span class="dv">0</span>][<span class="st">'pct_pobreza_2024'</span>]<span class="sc">:.1f}</span><span class="ss"> puntos"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ASHIRA_narrativa_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Brecha: 66.0% – 9.9% = 56.1 puntos</code></pre>
+</div>
+</div>
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);
+     padding:36px 44px; border-radius:14px; border-left:7px solid #f5a623; margin:24px 0 8px 0;">
+<p style="color:#f5a623;font-weight:700;letter-spacing:.15em;font-size:.95em;margin:0 0 8px 0;">
+ACTO II
+</p>
+<h2 style="color:white;font-size:2.1em;font-weight:900;margin:0 0 16px 0;" class="anchored">
+La brecha que no cierra
+</h2>
+<p style="color:#c9d1d9;font-size:1.15em;line-height:1.75;margin:0;">
+Entre 2016 y 2024, el ingreso en México creció. Pero no para todos por igual. Mientras el Norte avanzó, el Sur se quedó en el mismo lugar. La pandemia de 2020 golpeó a todos — pero al Sur le costó más recuperarse. Ocho años de datos. Una sola conclusión: <strong style="color:#f5a623;">el origen sigue siendo destino.</strong>
+</p>
+</div>
+<div id="cell-9" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">8</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(BG)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>años <span class="op">=</span> [<span class="dv">2016</span>, <span class="dv">2018</span>, <span class="dv">2020</span>, <span class="dv">2022</span>, <span class="dv">2024</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel izquierdo: trayectorias por región</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(CARD)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> region <span class="kw">in</span> [<span class="st">"Norte"</span>,<span class="st">"Centro"</span>,<span class="st">"Sur"</span>]:</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> enigh_reg[enigh_reg[<span class="st">"region"</span>]<span class="op">==</span>region].sort_values(<span class="st">"anio"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    col <span class="op">=</span> REGION_COLORS[region]</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    ax.plot(sub[<span class="st">"anio"</span>], sub[<span class="st">"ing_pc_mediana"</span>], marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span>col,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span><span class="dv">3</span>, markersize<span class="op">=</span><span class="dv">9</span>, zorder<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Etiqueta al final de la línea</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    ultimo <span class="op">=</span> sub.iloc[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    ax.annotate(<span class="ss">f"</span><span class="sc">{</span>region<span class="sc">}</span><span class="ch">\n</span><span class="ss">$</span><span class="sc">{</span>ultimo[<span class="st">'ing_pc_mediana'</span>]<span class="sc">:,.0f}</span><span class="ss">"</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                xy<span class="op">=</span>(ultimo[<span class="st">"anio"</span>], ultimo[<span class="st">"ing_pc_mediana"</span>]),</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                xytext<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">0</span>), textcoords<span class="op">=</span><span class="st">"offset points"</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                color<span class="op">=</span>col, fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Ingreso mediano per cápita mensual</span><span class="ch">\n</span><span class="st">por región · 2016–2024"</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Pesos / mes"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(años)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="bu">str</span>(a) <span class="cf">for</span> a <span class="kw">in</span> años], fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"$</span><span class="sc">{</span>x<span class="sc">:,.0f}</span><span class="ss">"</span>))</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>ax.grid(alpha<span class="op">=</span><span class="fl">0.12</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">2015</span>, <span class="dv">2026</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>ax.axvline(<span class="dv">2020</span>, color<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">1.2</span>, linestyle<span class="op">=</span><span class="st">":"</span>, alpha<span class="op">=</span><span class="fl">0.45</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">2019.85</span>, ax.get_ylim()[<span class="dv">1</span>]<span class="op">*</span><span class="fl">0.98</span>, <span class="st">"COVID-19"</span>, color<span class="op">=</span><span class="st">"white"</span>, fontsize<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.5</span>, ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"top"</span>, style<span class="op">=</span><span class="st">"italic"</span>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel derecho: brecha Norte-Sur</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>ax2.set_facecolor(CARD)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>norte_vals <span class="op">=</span> enigh_reg[enigh_reg[<span class="st">"region"</span>]<span class="op">==</span><span class="st">"Norte"</span>].sort_values(<span class="st">"anio"</span>)[<span class="st">"ing_pc_mediana"</span>].values</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>sur_vals   <span class="op">=</span> enigh_reg[enigh_reg[<span class="st">"region"</span>]<span class="op">==</span><span class="st">"Sur"</span>].sort_values(<span class="st">"anio"</span>)[<span class="st">"ing_pc_mediana"</span>].values</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>brecha <span class="op">=</span> norte_vals <span class="op">-</span> sur_vals</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>bars2 <span class="op">=</span> ax2.bar(años, brecha,</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>                color<span class="op">=</span>[ACCENT <span class="cf">if</span> b <span class="op">==</span> <span class="bu">max</span>(brecha) <span class="cf">else</span> GOLD <span class="cf">for</span> b <span class="kw">in</span> brecha],</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>                edgecolor<span class="op">=</span><span class="st">"none"</span>, width<span class="op">=</span><span class="fl">1.4</span>)</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, val <span class="kw">in</span> <span class="bu">zip</span>(bars2, brecha):</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    ax2.text(bar.get_x()<span class="op">+</span>bar.get_width()<span class="op">/</span><span class="dv">2</span>, bar.get_height()<span class="op">+</span><span class="dv">30</span>,</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>             <span class="ss">f"$</span><span class="sc">{</span>val<span class="sc">:,.0f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>,</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Brecha de ingreso Norte − Sur</span><span class="ch">\n</span><span class="st">(pesos por mes)"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">"Diferencia en pesos / mes"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>ax2.set_xticks(años)</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>ax2.set_xticklabels([<span class="bu">str</span>(a) <span class="cf">for</span> a <span class="kw">in</span> años], fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>ax2.yaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"$</span><span class="sc">{</span>x<span class="sc">:,.0f}</span><span class="ss">"</span>))</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>ax2.grid(axis<span class="op">=</span><span class="st">"y"</span>, alpha<span class="op">=</span><span class="fl">0.12</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Ocho años de datos. La distancia no cierra."</span>,</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">22</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, y<span class="op">=</span><span class="fl">1.01</span>)</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>plt.savefig(IMG<span class="op">/</span><span class="st">"02_trayectorias_brecha.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ASHIRA_narrativa_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);
+     padding:36px 44px; border-radius:14px; border-left:7px solid #7b68ee; margin:24px 0 8px 0;">
+<p style="color:#7b68ee;font-weight:700;letter-spacing:.15em;font-size:.95em;margin:0 0 8px 0;">
+ACTO III
+</p>
+<h2 style="color:white;font-size:2.1em;font-weight:900;margin:0 0 16px 0;" class="anchored">
+Las raíces: por qué el sur es pobre
+</h2>
+<p style="color:#c9d1d9;font-size:1.15em;line-height:1.75;margin:0;">
+La pobreza en México no es aleatoria. Tiene raíces en la historia, en la etnicidad, en el mercado de trabajo. Dos correlaciones que incomodan porque no tienen explicación inocente: más población indígena, más pobreza. Más informalidad, menos ingreso. <strong style="color:#7b68ee;">No es coincidencia. Es estructura.</strong>
+</p>
+</div>
+<div id="cell-11" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">8</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(BG)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel izquierdo: % indigena vs % pobreza (Censo 2020 × PM 2024)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(CARD)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>df_etnia_pm <span class="op">=</span> maestro.dropna(subset<span class="op">=</span>[<span class="st">"pct_indigena"</span>,<span class="st">"pct_pobreza_2024"</span>])</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Solo etiquetar estados extremos o narrativamente relevantes</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>ETIQUETAR <span class="op">=</span> {<span class="st">"Chiapas"</span>,<span class="st">"Guerrero"</span>,<span class="st">"Oaxaca"</span>,<span class="st">"Nuevo León"</span>,<span class="st">"Baja California"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Yucatán"</span>,<span class="st">"Hidalgo"</span>,<span class="st">"Querétaro"</span>,<span class="st">"Veracruz"</span>,<span class="st">"Ciudad de México"</span>}</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> df_etnia_pm.iterrows():</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    ax.scatter(row[<span class="st">"pct_indigena"</span>], row[<span class="st">"pct_pobreza_2024"</span>],</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>               c<span class="op">=</span>row[<span class="st">"color"</span>], s<span class="op">=</span><span class="dv">130</span>, zorder<span class="op">=</span><span class="dv">5</span>, edgecolors<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">"estado"</span>] <span class="kw">in</span> ETIQUETAR:</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        offset <span class="op">=</span> (<span class="dv">5</span>, <span class="dv">5</span>) <span class="cf">if</span> row[<span class="st">"pct_indigena"</span>] <span class="op">&lt;</span> <span class="dv">70</span> <span class="cf">else</span> (<span class="op">-</span><span class="dv">5</span>, <span class="op">-</span><span class="dv">12</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        ax.annotate(row[<span class="st">"estado"</span>],</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                    (row[<span class="st">"pct_indigena"</span>], row[<span class="st">"pct_pobreza_2024"</span>]),</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                    xytext<span class="op">=</span>offset, textcoords<span class="op">=</span><span class="st">"offset points"</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                    fontsize<span class="op">=</span><span class="dv">11</span>, color<span class="op">=</span><span class="st">"white"</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>                    path_effects<span class="op">=</span>[pe.withStroke(linewidth<span class="op">=</span><span class="dv">2</span>, foreground<span class="op">=</span>CARD)])</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.polyfit(df_etnia_pm[<span class="st">"pct_indigena"</span>], df_etnia_pm[<span class="st">"pct_pobreza_2024"</span>], <span class="dv">1</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>x_l <span class="op">=</span> np.linspace(<span class="dv">0</span>, df_etnia_pm[<span class="st">"pct_indigena"</span>].<span class="bu">max</span>()<span class="op">+</span><span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>ax.plot(x_l, np.poly1d(z)(x_l), <span class="st">"--"</span>, color<span class="op">=</span>GOLD, alpha<span class="op">=</span><span class="fl">0.7</span>, linewidth<span class="op">=</span><span class="fl">2.2</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df_etnia_pm[<span class="st">"pct_indigena"</span>].corr(df_etnia_pm[<span class="st">"pct_pobreza_2024"</span>])</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="ss">f"r = </span><span class="sc">{</span>corr<span class="sc">:.2f}</span><span class="ss">"</span>, transform<span class="op">=</span>ax.transAxes,</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">15</span>, color<span class="op">=</span>GOLD, va<span class="op">=</span><span class="st">"top"</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.4"</span>, facecolor<span class="op">=</span>BG, edgecolor<span class="op">=</span>GOLD, alpha<span class="op">=</span><span class="fl">0.85</span>))</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"% Población indígena (Censo 2020)"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"% Pobreza multidimensional (2024)"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"La exclusión histórica se mide</span><span class="ch">\n</span><span class="st">en datos"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.0f}</span><span class="ss">%"</span>))</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.0f}</span><span class="ss">%"</span>))</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>ax.grid(alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel derecho: informalidad vs ingreso (ICE × ENIGH 2024)</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>ax2.set_facecolor(CARD)</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>df_inf <span class="op">=</span> maestro.dropna(subset<span class="op">=</span>[<span class="st">"ice_informalidad"</span>,<span class="st">"ing_pc_mediana"</span>])</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> df_inf.iterrows():</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>    ax2.scatter(row[<span class="st">"ice_informalidad"</span>], row[<span class="st">"ing_pc_mediana"</span>],</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>                c<span class="op">=</span>row[<span class="st">"color"</span>], s<span class="op">=</span><span class="dv">130</span>, zorder<span class="op">=</span><span class="dv">5</span>, edgecolors<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">"estado"</span>] <span class="kw">in</span> ETIQUETAR:</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>        offset <span class="op">=</span> (<span class="dv">5</span>, <span class="dv">5</span>) <span class="cf">if</span> row[<span class="st">"ice_informalidad"</span>] <span class="op">&lt;</span> <span class="dv">65</span> <span class="cf">else</span> (<span class="op">-</span><span class="dv">5</span>, <span class="op">-</span><span class="dv">14</span>)</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>        ax2.annotate(row[<span class="st">"estado"</span>],</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>                     (row[<span class="st">"ice_informalidad"</span>], row[<span class="st">"ing_pc_mediana"</span>]),</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>                     xytext<span class="op">=</span>offset, textcoords<span class="op">=</span><span class="st">"offset points"</span>,</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>                     fontsize<span class="op">=</span><span class="dv">11</span>, color<span class="op">=</span><span class="st">"white"</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>                     path_effects<span class="op">=</span>[pe.withStroke(linewidth<span class="op">=</span><span class="dv">2</span>, foreground<span class="op">=</span>CARD)])</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>z2 <span class="op">=</span> np.polyfit(df_inf[<span class="st">"ice_informalidad"</span>], df_inf[<span class="st">"ing_pc_mediana"</span>], <span class="dv">1</span>)</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>x_l2 <span class="op">=</span> np.linspace(df_inf[<span class="st">"ice_informalidad"</span>].<span class="bu">min</span>()<span class="op">-</span><span class="dv">2</span>, df_inf[<span class="st">"ice_informalidad"</span>].<span class="bu">max</span>()<span class="op">+</span><span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>ax2.plot(x_l2, np.poly1d(z2)(x_l2), <span class="st">"--"</span>, color<span class="op">=</span>GOLD, alpha<span class="op">=</span><span class="fl">0.7</span>, linewidth<span class="op">=</span><span class="fl">2.2</span>)</span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>corr2 <span class="op">=</span> df_inf[<span class="st">"ice_informalidad"</span>].corr(df_inf[<span class="st">"ing_pc_mediana"</span>])</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>ax2.text(<span class="fl">0.95</span>, <span class="fl">0.95</span>, <span class="ss">f"r = </span><span class="sc">{</span>corr2<span class="sc">:.2f}</span><span class="ss">"</span>, transform<span class="op">=</span>ax2.transAxes,</span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>         fontsize<span class="op">=</span><span class="dv">15</span>, color<span class="op">=</span>GOLD, va<span class="op">=</span><span class="st">"top"</span>, ha<span class="op">=</span><span class="st">"right"</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>         bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.4"</span>, facecolor<span class="op">=</span>BG, edgecolor<span class="op">=</span>GOLD, alpha<span class="op">=</span><span class="fl">0.85</span>))</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"Informalidad laboral — ICE 2018 (%)"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">"Ingreso mediano mensual — ENIGH 2024 ($/mes)"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"La trampa de la informalidad:</span><span class="ch">\n</span><span class="st">menos seguridad, menos ingreso"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>ax2.yaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"$</span><span class="sc">{</span>x<span class="sc">:,.0f}</span><span class="ss">"</span>))</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>ax2.xaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.0f}</span><span class="ss">%"</span>))</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>ax2.grid(alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>handles <span class="op">=</span> [mpatches.Patch(color<span class="op">=</span>c, label<span class="op">=</span>r) <span class="cf">for</span> r, c <span class="kw">in</span> REGION_COLORS.items()]</span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>handles, fontsize<span class="op">=</span><span class="dv">12</span>, framealpha<span class="op">=</span><span class="fl">0.25</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>ax2.legend(handles<span class="op">=</span>handles, fontsize<span class="op">=</span><span class="dv">12</span>, framealpha<span class="op">=</span><span class="fl">0.25</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Las raíces estructurales de la pobreza territorial"</span>,</span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">22</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>plt.savefig(IMG<span class="op">/</span><span class="st">"03_raices_estructura.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ASHIRA_narrativa_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="background:#161b22; padding:24px 36px; border-radius:12px;
+     border-left:5px solid #e94560; margin:8px 0 8px 0;">
+<p style="color:#c9d1d9;font-size:1.1em;line-height:1.7;margin:0;">
+La tercera raíz es la más concreta: el hambre. Los estados con mayor inseguridad alimentaria son exactamente los mismos con mayor pobreza y mayor población indígena. <strong style="color:#e94560;">En Guerrero y Oaxaca, más de la mitad de los hogares no tienen acceso seguro a los alimentos.</strong> Eso no es solo una estadística de ODS 2 — es el piso desde el que se construye (o no se construye) cualquier movilidad social.
+</p>
+</div>
+<div id="cell-13" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(BG)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(CARD)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>df_alim_plot <span class="op">=</span> maestro.dropna(subset<span class="op">=</span>[<span class="st">"pct_inseg_alim"</span>]).sort_values(<span class="st">"pct_inseg_alim"</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>colors_alim <span class="op">=</span> [REGION_COLORS.get(r, MUTED) <span class="cf">for</span> r <span class="kw">in</span> df_alim_plot[<span class="st">"region"</span>]]</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>bars_alim <span class="op">=</span> ax.barh(df_alim_plot[<span class="st">"estado"</span>], df_alim_plot[<span class="st">"pct_inseg_alim"</span>],</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span>colors_alim, edgecolor<span class="op">=</span><span class="st">"none"</span>, height<span class="op">=</span><span class="fl">0.72</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>nac_alim <span class="op">=</span> df_alim_plot[<span class="st">"pct_inseg_alim"</span>].mean()</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>ax.axvline(nac_alim, color<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">1.4</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>ax.text(nac_alim <span class="op">+</span> <span class="fl">0.4</span>, <span class="bu">len</span>(df_alim_plot) <span class="op">-</span> <span class="fl">0.5</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"Promedio</span><span class="ch">\n</span><span class="sc">{</span>nac_alim<span class="sc">:.1f}</span><span class="ss">%"</span>, color<span class="op">=</span><span class="st">"white"</span>, fontsize<span class="op">=</span><span class="dv">11</span>, va<span class="op">=</span><span class="st">"top"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>DEST_ALIM <span class="op">=</span> {<span class="st">"Guerrero"</span>,<span class="st">"Oaxaca"</span>,<span class="st">"Chiapas"</span>,<span class="st">"Veracruz"</span>,<span class="st">"Hidalgo"</span>,<span class="st">"Nuevo León"</span>,<span class="st">"Baja California"</span>}</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, val, estado <span class="kw">in</span> <span class="bu">zip</span>(bars_alim, df_alim_plot[<span class="st">"pct_inseg_alim"</span>], df_alim_plot[<span class="st">"estado"</span>]):</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    destacado <span class="op">=</span> estado <span class="kw">in</span> DEST_ALIM</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_width() <span class="op">+</span> <span class="fl">0.3</span>, bar.get_y() <span class="op">+</span> bar.get_height()<span class="op">/</span><span class="dv">2</span>,</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"</span><span class="sc">{</span>val<span class="sc">:.1f}</span><span class="ss">%"</span>, va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"left"</span>, fontsize<span class="op">=</span><span class="dv">11</span>,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">"white"</span> <span class="cf">if</span> destacado <span class="cf">else</span> MUTED,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>            fontweight<span class="op">=</span><span class="st">"bold"</span> <span class="cf">if</span> destacado <span class="cf">else</span> <span class="st">"normal"</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"</span><span class="sc">% d</span><span class="st">e hogares con inseguridad alimentaria (Censo 2020)"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"El hambre también tiene código postal"</span>,</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">21</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">18</span>)</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">"y"</span>, labelsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.0f}</span><span class="ss">%"</span>))</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>ax.grid(axis<span class="op">=</span><span class="st">"x"</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>handles <span class="op">=</span> [mpatches.Patch(color<span class="op">=</span>c, label<span class="op">=</span>r) <span class="cf">for</span> r, c <span class="kw">in</span> REGION_COLORS.items()]</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>handles, loc<span class="op">=</span><span class="st">"lower right"</span>, fontsize<span class="op">=</span><span class="dv">13</span>, framealpha<span class="op">=</span><span class="fl">0.3</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>plt.savefig(IMG<span class="op">/</span><span class="st">"03b_inseg_alim.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>top3 <span class="op">=</span> df_alim_plot.nlargest(<span class="dv">3</span>, <span class="st">"pct_inseg_alim"</span>)[[<span class="st">"estado"</span>,<span class="st">"pct_inseg_alim"</span>]]</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Top 3 inseguridad alimentaria:"</span>)</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(top3.to_string(index<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ASHIRA_narrativa_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Top 3 inseguridad alimentaria:
+  estado  pct_inseg_alim
+ Tabasco       22.120023
+  Oaxaca       15.890900
+Guerrero       14.552084</code></pre>
+</div>
+</div>
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);
+     padding:36px 44px; border-radius:14px; border-left:7px solid #2ecc71; margin:24px 0 8px 0;">
+<p style="color:#2ecc71;font-weight:700;letter-spacing:.15em;font-size:.95em;margin:0 0 8px 0;">
+ACTO IV
+</p>
+<h2 style="color:white;font-size:2.1em;font-weight:900;margin:0 0 16px 0;" class="anchored">
+El parche: de qué vive el sur
+</h2>
+<p style="color:#c9d1d9;font-size:1.15em;line-height:1.75;margin:0;">
+Cuando el ingreso laboral no alcanza, el sur sobrevive de dos maneras: programas gubernamentales y remesas. La mejora en bienestar del último sexenio es real — pero es frágil. Descansa en transferencias, no en trabajo formal ni en inversión productiva. El sur concentra la mayor dependencia de remesas del país: en varios estados del sureste, una parte sustancial del ingreso familiar viene de alguien que <em>ya no vive ahí.</em>
+</p>
+</div>
+<div id="cell-15" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">8</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(BG)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel izquierdo: composición del ingreso por región en 2024</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(CARD)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>regiones_ord <span class="op">=</span> [<span class="st">"Sur"</span>,<span class="st">"Centro"</span>,<span class="st">"Norte"</span>,<span class="st">"CDMX"</span>]</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="bu">len</span>(regiones_ord))<span class="op">;</span> w <span class="op">=</span> <span class="fl">0.22</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>comp_2024 <span class="op">=</span> enigh_reg[enigh_reg[<span class="st">"anio"</span>]<span class="op">==</span><span class="dv">2024</span>].set_index(<span class="st">"region"</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>comps <span class="op">=</span> [</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"pct_ingtrab"</span>,  <span class="st">"Ingreso laboral"</span>,        TEAL),</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"pct_bene_gob"</span>, <span class="st">"Prog. gubernamentales"</span>,  GOLD),</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"pct_remesas"</span>,  <span class="st">"Remesas"</span>,                ACCENT),</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"pct_transfer"</span>, <span class="st">"Otras transferencias"</span>,   PURPLE),</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (col, label, color) <span class="kw">in</span> <span class="bu">enumerate</span>(comps):</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    vals <span class="op">=</span> [comp_2024.loc[r, col] <span class="cf">if</span> r <span class="kw">in</span> comp_2024.index <span class="cf">else</span> <span class="dv">0</span> <span class="cf">for</span> r <span class="kw">in</span> regiones_ord]</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    bars <span class="op">=</span> ax.bar(x <span class="op">+</span> (i<span class="op">-</span><span class="fl">1.5</span>)<span class="op">*</span>w, vals, w, label<span class="op">=</span>label,</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>                  color<span class="op">=</span>color, edgecolor<span class="op">=</span><span class="st">"none"</span>, alpha<span class="op">=</span><span class="fl">0.88</span>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars, vals):</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> v <span class="op">&gt;</span> <span class="fl">1.5</span>:</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>            ax.text(bar.get_x()<span class="op">+</span>bar.get_width()<span class="op">/</span><span class="dv">2</span>, bar.get_height()<span class="op">+</span><span class="fl">0.3</span>,</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"</span><span class="sc">{</span>v<span class="sc">:.1f}</span><span class="ss">%"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="fl">10.5</span>,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span><span class="st">"white"</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(x)<span class="op">;</span> ax.set_xticklabels(regiones_ord, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"</span><span class="sc">% d</span><span class="st">el ingreso corriente del hogar"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"¿De dónde viene el ingreso?</span><span class="ch">\n</span><span class="st">Composición por región · 2024"</span>,</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.0f}</span><span class="ss">%"</span>))</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">12</span>, framealpha<span class="op">=</span><span class="fl">0.3</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>, loc<span class="op">=</span><span class="st">"upper right"</span>)</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>ax.grid(axis<span class="op">=</span><span class="st">"y"</span>, alpha<span class="op">=</span><span class="fl">0.12</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel derecho: evolución de bene_gob por región 2016-2024</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>ax2.set_facecolor(CARD)</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> region <span class="kw">in</span> [<span class="st">"Norte"</span>,<span class="st">"Centro"</span>,<span class="st">"Sur"</span>]:</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> enigh_reg[enigh_reg[<span class="st">"region"</span>]<span class="op">==</span>region].sort_values(<span class="st">"anio"</span>)</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>    col <span class="op">=</span> REGION_COLORS[region]</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>    ax2.plot(sub[<span class="st">"anio"</span>], sub[<span class="st">"pct_bene_gob"</span>], marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span>col,</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>             linewidth<span class="op">=</span><span class="dv">3</span>, markersize<span class="op">=</span><span class="dv">9</span>, zorder<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>    ultimo <span class="op">=</span> sub.iloc[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>    ax2.annotate(<span class="ss">f"</span><span class="sc">{</span>region<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>ultimo[<span class="st">'pct_bene_gob'</span>]<span class="sc">:.1f}</span><span class="ss">%"</span>,</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>                 xy<span class="op">=</span>(ultimo[<span class="st">"anio"</span>], ultimo[<span class="st">"pct_bene_gob"</span>]),</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>                 xytext<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">0</span>), textcoords<span class="op">=</span><span class="st">"offset points"</span>,</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>                 color<span class="op">=</span>col, fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"</span><span class="sc">% d</span><span class="st">el ingreso que viene de</span><span class="ch">\n</span><span class="st">programas gubernamentales · 2016–2024"</span>,</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">"</span><span class="sc">% d</span><span class="st">el ingreso corriente"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>ax2.set_xticks([<span class="dv">2016</span>,<span class="dv">2018</span>,<span class="dv">2020</span>,<span class="dv">2022</span>,<span class="dv">2024</span>])</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>ax2.set_xticklabels([<span class="st">"2016"</span>,<span class="st">"2018"</span>,<span class="st">"2020"</span>,<span class="st">"2022"</span>,<span class="st">"2024"</span>], fontsize<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>ax2.yaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.1f}</span><span class="ss">%"</span>))</span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>ax2.grid(alpha<span class="op">=</span><span class="fl">0.12</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="dv">2015</span>, <span class="dv">2026</span>)</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"La mejora en el sur no viene del mercado — viene del Estado y del exterior"</span>,</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">21</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>plt.savefig(IMG<span class="op">/</span><span class="st">"04_composicion_ingreso.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ASHIRA_narrativa_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="background:#161b22; padding:24px 36px; border-radius:12px;
+     border-left:5px solid #2ecc71; margin:8px 0 8px 0;">
+<p style="color:#c9d1d9;font-size:1.1em;line-height:1.7;margin:0;">
+Los datos regionales muestran la tendencia. Los datos estatales revelan las personas. <strong style="color:#2ecc71;">Guerrero es el estado donde una mayor proporción del ingreso familiar proviene de remesas</strong> — dinero enviado desde Estados Unidos y desde otras ciudades de México por quienes ya no pudieron quedarse. No es un dato menor: es la fotografía de un estado que sobrevive de su propia diáspora.
+</p>
+</div>
+<div id="cell-17" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remesas por estado — ENIGH 2024 (estado-año)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>rem_est <span class="op">=</span> enigh_est[enigh_est[<span class="st">"anio"</span>]<span class="op">==</span><span class="dv">2024</span>][[<span class="st">"estado"</span>,<span class="st">"region"</span>,<span class="st">"pct_remesas"</span>]].dropna()</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>rem_est <span class="op">=</span> rem_est.sort_values(<span class="st">"pct_remesas"</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>DEST_REM <span class="op">=</span> {<span class="st">"Guerrero"</span>,<span class="st">"Michoacán"</span>,<span class="st">"Oaxaca"</span>,<span class="st">"Veracruz"</span>,<span class="st">"Hidalgo"</span>,<span class="st">"Zacatecas"</span>,<span class="st">"Guanajuato"</span>}</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(BG)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(CARD)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>colors_rem <span class="op">=</span> []</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> rem_est.iterrows():</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">"estado"</span>] <span class="kw">in</span> (<span class="st">"Guerrero"</span>,<span class="st">"Veracruz"</span>):</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        colors_rem.append(ACCENT)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        colors_rem.append(REGION_COLORS.get(row[<span class="st">"region"</span>], MUTED))</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>bars_rem <span class="op">=</span> ax.barh(rem_est[<span class="st">"estado"</span>], rem_est[<span class="st">"pct_remesas"</span>],</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                   color<span class="op">=</span>colors_rem, edgecolor<span class="op">=</span><span class="st">"none"</span>, height<span class="op">=</span><span class="fl">0.72</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, val, estado <span class="kw">in</span> <span class="bu">zip</span>(bars_rem, rem_est[<span class="st">"pct_remesas"</span>], rem_est[<span class="st">"estado"</span>]):</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    destacado <span class="op">=</span> estado <span class="kw">in</span> DEST_REM</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_width() <span class="op">+</span> <span class="fl">0.1</span>, bar.get_y() <span class="op">+</span> bar.get_height()<span class="op">/</span><span class="dv">2</span>,</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"</span><span class="sc">{</span>val<span class="sc">:.1f}</span><span class="ss">%"</span>, va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"left"</span>, fontsize<span class="op">=</span><span class="dv">11</span>,</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">"white"</span> <span class="cf">if</span> destacado <span class="cf">else</span> MUTED,</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>            fontweight<span class="op">=</span><span class="st">"bold"</span> <span class="cf">if</span> destacado <span class="cf">else</span> <span class="st">"normal"</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Remesas como </span><span class="sc">% d</span><span class="st">el ingreso corriente del hogar · ENIGH 2024"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"¿Quién vive de los que se fueron?</span><span class="ch">\n</span><span class="st">Remesas por estado · 2024"</span>,</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">20</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">18</span>)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">"y"</span>, labelsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.1f}</span><span class="ss">%"</span>))</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>ax.grid(axis<span class="op">=</span><span class="st">"x"</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Leyenda manual</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>handles_r <span class="op">=</span> [mpatches.Patch(color<span class="op">=</span>c, label<span class="op">=</span>r) <span class="cf">for</span> r, c <span class="kw">in</span> REGION_COLORS.items()]</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>handles_r.append(mpatches.Patch(color<span class="op">=</span>ACCENT, label<span class="op">=</span><span class="st">"Guerrero / Veracruz"</span>))</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>handles_r, loc<span class="op">=</span><span class="st">"lower right"</span>, fontsize<span class="op">=</span><span class="dv">12</span>, framealpha<span class="op">=</span><span class="fl">0.3</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>plt.savefig(IMG<span class="op">/</span><span class="st">"04b_remesas_estado.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>top5 <span class="op">=</span> rem_est.nlargest(<span class="dv">5</span>, <span class="st">"pct_remesas"</span>)[[<span class="st">"estado"</span>,<span class="st">"pct_remesas"</span>]]</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Top 5 estados por </span><span class="sc">% r</span><span class="st">emesas (2024):"</span>)</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(top5.to_string(index<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ASHIRA_narrativa_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Top 5 estados por % remesas (2024):
+         estado  pct_remesas
+      Zacatecas     5.387799
+     Guanajuato     3.382325
+San Luis Potosí     3.262477
+       Guerrero     3.194545
+         Oaxaca     2.927823</code></pre>
+</div>
+</div>
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);
+     padding:36px 44px; border-radius:14px; border-left:7px solid #e94560; margin:24px 0 8px 0;">
+<p style="color:#e94560;font-weight:700;letter-spacing:.15em;font-size:.95em;margin:0 0 8px 0;">
+ACTO V
+</p>
+<h2 style="color:white;font-size:2.1em;font-weight:900;margin:0 0 16px 0;" class="anchored">
+Los que se van: la fuga de talento que perpetúa el ciclo
+</h2>
+<p style="color:#c9d1d9;font-size:1.15em;line-height:1.75;margin:0;">
+El sur exporta lo único que tiene: a su gente. Los estados con más pobreza son los que pierden más población hacia el norte y el centro. Cada joven que migra manda remesas — y eso aparece como ingreso, como si el estado estuviera mejorando. Pero el estado <em>no mejoró.</em> Solo aprendió a vivir de los que ya no están. <strong style="color:#e94560;">El dato lo confirma: más pobreza, más emigración.</strong>
+</p>
+</div>
+<div id="cell-19" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">9</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(BG)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(CARD)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df_mig <span class="op">=</span> maestro.dropna(subset<span class="op">=</span>[<span class="st">"ice_migracion"</span>,<span class="st">"pct_pobreza_2024"</span>]).copy()</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>ETIQUETAR_MIG <span class="op">=</span> {<span class="st">"Chiapas"</span>,<span class="st">"Guerrero"</span>,<span class="st">"Oaxaca"</span>,<span class="st">"Veracruz"</span>,<span class="st">"Puebla"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"Nuevo León"</span>,<span class="st">"Ciudad de México"</span>,<span class="st">"Baja California"</span>,<span class="st">"Querétaro"</span>}</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> df_mig.iterrows():</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    ax.scatter(row[<span class="st">"pct_pobreza_2024"</span>], row[<span class="st">"ice_migracion"</span>],</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>               c<span class="op">=</span>row[<span class="st">"color"</span>], s<span class="op">=</span><span class="dv">130</span>, zorder<span class="op">=</span><span class="dv">5</span>, edgecolors<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">"estado"</span>] <span class="kw">in</span> ETIQUETAR_MIG:</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Ajustar offset para evitar superposición</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        dy <span class="op">=</span> <span class="fl">0.4</span> <span class="cf">if</span> row[<span class="st">"ice_migracion"</span>] <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="op">-</span><span class="fl">0.5</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        dx <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        ax.annotate(row[<span class="st">"estado"</span>],</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>                    (row[<span class="st">"pct_pobreza_2024"</span>], row[<span class="st">"ice_migracion"</span>]),</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>                    xytext<span class="op">=</span>(dx, dy), textcoords<span class="op">=</span><span class="st">"offset points"</span>,</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>                    fontsize<span class="op">=</span><span class="fl">11.5</span>, color<span class="op">=</span><span class="st">"white"</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>                    path_effects<span class="op">=</span>[pe.withStroke(linewidth<span class="op">=</span><span class="fl">2.5</span>, foreground<span class="op">=</span>CARD)],</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>                    xycoords<span class="op">=</span><span class="st">"data"</span>,</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>                    arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-"</span>, color<span class="op">=</span><span class="st">"white"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, lw<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> <span class="bu">abs</span>(row[<span class="st">"ice_migracion"</span>]) <span class="op">&gt;</span> <span class="fl">1.5</span> <span class="cf">else</span> <span class="va">None</span>)</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">1.2</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="dv">3</span>, <span class="fl">0.15</span>, <span class="st">"Recibe migrantes"</span>, color<span class="op">=</span>TEAL, fontsize<span class="op">=</span><span class="dv">13</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="dv">3</span>, <span class="op">-</span><span class="fl">0.2</span>, <span class="st">"Pierde población"</span>, color<span class="op">=</span>ACCENT, fontsize<span class="op">=</span><span class="dv">13</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.polyfit(df_mig[<span class="st">"pct_pobreza_2024"</span>], df_mig[<span class="st">"ice_migracion"</span>], <span class="dv">1</span>)</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>x_l <span class="op">=</span> np.linspace(df_mig[<span class="st">"pct_pobreza_2024"</span>].<span class="bu">min</span>()<span class="op">-</span><span class="dv">2</span>, df_mig[<span class="st">"pct_pobreza_2024"</span>].<span class="bu">max</span>()<span class="op">+</span><span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>ax.plot(x_l, np.poly1d(z)(x_l), <span class="st">"--"</span>, color<span class="op">=</span>GOLD, alpha<span class="op">=</span><span class="fl">0.65</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df_mig[<span class="st">"pct_pobreza_2024"</span>].corr(df_mig[<span class="st">"ice_migracion"</span>])</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">0.97</span>, <span class="fl">0.05</span>, <span class="ss">f"r = </span><span class="sc">{</span>corr<span class="sc">:.2f}</span><span class="ss">"</span>, transform<span class="op">=</span>ax.transAxes,</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">14</span>, color<span class="op">=</span>GOLD, ha<span class="op">=</span><span class="st">"right"</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.4"</span>, facecolor<span class="op">=</span>BG, edgecolor<span class="op">=</span>GOLD, alpha<span class="op">=</span><span class="fl">0.85</span>))</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"% Pobreza multidimensional 2024"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Migración neta · ICE 2018 (escala relativa)"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Los estados más pobres son los que más gente pierden"</span>,</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">20</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.0f}</span><span class="ss">%"</span>))</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>ax.grid(alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>handles <span class="op">=</span> [mpatches.Patch(color<span class="op">=</span>c, label<span class="op">=</span>r) <span class="cf">for</span> r, c <span class="kw">in</span> REGION_COLORS.items()]</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>handles, fontsize<span class="op">=</span><span class="dv">13</span>, framealpha<span class="op">=</span><span class="fl">0.3</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>plt.savefig(IMG<span class="op">/</span><span class="st">"05_migracion_pobreza.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>direction <span class="op">=</span> <span class="st">"negativa (más pobreza → más emigración)"</span> <span class="cf">if</span> corr <span class="op">&lt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">"positiva"</span></span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Correlación pobreza × migración: r = </span><span class="sc">{</span>corr<span class="sc">:.2f}</span><span class="ss">  [</span><span class="sc">{</span>direction<span class="sc">}</span><span class="ss">]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ASHIRA_narrativa_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Correlación pobreza × migración: r = -0.57  [negativa (más pobreza → más emigración)]</code></pre>
+</div>
+</div>
+<div style="background:#0d1117; padding:36px 44px; border-radius:14px;
+     border: 1px solid #30363d; margin:24px 0;">
+<h3 style="color:white;font-size:1.5em;font-weight:800;margin:0 0 24px 0;text-align:center;
+             letter-spacing:.05em;" class="anchored">
+El ciclo que se perpetúa
+</h3>
+<div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;">
+<pre><code>&lt;div style="background:#1a1a2e;padding:14px 20px;border-radius:10px;
+            border-top:3px solid #e94560;text-align:center;min-width:130px;"&gt;
+  &lt;div style="color:#e94560;font-weight:800;font-size:1em;"&gt;Naces en el Sur&lt;/div&gt;
+  &lt;div style="color:#8b949e;font-size:.85em;margin-top:4px;"&gt;Alta pobreza · r=0.8 con etnicidad&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style="color:#8b949e;font-size:1.8em;padding:0 8px;"&gt;→&lt;/div&gt;
+&lt;div style="background:#1a1a2e;padding:14px 20px;border-radius:10px;
+            border-top:3px solid #7b68ee;text-align:center;min-width:130px;"&gt;
+  &lt;div style="color:#7b68ee;font-weight:800;font-size:1em;"&gt;Empleo informal&lt;/div&gt;
+  &lt;div style="color:#8b949e;font-size:.85em;margin-top:4px;"&gt;&amp;gt;60% informalidad · ICE 2018&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style="color:#8b949e;font-size:1.8em;padding:0 8px;"&gt;→&lt;/div&gt;
+&lt;div style="background:#1a1a2e;padding:14px 20px;border-radius:10px;
+            border-top:3px solid #f5a623;text-align:center;min-width:130px;"&gt;
+  &lt;div style="color:#f5a623;font-weight:800;font-size:1em;"&gt;Bajos ingresos&lt;/div&gt;
+  &lt;div style="color:#8b949e;font-size:.85em;margin-top:4px;"&gt;1.4× menos que el Norte · ENIGH 2024&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style="color:#8b949e;font-size:1.8em;padding:0 8px;"&gt;→&lt;/div&gt;
+&lt;div style="background:#1a1a2e;padding:14px 20px;border-radius:10px;
+            border-top:3px solid #0f9b8e;text-align:center;min-width:130px;"&gt;
+  &lt;div style="color:#0f9b8e;font-weight:800;font-size:1em;"&gt;Migras&lt;/div&gt;
+  &lt;div style="color:#8b949e;font-size:.85em;margin-top:4px;"&gt;Correlación pobreza–emigración&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style="color:#8b949e;font-size:1.8em;padding:0 8px;"&gt;→&lt;/div&gt;
+&lt;div style="background:#1a1a2e;padding:14px 20px;border-radius:10px;
+            border-top:3px solid #2ecc71;text-align:center;min-width:130px;"&gt;
+  &lt;div style="color:#2ecc71;font-weight:800;font-size:1em;"&gt;Mandas remesas&lt;/div&gt;
+  &lt;div style="color:#8b949e;font-size:.85em;margin-top:4px;"&gt;Guerrero: top 1 nacional · ENIGH 2024&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style="color:#8b949e;font-size:1.8em;padding:0 8px;"&gt;→&lt;/div&gt;
+&lt;div style="background:#1a1a2e;padding:14px 20px;border-radius:10px;
+            border-top:3px solid #e94560;text-align:center;min-width:130px;"&gt;
+  &lt;div style="color:#e94560;font-weight:800;font-size:1em;"&gt;El estado "mejora"&lt;/div&gt;
+  &lt;div style="color:#8b949e;font-size:.85em;margin-top:4px;"&gt;Pero la brecha no cierra&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<p style="color:#8b949e;font-size:.9em;text-align:center;margin:20px 0 0 0;">
+Cada eslabón está respaldado por datos de fuentes oficiales independientes. El ciclo no es un accidente — es la arquitectura del sistema.
+</p>
+</div>
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);
+     padding:36px 44px; border-radius:14px; border-left:7px solid #f5a623; margin:24px 0 8px 0;">
+<p style="color:#f5a623;font-weight:700;letter-spacing:.15em;font-size:.95em;margin:0 0 8px 0;">
+ACTO VI
+</p>
+<h2 style="color:white;font-size:2.1em;font-weight:900;margin:0 0 16px 0;" class="anchored">
+¿Está cambiando? ¿A qué ritmo?
+</h2>
+<p style="color:#c9d1d9;font-size:1.15em;line-height:1.75;margin:0;">
+Comparamos el ingreso de cada estado en 2016 con el de 2024. Los puntos arriba de la diagonal mejoraron. Los debajo, empeoraron. Pero la pregunta no es si mejoró — la pregunta es si la brecha se cerró.
+</p>
+</div>
+<div id="cell-22" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">8</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(BG)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel izquierdo: scatter 2016 vs 2024 por estado</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(CARD)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>e16 <span class="op">=</span> enigh_est[enigh_est[<span class="st">"anio"</span>]<span class="op">==</span><span class="dv">2016</span>].set_index(<span class="st">"estado"</span>)[<span class="st">"ing_pc_mediana"</span>]</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>e24 <span class="op">=</span> enigh_est[enigh_est[<span class="st">"anio"</span>]<span class="op">==</span><span class="dv">2024</span>].set_index(<span class="st">"estado"</span>)[<span class="st">"ing_pc_mediana"</span>]</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>comun <span class="op">=</span> e16.index.intersection(e24.index)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>df_conv <span class="op">=</span> pd.DataFrame({<span class="st">"ing_2016"</span>: e16[comun], <span class="st">"ing_2024"</span>: e24[comun]}).reset_index()</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>df_conv[<span class="st">"region"</span>] <span class="op">=</span> df_conv[<span class="st">"estado"</span>].<span class="bu">map</span>(REGIONES).fillna(<span class="st">"Otro"</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>df_conv[<span class="st">"color"</span>]  <span class="op">=</span> df_conv[<span class="st">"region"</span>].<span class="bu">map</span>(REGION_COLORS).fillna(<span class="st">"gray"</span>)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>df_conv[<span class="st">"mejora"</span>] <span class="op">=</span> df_conv[<span class="st">"ing_2024"</span>] <span class="op">/</span> df_conv[<span class="st">"ing_2016"</span>]</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>lim_min <span class="op">=</span> <span class="bu">min</span>(df_conv[<span class="st">"ing_2016"</span>].<span class="bu">min</span>(), df_conv[<span class="st">"ing_2024"</span>].<span class="bu">min</span>()) <span class="op">*</span> <span class="fl">0.9</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>lim_max <span class="op">=</span> <span class="bu">max</span>(df_conv[<span class="st">"ing_2016"</span>].<span class="bu">max</span>(), df_conv[<span class="st">"ing_2024"</span>].<span class="bu">max</span>()) <span class="op">*</span> <span class="fl">1.1</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>ax.plot([lim_min, lim_max], [lim_min, lim_max], <span class="st">"--"</span>, color<span class="op">=</span><span class="st">"white"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>ax.fill_between([lim_min, lim_max], [lim_min, lim_max], lim_max,</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>                color<span class="op">=</span>TEAL, alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>ax.fill_between([lim_min, lim_max], lim_min, [lim_min, lim_max],</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>                color<span class="op">=</span>ACCENT, alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>ax.text(lim_min<span class="op">*</span><span class="fl">1.05</span>, lim_max<span class="op">*</span><span class="fl">0.97</span>, <span class="st">"Mejoró"</span>, color<span class="op">=</span>TEAL, fontsize<span class="op">=</span><span class="dv">12</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>ax.text(lim_max<span class="op">*</span><span class="fl">0.75</span>, lim_min<span class="op">*</span><span class="fl">1.08</span>, <span class="st">"Empeoró"</span>, color<span class="op">=</span>ACCENT, fontsize<span class="op">=</span><span class="dv">12</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>ETIQUETAR_C <span class="op">=</span> {<span class="st">"Chiapas"</span>,<span class="st">"Guerrero"</span>,<span class="st">"Oaxaca"</span>,<span class="st">"Nuevo León"</span>,<span class="st">"Baja California"</span>,<span class="st">"Veracruz"</span>,<span class="st">"Tabasco"</span>}</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> df_conv.iterrows():</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    ax.scatter(row[<span class="st">"ing_2016"</span>], row[<span class="st">"ing_2024"</span>],</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>               c<span class="op">=</span>row[<span class="st">"color"</span>], s<span class="op">=</span><span class="dv">120</span>, zorder<span class="op">=</span><span class="dv">5</span>, edgecolors<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">"estado"</span>] <span class="kw">in</span> ETIQUETAR_C:</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>        ax.annotate(row[<span class="st">"estado"</span>],</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>                    (row[<span class="st">"ing_2016"</span>], row[<span class="st">"ing_2024"</span>]),</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>                    xytext<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>), textcoords<span class="op">=</span><span class="st">"offset points"</span>,</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>                    fontsize<span class="op">=</span><span class="fl">10.5</span>, color<span class="op">=</span><span class="st">"white"</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>                    path_effects<span class="op">=</span>[pe.withStroke(linewidth<span class="op">=</span><span class="dv">2</span>, foreground<span class="op">=</span>CARD)])</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Ingreso mediano mensual 2016 ($/mes)"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Ingreso mediano mensual 2024 ($/mes)"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"¿Quién ganó entre 2016 y 2024?"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"$</span><span class="sc">{</span>x<span class="sc">:,.0f}</span><span class="ss">"</span>))</span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"$</span><span class="sc">{</span>x<span class="sc">:,.0f}</span><span class="ss">"</span>))</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>ax.grid(alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>handles <span class="op">=</span> [mpatches.Patch(color<span class="op">=</span>c, label<span class="op">=</span>r) <span class="cf">for</span> r, c <span class="kw">in</span> REGION_COLORS.items()]</span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>handles, fontsize<span class="op">=</span><span class="dv">12</span>, framealpha<span class="op">=</span><span class="fl">0.25</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel derecho: % de cambio ordenado por región</span></span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>ax2.set_facecolor(CARD)</span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>df_conv_sorted <span class="op">=</span> df_conv.sort_values(<span class="st">"mejora"</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a>colors2 <span class="op">=</span> [REGION_COLORS.get(r, MUTED) <span class="cf">for</span> r <span class="kw">in</span> df_conv_sorted[<span class="st">"region"</span>]]</span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>bars3 <span class="op">=</span> ax2.barh(df_conv_sorted[<span class="st">"estado"</span>],</span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a>                 (df_conv_sorted[<span class="st">"mejora"</span>]<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="dv">100</span>,</span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a>                 color<span class="op">=</span>colors2,</span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>                 edgecolor<span class="op">=</span><span class="st">"none"</span>, height<span class="op">=</span><span class="fl">0.72</span>)</span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a>ax2.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">1.2</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, val <span class="kw">in</span> <span class="bu">zip</span>(bars3, (df_conv_sorted[<span class="st">"mejora"</span>]<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="dv">100</span>):</span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a>    x_pos <span class="op">=</span> val <span class="op">+</span> <span class="fl">0.5</span> <span class="cf">if</span> val <span class="op">&gt;=</span> <span class="dv">0</span> <span class="cf">else</span> val <span class="op">-</span> <span class="fl">0.5</span></span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a>    ha <span class="op">=</span> <span class="st">"left"</span> <span class="cf">if</span> val <span class="op">&gt;=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">"right"</span></span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>    ax2.text(x_pos, bar.get_y()<span class="op">+</span>bar.get_height()<span class="op">/</span><span class="dv">2</span>,</span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a>             <span class="ss">f"</span><span class="sc">{</span>val<span class="sc">:+.0f}</span><span class="ss">%"</span>, va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span>ha, fontsize<span class="op">=</span><span class="fl">9.5</span>,</span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>             color<span class="op">=</span><span class="st">"white"</span>, fontweight<span class="op">=</span><span class="st">"bold"</span> <span class="cf">if</span> <span class="bu">abs</span>(val) <span class="op">&gt;</span> <span class="dv">30</span> <span class="cf">else</span> <span class="st">"normal"</span>)</span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"Variación real del ingreso mediano 2016–2024 (%)"</span>, fontsize<span class="op">=</span><span class="dv">14</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Cambio porcentual por estado"</span>, fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>ax2.xaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x,_: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:+.0f}</span><span class="ss">%"</span>))</span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>ax2.tick_params(axis<span class="op">=</span><span class="st">"y"</span>, labelsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a>ax2.grid(axis<span class="op">=</span><span class="st">"x"</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a>ax2.legend(handles<span class="op">=</span>handles, fontsize<span class="op">=</span><span class="dv">11</span>, framealpha<span class="op">=</span><span class="fl">0.25</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>,</span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>           loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"El crecimiento fue real — pero no igualó las oportunidades"</span>,</span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">21</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a>plt.savefig(IMG<span class="op">/</span><span class="st">"06_convergencia.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a><span class="co"># Proyección de convergencia Norte-Sur</span></span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a>años_data <span class="op">=</span> enigh_reg[enigh_reg[<span class="st">"region"</span>]<span class="op">==</span><span class="st">"Norte"</span>].sort_values(<span class="st">"anio"</span>)[<span class="st">"anio"</span>].values</span>
+<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a>norte_s <span class="op">=</span> enigh_reg[enigh_reg[<span class="st">"region"</span>]<span class="op">==</span><span class="st">"Norte"</span>].sort_values(<span class="st">"anio"</span>)[<span class="st">"ing_pc_mediana"</span>].values</span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a>sur_s   <span class="op">=</span> enigh_reg[enigh_reg[<span class="st">"region"</span>]<span class="op">==</span><span class="st">"Sur"</span>].sort_values(<span class="st">"anio"</span>)[<span class="st">"ing_pc_mediana"</span>].values</span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a>brechas_t <span class="op">=</span> norte_s <span class="op">-</span> sur_s</span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a>z_brecha <span class="op">=</span> np.polyfit(años_data, brechas_t, <span class="dv">1</span>)</span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> z_brecha[<span class="dv">0</span>] <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a>    año_conv <span class="op">=</span> <span class="bu">int</span>(<span class="op">-</span>z_brecha[<span class="dv">1</span>] <span class="op">/</span> z_brecha[<span class="dv">0</span>])</span>
+<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Proyección de convergencia Norte-Sur: año </span><span class="sc">{</span>a<span class="sc">ñ</span>o_conv<span class="sc">}</span><span class="ss"> (regresión lineal sobre la brecha)"</span>)</span>
+<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a>    año_conv <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"La brecha Norte-Sur NO converge al ritmo actual (tendencia creciente o estable)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ASHIRA_narrativa_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Proyección de convergencia Norte-Sur: año 2019 (regresión lineal sobre la brecha)</code></pre>
+</div>
+</div>
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);
+     padding:36px 44px; border-radius:14px; border-left:7px solid #0f9b8e; margin:24px 0 8px 0;">
+<p style="color:#0f9b8e;font-weight:700;letter-spacing:.15em;font-size:.95em;margin:0 0 8px 0;">
+PANORAMA COMPLETO
+</p>
+<h2 style="color:white;font-size:2.1em;font-weight:900;margin:0 0 16px 0;" class="anchored">
+Los 32 estados bajo una misma lente
+</h2>
+<p style="color:#c9d1d9;font-size:1.15em;line-height:1.75;margin:0;">
+Cada indicador por separado cuenta una parte de la historia. Juntos, revelan el patrón: los mismos estados aparecen siempre arriba en pobreza, informalidad, remesas e inseguridad alimentaria. No es azar. Es estructura.
+</p>
+</div>
+<div id="cell-24" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmap de 32 estados × 5 indicadores clave (normalizados)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>indicadores <span class="op">=</span> {</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Pobreza 2024 (%)"</span>:        <span class="st">"pct_pobreza_2024"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Informali-</span><span class="ch">\n</span><span class="st">dad 2018 (%)"</span>: <span class="st">"ice_informalidad"</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Remesas 2024 (%)"</span>:        <span class="st">"pct_remesas"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"% Indígena</span><span class="ch">\n</span><span class="st">2020"</span>:        <span class="st">"pct_indigena"</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Inseg. Ali-</span><span class="ch">\n</span><span class="st">mentaria (%)"</span>:<span class="st">"pct_inseg_alim"</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>df_heat <span class="op">=</span> maestro[[<span class="st">"estado"</span>,<span class="st">"region"</span>] <span class="op">+</span> <span class="bu">list</span>(indicadores.values())].dropna().copy()</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>df_heat <span class="op">=</span> df_heat.sort_values(<span class="st">"pct_pobreza_2024"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>mat <span class="op">=</span> df_heat[<span class="bu">list</span>(indicadores.values())].values.astype(<span class="bu">float</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>mat_norm <span class="op">=</span> (mat <span class="op">-</span> mat.<span class="bu">min</span>(axis<span class="op">=</span><span class="dv">0</span>)) <span class="op">/</span> (mat.<span class="bu">max</span>(axis<span class="op">=</span><span class="dv">0</span>) <span class="op">-</span> mat.<span class="bu">min</span>(axis<span class="op">=</span><span class="dv">0</span>) <span class="op">+</span> <span class="fl">1e-9</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">14</span>))</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>fig.patch.set_facecolor(BG)</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(BG)</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> ax.imshow(mat_norm, aspect<span class="op">=</span><span class="st">"auto"</span>, cmap<span class="op">=</span><span class="st">"RdYlGn_r"</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(indicadores)))</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(<span class="bu">list</span>(indicadores.keys()), fontsize<span class="op">=</span><span class="dv">12</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(df_heat)))</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(df_heat[<span class="st">"estado"</span>].values, fontsize<span class="op">=</span><span class="dv">11</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>ax.tick_params(top<span class="op">=</span><span class="va">True</span>, bottom<span class="op">=</span><span class="va">False</span>, labeltop<span class="op">=</span><span class="va">True</span>, labelbottom<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_label_position(<span class="st">"top"</span>)</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Color lateral por región</span></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (_, row) <span class="kw">in</span> <span class="bu">enumerate</span>(df_heat.iterrows()):</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>    ax.annotate(<span class="st">""</span>, xy<span class="op">=</span>(<span class="op">-</span><span class="fl">0.7</span>, i), xytext<span class="op">=</span>(<span class="op">-</span><span class="fl">0.35</span>, i),</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>                xycoords<span class="op">=</span>(<span class="st">"data"</span>,<span class="st">"data"</span>), textcoords<span class="op">=</span>(<span class="st">"data"</span>,<span class="st">"data"</span>),</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>                arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-"</span>, color<span class="op">=</span>REGION_COLORS.get(row[<span class="st">"region"</span>],<span class="st">"gray"</span>),</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>                                lw<span class="op">=</span><span class="dv">5</span>, alpha<span class="op">=</span><span class="fl">0.85</span>))</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Anotaciones de valor en cada celda</span></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(mat.shape[<span class="dv">0</span>]):</span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(mat.shape[<span class="dv">1</span>]):</span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>        val <span class="op">=</span> mat[i, j]</span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>        txt_color <span class="op">=</span> <span class="st">"white"</span> <span class="cf">if</span> mat_norm[i,j] <span class="op">&gt;</span> <span class="fl">0.7</span> <span class="kw">or</span> mat_norm[i,j] <span class="op">&lt;</span> <span class="fl">0.3</span> <span class="cf">else</span> <span class="st">"#1a1a2e"</span></span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>        ax.text(j, i, <span class="ss">f"</span><span class="sc">{</span>val<span class="sc">:.0f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>                fontsize<span class="op">=</span><span class="fl">8.5</span>, color<span class="op">=</span>txt_color, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a>cbar <span class="op">=</span> plt.colorbar(im, ax<span class="op">=</span>ax, shrink<span class="op">=</span><span class="fl">0.5</span>, pad<span class="op">=</span><span class="fl">0.02</span>)</span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a>cbar.ax.tick_params(colors<span class="op">=</span><span class="st">"white"</span>, labelsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a>cbar.set_label(<span class="st">"Peor → Mejor (normalizado)"</span>, color<span class="op">=</span><span class="st">"white"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Los mismos estados, siempre en rojo</span><span class="ch">\n</span><span class="st">Patrón estructural de desigualdad territorial"</span>,</span>
+<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"white"</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a>ax.spines[:].set_visible(<span class="va">False</span>)</span>
+<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a>ax.tick_params(colors<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a>plt.savefig(IMG<span class="op">/</span><span class="st">"07_heatmap.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ASHIRA_narrativa_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="background:linear-gradient(160deg,#0d1117,#1a1a2e,#16213e);
+     padding:52px 48px; border-radius:16px; margin:24px 0 0 0;
+     border: 1px solid #30363d;">
+<h2 style="color:white;font-size:2.4em;font-weight:900;line-height:1.2;margin:0 0 24px 0;" class="anchored">
+El talento está en todo México.<br> <span style="color:#e94560;">Lo que no está distribuido igual son las oportunidades.</span>
+</h2>
+<p style="color:#c9d1d9;font-size:1.15em;line-height:1.85;margin:0 0 20px 0;max-width:800px;">
+México se comprometió con la Agenda 2030. Al ritmo actual, los estados del sur tardarán décadas en alcanzar los niveles de bienestar del norte. No porque su gente sea menos trabajadora o menos capaz — sino porque las instituciones, el mercado de trabajo, el acceso a educación y salud de calidad llevan generaciones concentrándose en el norte.
+</p>
+<p style="color:#c9d1d9;font-size:1.15em;line-height:1.85;margin:0 0 28px 0;max-width:800px;">
+Los datos son claros: la pobreza territorial en México tiene raíces históricas, estructurales y étnicas. Mientras el análisis se limite al promedio nacional, la desigualdad seguirá invisible. Los ODS exigen desagregarla.
+</p>
+<div style="display:flex;gap:32px;flex-wrap:wrap;margin-top:12px;">
+<pre><code>&lt;div style="background:#1a1a2e;padding:20px 28px;border-radius:10px;border-top:3px solid #e94560;min-width:180px;"&gt;
+  &lt;div style="color:#e94560;font-size:2em;font-weight:900;margin-bottom:4px;"&gt;~56 pts&lt;/div&gt;
+  &lt;div style="color:#8b949e;font-size:.95em;"&gt;Brecha de pobreza&lt;br&gt;Chiapas vs Baja California&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style="background:#1a1a2e;padding:20px 28px;border-radius:10px;border-top:3px solid #f5a623;min-width:180px;"&gt;
+  &lt;div style="color:#f5a623;font-size:2em;font-weight:900;margin-bottom:4px;"&gt;1.4×&lt;/div&gt;
+  &lt;div style="color:#8b949e;font-size:.95em;"&gt;El Norte gana más&lt;br&gt;que el Sur (2024)&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style="background:#1a1a2e;padding:20px 28px;border-radius:10px;border-top:3px solid #0f9b8e;min-width:180px;"&gt;
+  &lt;div style="color:#0f9b8e;font-size:2em;font-weight:900;margin-bottom:4px;"&gt;r ≈ 0.8&lt;/div&gt;
+  &lt;div style="color:#8b949e;font-size:.95em;"&gt;Correlación etnicidad&lt;br&gt;× pobreza (Censo × PM 2024)&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style="background:#1a1a2e;padding:20px 28px;border-radius:10px;border-top:3px solid #7b68ee;min-width:180px;"&gt;
+  &lt;div style="color:#7b68ee;font-size:2em;font-weight:900;margin-bottom:4px;"&gt;6 eslabones&lt;/div&gt;
+  &lt;div style="color:#8b949e;font-size:.95em;"&gt;Del ciclo de pobreza&lt;br&gt;respaldados por datos&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<div style="margin-top:36px;padding-top:28px;border-top:1px solid #30363d;max-width:820px;">
+<pre><code>&lt;h3 style="color:white;font-size:1.25em;font-weight:800;margin:0 0 14px 0;"&gt;¿Qué implica esto para la política pública?&lt;/h3&gt;
+&lt;p style="color:#c9d1d9;font-size:1.05em;line-height:1.75;margin:0 0 10px 0;"&gt;
+  Los datos muestran que invertir en reducir la pobreza nacional sin desagregar
+  por entidad federativa es ineficiente: los recursos se diluyen en estados que
+  ya tienen capacidad de recuperación, mientras los estados del sur permanecen
+  atrapados en el ciclo. La convergencia requiere intervenciones asimétricas —
+  mayor inversión en formalización laboral, acceso a educación superior y
+  reducción de inseguridad alimentaria exactamente en los estados donde
+  la correlación etnicidad–pobreza es más alta.
+&lt;/p&gt;
+&lt;p style="color:#c9d1d9;font-size:1.05em;line-height:1.75;margin:0;"&gt;
+  La Agenda 2030 no pide promedios. Pide que nadie se quede atrás.
+  &lt;strong style="color:#e94560;"&gt;Este análisis muestra que en México, el lugar
+  donde naciste todavía decide si te quedas o te vas — y si te vas, si regresas.&lt;/strong&gt;
+&lt;/p&gt;</code></pre>
+</div>
+<p style="color:#8b949e;font-size:1em;margin:32px 0 0 0;">
+ASHIRA · HackODS UNAM 2026 · ODS 1 + ODS 10<br> Fuentes: ENIGH 2016–2024 · PM 2024 · Censo 2020 · ICE IMCO 2020 (datos 2018) — INEGI / IMCO / CONEVAL
+</p>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

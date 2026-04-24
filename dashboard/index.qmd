@@ -28,7 +28,7 @@ execute:
   echo: false
   warning: false
   message: false
-jupyter: python313
+jupyter: python3
 ---
 
 
