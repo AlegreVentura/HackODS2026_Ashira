@@ -95,6 +95,22 @@
     } catch(e) {}
   }
 
+  function recolorShapes(el, isLight) {
+    try {
+      var shapes = el.layout && el.layout.shapes;
+      if (!shapes || !shapes.length) return;
+      var updated = shapes.map(function(s) {
+        if (!s.line || !s.line.color) return s;
+        return Object.assign({}, s, {
+          line: Object.assign({}, s.line, {
+            color: isLight ? 'rgba(60,100,150,0.40)' : 'rgba(170,205,240,0.65)'
+          })
+        });
+      });
+      Plotly.relayout(el, { shapes: updated });
+    } catch(e) {}
+  }
+
   function recolorPlotly(isLight) {
     if (typeof Plotly === 'undefined') return;
     var p = isLight ? LIGHT : DARK;
@@ -108,11 +124,12 @@
     };
 
     document.querySelectorAll('.js-plotly-plot').forEach(function(el) {
-      try { 
-        Plotly.relayout(el, update); 
-        Plotly.restyle(el, traceUpdate); // <--- Aquí inyectamos el cambio de tooltip
+      try {
+        Plotly.relayout(el, update);
+        Plotly.restyle(el, traceUpdate);
       } catch(e) {}
       recolorAnnotations(el, p);
+      recolorShapes(el, isLight);
     });
   }
 
