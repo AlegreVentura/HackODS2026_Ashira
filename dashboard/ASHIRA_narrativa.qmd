@@ -3,7 +3,6 @@ title: "ASHIRA"
 lang: es
 format:
   html:
-    include-after-body: ashira_theme_toggle.html
     theme: flatly
     toc: true
     toc-title: "El recorrido"
@@ -29,12 +28,6 @@ execute:
 jupyter: python3
 ---
 
-```{=html}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.lordicon.com/lordicon.js"></script>
-```
 
 <div class="ashira-hero" id="inicio">
 <div class="ashira-hero-inner">
@@ -54,74 +47,11 @@ jupyter: python3
 <div class="ashira-hero-date">Dashboard realizado en Abril de 2026</div>
 </div>
 
-```{=html}
 <div id="ashira-scroll-hint" class="ashira-scroll-hint" aria-hidden="true">
     <span class="scroll-hint-label">Desliza</span>
     <span class="scroll-hint-arrow">↓</span>
 </div>
-```
 
-<script>
-if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-window.addEventListener('load', () => { window.scrollTo(0, 0); });
-
-// Plotly resize + recolor cuando se cambia de tab
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('[data-bs-toggle="tab"], [role="tab"]').forEach(function(tab) {
-    tab.addEventListener('shown.bs.tab', function() {
-      window.dispatchEvent(new Event('resize'));
-      // Re-aplicar colores del tema activo al tab recién mostrado
-      setTimeout(function() {
-        if (typeof window.ashiraRecolorPlotly === 'function') {
-          window.ashiraRecolorPlotly(document.documentElement.classList.contains('light-mode'));
-        }
-      }, 80);
-    });
-  });
-
-    const hint = document.getElementById('ashira-scroll-hint');
-    if (!hint) return;
-
-    const IDLE_MS = 30000;
-    const BOTTOM_GAP_PX = 220;
-    let lastInteraction = Date.now();
-
-    function isNearBottom() {
-        return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - BOTTOM_GAP_PX;
-    }
-
-    function showHint() {
-        if (!isNearBottom()) {
-            hint.classList.add('is-visible');
-        }
-    }
-
-    function hideHint() {
-        hint.classList.remove('is-visible');
-    }
-
-    function markInteraction() {
-        lastInteraction = Date.now();
-        hideHint();
-    }
-
-    ['scroll', 'wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function(evt) {
-        window.addEventListener(evt, markInteraction, { passive: true });
-    });
-
-    window.addEventListener('scroll', function() {
-        if (isNearBottom()) hideHint();
-    }, { passive: true });
-
-    setInterval(function() {
-        if (document.hidden) return;
-        const idleFor = Date.now() - lastInteraction;
-        if (idleFor >= IDLE_MS && !isNearBottom()) {
-            showHint();
-        }
-    }, 1000);
-});
-</script>
 
 ```{python}
 #| echo: false
@@ -1336,25 +1266,21 @@ fig.update_layout(
 fig.show()
 ```
 
-```{=html}
 <p class="ashira-globe-intro" style="font-size:1.08em; line-height:1.78; margin:20px 0 14px 0;">La migración neta dice <em>cuántos se van</em>. El origen-destino dice <strong>adónde van</strong>. El patrón es consistente: el Sur alimenta al Norte y a los centros turísticos, los únicos mercados laborales que todavía absorben trabajadores sin credenciales universitarias.</p>
-```
 
 ```{python}
 #| label: fig-flujo-migratorio
-from IPython.display import HTML as _HTML
+#| fig-cap: "Flujos de migración interestatal 2015–2020 · Top 40 pares por volumen. Puntos: balance neto (azul = receptor, rojo = emisor).<br><span class='fig-source'>Fuente: Migración origen-destino, Censo de Población y Vivienda 2020, INEGI.</span>"
 
-# ── Centroids ───────────────────────────────────────────────────────────────
 def _ctr(g):
     c = g["coordinates"][0] if g["type"]=="Polygon" else max(g["coordinates"],key=lambda p:len(p[0]))[0]
     return sum(x[0] for x in c)/len(c), sum(x[1] for x in c)/len(c)
 _ctr_d = {f["properties"]["name"]: _ctr(f["geometry"]) for f in mx_geo["features"]}
 
-# ── INEGI → GeoJSON name ────────────────────────────────────────────────────
 _nmap = {n: n for n in _ctr_d}
 _nmap.update({"Coahuila de Zaragoza":"Coahuila","Michoacán de Ocampo":"Michoacán","Veracruz de Ignacio de la Llave":"Veracruz"})
 
-# ── Load & aggregate OD ─────────────────────────────────────────────────────
+# ── Cargar y agregar datos OD ───────────────────────────────────────────────
 _p = REPO/"datos"/"migracion_od"/"cpv2020_migracion_municipios_2015_2020.csv"
 _df = pd.read_csv(_p, encoding="utf-8", sep=";", skiprows=5)
 _df.columns = ["eo","mo","ed","md","pob"]
@@ -1369,185 +1295,87 @@ _od2["go"] = _od2["no"].map(_nmap); _od2["gd"] = _od2["nd"].map(_nmap)
 _od2 = (_od2.dropna(subset=["go","gd"])
         .pipe(lambda d: d[d["go"].isin(_ctr_d)&d["gd"].isin(_ctr_d)])
         .sort_values("pob",ascending=False).reset_index(drop=True))
-_top = _od2.head(80).copy()
+_top = _od2.head(40).copy()
 _top["q"] = pd.qcut(_top["pob"], q=5, labels=False)
 
-# ── Per-state balance ────────────────────────────────────────────────────────
-_net2,_tot2 = {},{}
+# Balance neto por estado
+_net2 = {}
 for _s in _ctr_d:
-    _i = _od2[_od2["gd"]==_s]["pob"].sum(); _o = _od2[_od2["go"]==_s]["pob"].sum()
-    _net2[_s]=int(_i-_o); _tot2[_s]=int(_i+_o)
-_mt2 = max(_tot2.values())
+    _i = _od2[_od2["gd"]==_s]["pob"].sum()
+    _o = _od2[_od2["go"]==_s]["pob"].sum()
+    _net2[_s] = int(_i - _o)
 
-# ── Serialize to JSON ────────────────────────────────────────────────────────
-import json as _json
-_arcs_js = _json.dumps([
-    {"srcLat":_ctr_d[r.go][1],"srcLng":_ctr_d[r.go][0],
-     "dstLat":_ctr_d[r.gd][1],"dstLng":_ctr_d[r.gd][0],
-     "pob":int(r.pob),"q":int(r.q),"src":r.go,"dst":r.gd}
-    for _,r in _top.iterrows()], separators=(",",":"))
-_nodes_js = _json.dumps([
-    {"state":s,"lat":_ctr_d[s][1],"lng":_ctr_d[s][0],"net":_net2[s],"tot":_tot2[s]}
-    for s in _ctr_d], separators=(",",":"))
-_geo_js = _json.dumps(mx_geo, separators=(",",":"))
+# ── Visualización Plotly Scattergeo ────────────────────────────────────────
+fig = go.Figure()
 
-_html_globe = f"""
-<div class="ashira-globe-card" style="font-family:Inter,sans-serif;border-radius:14px;overflow:hidden;margin:8px 0 4px;position:relative;">
-  <div class="ashira-globe-header" style="padding:22px 30px 10px;">
-    <h3 class="ashira-globe-title" style="margin:0 0 5px;font-family:Fraunces,serif;font-size:1.25em;font-weight:600;">
-      &#191;Ad&#243;nde va la gente que se va?
-    </h3>
-    <p class="ashira-globe-subtitle" style="margin:0;font-size:0.85em;">
-      Flujos interestatales reales 2015&#8211;2020 &nbsp;&#183;&nbsp; Top 80 de 992 pares &nbsp;&#183;&nbsp;
-      Arrastra para rotar &nbsp;&#183;&nbsp; Scroll para zoom &nbsp;&#183;&nbsp; Hover sobre arcos y estados
-    </p>
-  </div>
-  <div id="globe-flujo-ashira" style="width:100%;height:520px;background:#040c18;display:flex;align-items:center;justify-content:center;">
-    <span id="globe-loading-msg" style="color:#484f58;font-size:13px;font-family:Inter,sans-serif;">Cargando globo WebGL...</span>
-  </div>
-  <div class="ashira-globe-legend" style="position:absolute;bottom:0;left:0;right:0;z-index:20;background:rgba(4,12,24,0.92);padding:10px 22px 12px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;row-gap:8px;border-top:1px solid rgba(26,60,92,0.6);pointer-events:none;">
-    <span class="ashira-globe-legend-head" style="color:#3d5268;font-size:0.68em;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Puntos</span>
-    <span style="display:flex;align-items:center;gap:7px;">
-      <span style="width:11px;height:11px;border-radius:50%;background:#26c6da;display:inline-block;box-shadow:0 0 5px #26c6da99;flex-shrink:0;"></span>
-      <span class="ashira-globe-legend-text" style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Receptor neto de migraci&#243;n</span>
-    </span>
-    <span style="display:flex;align-items:center;gap:7px;">
-      <span style="width:11px;height:11px;border-radius:50%;background:#ff5252;display:inline-block;box-shadow:0 0 5px #ff525299;flex-shrink:0;"></span>
-      <span class="ashira-globe-legend-text" style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Emisor neto de migraci&#243;n</span>
-    </span>
-    <span style="width:1px;height:16px;background:rgba(26,60,92,0.8);display:inline-block;margin:0 2px;flex-shrink:0;"></span>
-    <span class="ashira-globe-legend-head" style="color:#3d5268;font-size:0.68em;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Arcos</span>
-    <span style="display:flex;align-items:center;gap:7px;">
-      <span style="width:22px;height:2px;background:linear-gradient(90deg,rgba(30,100,255,0.5),rgba(80,160,255,0.95));display:inline-block;border-radius:1px;flex-shrink:0;"></span>
-      <span class="ashira-globe-legend-text" style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Menor volumen</span>
-    </span>
-    <span style="display:flex;align-items:center;gap:7px;">
-      <span style="width:22px;height:2px;background:linear-gradient(90deg,rgba(255,60,0,0.6),rgba(255,100,30,0.98));display:inline-block;border-radius:1px;flex-shrink:0;"></span>
-      <span class="ashira-globe-legend-text" style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Mayor volumen</span>
-    </span>
-    <span class="ashira-globe-legend-src" style="margin-left:auto;color:#273848;font-size:0.68em;font-family:Inter,sans-serif;">INEGI &#183; Censo 2020</span>
-  </div>
-</div>
+arc_colors = [
+    "rgba(30,100,255,0.22)", "rgba(0,180,230,0.30)",
+    "rgba(0,210,185,0.38)", "rgba(255,165,0,0.46)", "rgba(255,60,0,0.56)"
+]
+arc_widths = [0.5, 0.8, 1.1, 1.5, 2.0]
 
-<!-- Paso 1: datos embebidos (sin dependencias externas) -->
-<script>
-var _gA={_arcs_js};
-var _gN={_nodes_js};
-var _gG={_geo_js};
-</script>
+for _, row in _top.iterrows():
+    if row.go not in _ctr_d or row.gd not in _ctr_d:
+        continue
+    o_lng, o_lat = _ctr_d[row.go]
+    d_lng, d_lat = _ctr_d[row.gd]
+    q = int(row.q)
+    fig.add_trace(go.Scattergeo(
+        lon=[o_lng, d_lng], lat=[o_lat, d_lat],
+        mode="lines",
+        line=dict(width=arc_widths[q], color=arc_colors[q]),
+        hovertemplate=(
+            f"<b style='color:#e6edf3'>{row.go} → {row.gd}</b><br>"
+            f"<span style='color:#a0aec0'>Personas: </span>"
+            f"<b style='color:#e6edf3'>{int(row.pob):,}</b>"
+            "<extra></extra>"
+        ),
+        showlegend=False,
+    ))
 
-<!-- Paso 2: inicialización (Globe.gl ya cargó desde el header del documento) -->
-<script>
-(function(){{
-  var _msg=document.getElementById('globe-loading-msg');
-  function _initGlobeAshira(){{
-  var el=document.getElementById('globe-flujo-ashira');
-  if(!el)return;
-  if(_msg){{_msg.style.display='none';}}
-  el.style.display='block';el.style.alignItems='';el.style.justifyContent='';
-  var _lm=document.documentElement.classList.contains('light-mode');
-  var ARC_COLORS=_lm?[
-    ['rgba(0,70,200,0.50)','rgba(40,120,255,0.90)'],
-    ['rgba(0,140,200,0.55)','rgba(0,190,235,0.92)'],
-    ['rgba(0,170,155,0.58)','rgba(0,210,185,0.95)'],
-    ['rgba(200,110,0,0.62)','rgba(245,165,10,0.95)'],
-    ['rgba(200,25,0,0.66)','rgba(245,65,10,0.98)']
-  ]:[
-    ['rgba(30,100,255,0.12)','rgba(80,160,255,0.50)'],
-    ['rgba(0,180,230,0.15)','rgba(0,220,255,0.58)'],
-    ['rgba(0,230,200,0.18)','rgba(0,255,220,0.66)'],
-    ['rgba(255,165,0,0.20)','rgba(255,210,40,0.72)'],
-    ['rgba(255,60,0,0.24)','rgba(255,100,30,0.82)']
-  ];
-  var maxTot=Math.max.apply(null,_gN.map(function(n){{return n.tot;}}));
-  try{{
-    var g=Globe()
-      .globeImageUrl('')
-      .backgroundColor(_lm?'#dde6f0':'#040c18')
-      .showAtmosphere(true)
-      .atmosphereColor(_lm?'#6aaad4':'#0a2040')
-      .atmosphereAltitude(0.18)
-      .polygonsData(_gG.features)
-      .polygonCapColor(function(){{return _lm?'#bfd0e0':'#0c1825';}})
-      .polygonSideColor(function(){{return _lm?'#aec2d4':'#081218';}})
-      .polygonStrokeColor(function(){{return _lm?'#5a90b8':'#1a3a5c';}})
-      .polygonAltitude(0.008)
-      .arcsData(_gA)
-      .arcStartLat(function(d){{return d.srcLat;}})
-      .arcStartLng(function(d){{return d.srcLng;}})
-      .arcEndLat(function(d){{return d.dstLat;}})
-      .arcEndLng(function(d){{return d.dstLng;}})
-      .arcColor(function(d){{return ARC_COLORS[d.q];}})
-      .arcAltitude(function(d){{return 0.03+d.q*0.06;}})
-      .arcStroke(function(d){{return 0.08+d.q*0.06;}})
-      .arcDashLength(0.14)
-      .arcDashGap(0.86)
-      .arcDashInitialGap(function(d){{return Math.random();}})
-      .arcDashAnimateTime(function(d){{return 2200+(4-d.q)*1600;}})
-      .arcLabel(function(d){{
-        return '<div style="background:rgba(4,12,24,0.96);padding:9px 13px;border-radius:8px;font-family:Inter,sans-serif;border:1px solid rgba(255,255,255,0.12);max-width:220px">'
-          +'<b style="font-size:13px;color:#e6edf3">'+d.src+' → '+d.dst+'</b><br>'
-          +'<span style="color:#8b949e;font-size:11px">Personas: <b style="color:#c9d1d9">'+d.pob.toLocaleString('es-MX')+'</b></span>'
-          +'</div>';
-      }})
-      .pointsData(_gN)
-      .pointLat(function(d){{return d.lat;}})
-      .pointLng(function(d){{return d.lng;}})
-      .pointColor(function(d){{return d.net>0?'#26c6da':'#ff5252';}})
-      .pointAltitude(0.03)
-      .pointRadius(function(d){{return 0.10+0.28*Math.pow(d.tot/maxTot,0.38);}})
-      .pointLabel(function(d){{
-        var sign=d.net>0?'+':'';
-        var col=d.net>0?'#26c6da':'#ff5252';
-        return '<div style="background:rgba(4,12,24,0.96);padding:9px 13px;border-radius:8px;font-family:Inter,sans-serif;border:1px solid rgba(255,255,255,0.12)">'
-          +'<b style="font-size:13px;color:#e6edf3">'+d.state+'</b><br>'
-          +'<span style="color:#8b949e;font-size:11px">Flujo total: <b style="color:#c9d1d9">'+d.tot.toLocaleString('es-MX')+'</b></span><br>'
-          +'<span style="color:#8b949e;font-size:11px">Balance: <b style="color:'+col+'">'+sign+d.net.toLocaleString('es-MX')+'</b></span>'
-          +'</div>';
-      }})
-      (el);
-    g.pointOfView({{lat:16,lng:-100,altitude:0.82}},0);
-    g.controls().enableZoom=true;
-    g.controls().autoRotate=false;
-    g.controls().enablePan=false;
-    g.controls().minPolarAngle=Math.PI*0.18;
-    g.controls().maxPolarAngle=Math.PI*0.82;
-    var _oT=Date.now(),_oA=true,_oPer=26000;
-    var _cLng=-100,_lRng=1,_rRng=20,_lF=_lRng/(_lRng+_rRng);
-    function _osc(){{
-      if(_oA){{
-        var _tN=((Date.now()-_oT)%_oPer)/_oPer,_ph,_lng;
-        if(_tN<_lF){{_ph=_tN/_lF*Math.PI;_lng=_cLng-_lRng*Math.sin(_ph);}}
-        else{{_ph=(_tN-_lF)/(1-_lF)*Math.PI;_lng=_cLng+_rRng*Math.sin(_ph);}}
-        g.pointOfView({{lat:16,lng:_lng,altitude:0.82}});
-      }}
-      requestAnimationFrame(_osc);
-    }}
-    g.controls().addEventListener('start',function(){{_oA=false;}});
-    g.controls().addEventListener('end',function(){{setTimeout(function(){{_oT=Date.now();_oA=true;}},2500);}});
-    _osc();
-  }}catch(e){{
-    el.innerHTML='<p style="color:#ff5252;padding:20px;font-family:Inter">Error al inicializar el globo: '+e.message+'</p>';
-  }}
-  }}
-  if(window.Globe){{
-    _initGlobeAshira();
-  }}else{{
-    var _s=document.createElement('script');
-    _s.src='globe.gl.min.js';
-    _s.onload=_initGlobeAshira;
-    _s.onerror=function(){{
-      if(_msg){{_msg.style.color='#ff5252';_msg.textContent='Error: No se pudo cargar globe.gl.min.js';}}
-    }};
-    document.head.appendChild(_s);
-  }}
-}})();
-</script>
-"""
-_HTML(_html_globe)
+_max_abs = max(abs(v) for v in _net2.values()) if _net2 else 1
+for state, (lng, lat) in _ctr_d.items():
+    net = _net2.get(state, 0)
+    color = "#26c6da" if net > 0 else "#ff5252"
+    size = 5 + 12 * (abs(net) / _max_abs) ** 0.45
+    sign = "+" if net > 0 else ""
+    fig.add_trace(go.Scattergeo(
+        lon=[lng], lat=[lat], mode="markers",
+        marker=dict(size=size, color=color, opacity=0.88,
+                    line=dict(width=0.8, color="rgba(255,255,255,0.35)")),
+        hovertemplate=(
+            f"<b style='font-size:14px;color:#e6edf3'>{state}</b><br>"
+            f"<span style='color:#a0aec0'>Balance: </span>"
+            f"<b style='color:{color}'>{sign}{net:,}</b>"
+            "<extra></extra>"
+        ),
+        showlegend=False,
+    ))
+
+fig.update_geos(
+    visible=False, bgcolor="rgba(0,0,0,0)",
+    projection_type="mercator", showframe=False, showcoastlines=False,
+    lataxis_range=[13.5, 33.5], lonaxis_range=[-119.0, -85.5],
+)
+fig.update_layout(
+    height=580,
+    margin=dict(l=0, r=0, t=90, b=0),
+    title=dict(
+        text=(
+            "¿Adónde va la gente que se va? · Flujos interestatales 2015–2020<br>"
+            "<span style='color:#5a6e84;font-size:13px;'>"
+            "Top 40 pares · "
+            "<span style='color:#26c6da;'>●</span> Receptor neto &nbsp; "
+            "<span style='color:#ff5252;'>●</span> Emisor neto · "
+            "Arco más rojo = mayor volumen</span>"
+        ),
+        y=0.97, yanchor="top",
+    ),
+    geo=dict(bgcolor="rgba(0,0,0,0)", lakecolor="rgba(0,0,0,0)", landcolor="rgba(0,0,0,0)"),
+)
+fig.show()
 ```
 
-```{=html}
 <div class="ashira-paradoja">
 <h3>¿Por qué bajan los números pero no la pobreza?</h3>
 <p style="font-size:1.05em; line-height:1.75; margin:0 0 16px 0;">Los estados del Sur cambian porque pierden gente, no porque ganen oportunidades. Cuando alguien migra buscando trabajo, su pobreza simplemente se muda de casa.</p>
@@ -1556,7 +1384,6 @@ _HTML(_html_globe)
 <p style="font-size:1.03em; line-height:1.72; margin:0;"><strong>La verdadera meta:</strong> No basta con "limpiar" las cifras de un estado; hay que generar riqueza donde la gente vive.</p>
 <p class="paradoja-quote">La estadística mide territorios. La dignidad se juega en personas.</p>
 </div>
-```
 
 ## El panorama completo
 
@@ -1622,7 +1449,6 @@ fig.show()
 
 ## El ciclo que se perpetúa
 
-```{=html}
 <div class="ashira-ciclo">
 <p class="ashira-ciclo-sub">Cada paso lleva al siguiente y el último vuelve al primero. Por eso la pobreza no se rompe sola.</p>
 <div class="ashira-ciclo-grid ciclo-circle">
@@ -1639,13 +1465,11 @@ fig.show()
     <div class="ciclo-core">Pobreza estructural</div>
 </div>
 </div>
-```
 
 ---
 
 ## ¿Qué sigue?
 
-```{=html}
 <div class="que-sigue-intro">
 <h3>Esto no es inevitable</h3>
 <p style="font-size:1.05em; line-height:1.75; margin:0;">En los últimos 20 años, Aguascalientes y Querétaro lograron reducir su pobreza y subir su ingreso mediano. Brasil redujo la pobreza extrema un 58% entre 2003 y 2014 con Bolsa Família. Colombia redujo la pobreza multidimensional de 30% a 18% con Familias en Acción. <strong style="color:#38bdf8;">La convergencia es posible cuando las intervenciones son focalizadas, sostenidas y medidas públicamente.</strong></p>
@@ -1654,25 +1478,25 @@ fig.show()
 <div class="que-sigue-grid">
 
 <div class="que-sigue-card">
-<span class="que-sigue-card-icon"><lord-icon src="https://cdn.lordicon.com/bhfjfgqz.json" trigger="hover" colors="primary:#e94560,secondary:#38bdf8" style="width:56px;height:56px"></lord-icon></span>
+<span class="que-sigue-card-icon"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#e94560" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
 <div class="que-sigue-card-title">Si eres ciudadano</div>
 <p>Consulta <a href="https://datos.gob.mx" target="_blank" rel="noopener">Datos Abiertos</a>, <a href="https://imco.org.mx" target="_blank" rel="noopener">IMCO</a> y <a href="https://www.mejoratuescuela.org" target="_blank" rel="noopener">MejoraTuEscuela</a>. Escríbele a tu diputado federal sobre el presupuesto de transferencias sociales. Exige metas estatales públicas.</p>
 </div>
 
 <div class="que-sigue-card">
-<span class="que-sigue-card-icon"><lord-icon src="https://cdn.lordicon.com/wjyqkiew.json" trigger="hover" colors="primary:#e94560,secondary:#38bdf8" style="width:56px;height:56px"></lord-icon></span>
+<span class="que-sigue-card-icon"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#e94560" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg></span>
 <div class="que-sigue-card-title">Si eres investigador o estudiante</div>
 <p>Replica este análisis a nivel municipal. Explora el efecto intergeneracional de las remesas. El código y datos están disponibles en <a href="https://github.com" target="_blank" rel="noopener">GitHub del equipo ASHIRA</a> bajo CC BY 4.0.</p>
 </div>
 
 <div class="que-sigue-card">
-<span class="que-sigue-card-icon"><lord-icon src="https://cdn.lordicon.com/bduzytli.json" trigger="hover" colors="primary:#e94560,secondary:#38bdf8" style="width:56px;height:56px"></lord-icon></span>
+<span class="que-sigue-card-icon"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#e94560" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="17"/><line x1="9.5" y1="14.5" x2="14.5" y2="14.5"/></svg></span>
 <div class="que-sigue-card-title">Si eres funcionario público</div>
 <p>Adopta metas estatales focalizadas. Diseña mecanismos de asignación asimétrica del gasto. Reporta trimestralmente los indicadores de convergencia Norte–Sur para cada entidad.</p>
 </div>
 
 <div class="que-sigue-card">
-<span class="que-sigue-card-icon"><lord-icon src="https://cdn.lordicon.com/jdgfsfzr.json" trigger="hover" colors="primary:#e94560,secondary:#38bdf8" style="width:56px;height:56px"></lord-icon></span>
+<span class="que-sigue-card-icon"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#e94560" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="6" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="6" y1="16" x2="12" y2="16"/></svg></span>
 <div class="que-sigue-card-title">Si eres periodista o comunicador</div>
 <p>Descarga los gráficos en PNG y los datos en CSV desde nuestro repositorio. Los hallazgos clave están listos para citar. Cubre la brecha Norte–Sur como la historia estructural que es, no como dato puntual.</p>
 </div>
@@ -1702,13 +1526,11 @@ fig.show()
 <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://ashira.github.io" target="_blank" rel="noopener" class="cta-share-btn linkedin"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Compartir en LinkedIn</a>
 <a href="#inicio" class="cta-share-btn link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l7-7 7 7"/><path d="M12 5v14"/></svg>Volver al inicio</a>
 </div>
-```
 
 ---
 
 ## Hallazgos clave
 
-```{=html}
 <div class="ashira-closing">
 <div class="closing-eyebrow">Lo que descubrimos</div>
 <h2 class="closing-title">El talento está en todo México.<br><span class="closing-title-accent">Lo que no está distribuido son las oportunidades.</span></h2>
@@ -1740,4 +1562,3 @@ fig.show()
     </div>
   </div>
 </footer>
-```

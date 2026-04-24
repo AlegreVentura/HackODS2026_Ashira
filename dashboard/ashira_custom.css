@@ -3,6 +3,8 @@
    Diseño moderno · dark · editorial · interactivo
    ═══════════════════════════════════════════════════════════ */
 
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap');
+
 /* ── 0. BASE ─────────────────────────────────────────────── */
 :root {
   /* ── Dark mode (default) ── */
@@ -103,43 +105,7 @@
 }
 
 /* ── THEME TOGGLE BUTTON ─────────────────────────────────── */
-#ashira-theme-toggle {
-  position: fixed;
-  top: 18px;
-  right: 20px;
-  z-index: 9999;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1.5px solid var(--border);
-  background: var(--bg-card);
-  color: var(--text-2);
-  font-size: 1.15rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-sm);
-  transition: background 0.25s ease, border-color 0.25s ease,
-              transform 0.2s ease, box-shadow 0.2s ease;
-  outline: none;
-  backdrop-filter: blur(8px);
-}
-
-#ashira-theme-toggle:hover {
-  border-color: var(--accent);
-  transform: scale(1.1) rotate(12deg);
-  box-shadow: 0 4px 16px var(--accent-glow-soft);
-}
-
-#ashira-theme-toggle:active {
-  transform: scale(0.95);
-}
-
-#ashira-theme-toggle .toggle-icon-dark  { display: block; }
-#ashira-theme-toggle .toggle-icon-light { display: none; }
-:root.light-mode #ashira-theme-toggle .toggle-icon-dark  { display: none; }
-:root.light-mode #ashira-theme-toggle .toggle-icon-light { display: block; }
+/* (removido — se usa el toggle nativo de Quarto si se activa) */
 
 /* ── SMOOTH TRANSITION ON THEME SWITCH ───────────────────── */
 *, *::before, *::after {
@@ -1953,15 +1919,7 @@ nav a,
 }
 
 /* ── 16. THEME TOGGLE — RESPONSIVE ──────────────────────── */
-@media (max-width: 900px) {
-  #ashira-theme-toggle {
-    top: 12px;
-    right: 14px;
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-}
+/* (removido — toggle externo eliminado) */
 
 /* ── 17. LIGHT MODE — SELECTION COLOR ───────────────────── */
 :root.light-mode ::selection {
@@ -1974,10 +1932,8 @@ nav a,
 :root.light-mode ::-webkit-scrollbar-thumb { background: var(--border); }
 :root.light-mode ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-/* ── 19. THEME TOGGLE JS INJECTION ──────────────────────── */
-/* NOTE: Add this <script> block to your .qmd file (e.g. in a raw HTML block) 
-   or in the _quarto.yml under include-in-header to inject the button and logic.
-   See ashira_theme_toggle.html for the ready-to-use snippet. */
+/* ── 19. THEME TOGGLE ────────────────────────────────────── */
+/* Toggle removido. Ver ashira_theme_toggle.html para referencia. */
 /* ── 20. NARRATIVE INSIGHT BOXES (theme-aware) ──────────── */
 /* Reemplaza los div con background hardcodeado en el .qmd   */
 .ashira-insight {
