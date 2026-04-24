@@ -221,15 +221,51 @@ El equipo utilizó herramientas de IA como acelerador técnico para corrección 
 
 <div align="center">
 
-**Equipo ASHIRA · HackODS UNAM 2026**
+**ASHIRA · HackODS UNAM 2026 · ODS 1 y ODS 10**
 
-| | Integrante | Origen | Contribución |
-|:---:|---|---|---|
-| | Melisa Asharet Arano Bejarano | Veracruz | Análisis de ingreso y desigualdad territorial (ENIGH 2016–2024) |
-| | Roberto Jhoshua Alegre Ventura | Guerrero | Análisis de pobreza multidimensional por estado (PM CONEVAL 2024) |
-| | Israel Martínez Jiménez | Estado de México | Análisis de estructura territorial, etnicidad y competitividad (Censo 2020 e ICE IMCO) |
+<br>
 
-ODS 1 · ODS 10 · Licencia [CC BY-SA 4.0](LICENSE)
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <img width="80" height="80" src="https://ui-avatars.com/api/?name=Melisa+Arano&background=e94560&color=fff&size=80&bold=true&rounded=true" alt="Melisa"/>
+      <br><br>
+      <b>Melisa Asharet Arano Bejarano</b>
+      <br>
+      <sub>Veracruz</sub>
+      <br><br>
+      Análisis de ingreso y desigualdad territorial
+      <br>
+      <sub>ENIGH 2016–2024</sub>
+    </td>
+    <td align="center" width="33%">
+      <img width="80" height="80" src="https://ui-avatars.com/api/?name=Roberto+Alegre&background=f5a623&color=fff&size=80&bold=true&rounded=true" alt="Roberto"/>
+      <br><br>
+      <b>Roberto Jhoshua Alegre Ventura</b>
+      <br>
+      <sub>Guerrero</sub>
+      <br><br>
+      Análisis de pobreza multidimensional por estado
+      <br>
+      <sub>PM CONEVAL 2024</sub>
+    </td>
+    <td align="center" width="33%">
+      <img width="80" height="80" src="https://ui-avatars.com/api/?name=Israel+Martinez&background=38bdf8&color=fff&size=80&bold=true&rounded=true" alt="Israel"/>
+      <br><br>
+      <b>Israel Martínez Jiménez</b>
+      <br>
+      <sub>Estado de México</sub>
+      <br><br>
+      Estructura territorial, etnicidad y competitividad
+      <br>
+      <sub>Censo 2020 · ICE IMCO</sub>
+    </td>
+  </tr>
+</table>
+
+<br>
+
+[![CC BY-SA 4.0](https://img.shields.io/badge/Licencia-CC%20BY--SA%204.0-lightgrey.svg)](LICENSE)
 
 *Fuentes: INEGI · CONEVAL · IMCO · Censo 2020 · Migración OD — todas oficiales y de acceso público*
 
