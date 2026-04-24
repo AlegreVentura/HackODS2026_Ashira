@@ -813,6 +813,7 @@ p.caption {
 .callout-tip .callout-title {
   color: var(--teal) !important;
   font-weight: 800 !important;
+  font-size: 1.05rem !important;
 }
 
 .callout-body p {

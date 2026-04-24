@@ -627,7 +627,7 @@ fig.show()
 ```
 
 ::: {.callout-important}
-## ~56 puntos porcentuales separan a Chiapas de Baja California
+### ~56 puntos porcentuales separan a Chiapas de Baja California
 Hablar de un "promedio nacional" en México es un error estadístico que oculta realidades opuestas: la distancia entre Chiapas y Baja California es mayor a la diferencia entre México y Alemania. Los niveles de pobreza en el Sur son inaceptables bajo estándares de la OCDE, el grupo de los países más desarrollados del mundo.
 :::
 
@@ -749,12 +749,12 @@ fig.show()
 ```
 
 ::: {.callout-warning}
-## La brecha se duplica: 8 años sin convergencia
+### La brecha se duplica: 8 años sin convergencia
 Aunque el ingreso subió en ambas regiones, la distancia en pesos entre el Norte y el Sur se disparó. En 2016, la diferencia era de $1,400 mensuales; para 2024, esa brecha creció a $3,300. El Norte no solo gana más, sino que se aleja cada vez más rápido, dejando al Sur con una recuperación mucho más lenta tras la pandemia.
 :::
 
 ::: {.callout-tip}
-## ¿Mejora real o alivio temporal?
+### ¿Mejora real o alivio temporal?
 Entre 2020 y 2022, la pobreza en el Sur bajó, pero la estructura productiva no cambió. Este avance se sostiene sobre tres pilares frágiles: programas sociales, remesas y aumentos al salario mínimo.
 
 **El problema:** La brecha Norte–Sur sigue intacta porque no se está creando riqueza local, solo se está inyectando dinero externo.
@@ -1018,7 +1018,7 @@ fig.show()
 :::
 
 ::: {.callout-important}
-## ¿Qué nos dicen estos datos?
+### ¿Qué nos dicen estos datos?
 Los gráficos revelan una verdad incómoda: la pobreza en México está ligada a quiénes somos y dónde vivimos.
 
 **Identidad:** Los estados con más raíces indígenas son sistemáticamente los más castigados por la pobreza.
