@@ -121,7 +121,7 @@ strong, b { font-weight: 600; }
     radial-gradient(ellipse at 80% 100%, rgba(192,132,252,0.08), transparent 60%),
     linear-gradient(155deg, #060910 0%, #0f0d1e 40%, #0d1525 100%);
   border-left: 6px solid var(--accent);
-  padding: 28px 40px 40px 40px;
+  padding: 16px 40px 24px 40px;
   margin: 0;
   position: relative;
   overflow: hidden;
@@ -191,7 +191,7 @@ strong, b { font-weight: 600; }
   color: var(--text-1) !important;
   line-height: 1.08 !important;
   letter-spacing: -0.02em;
-  margin: 0 auto 24px auto !important;
+  margin: 0 auto 14px auto !important;
   max-width: 960px;
   text-wrap: balance;
   text-shadow: 0 2px 24px rgba(0,0,0,0.15);
@@ -395,7 +395,7 @@ strong, b { font-weight: 600; }
   font-size: 1.12rem !important;
   color: var(--text-3) !important;
   line-height: 1.6 !important;
-  margin: 0 auto 32px auto !important;
+  margin: 0 auto 18px auto !important;
   max-width: 680px;
   letter-spacing: 0.01em;
   font-weight: 500;
@@ -406,9 +406,9 @@ strong, b { font-weight: 600; }
   border: none;
   border-left: 3px solid var(--accent);
   border-radius: 0;
-  padding: 24px 0 24px 28px;
+  padding: 14px 0 14px 28px;
   max-width: 760px;
-  margin: 0 auto 40px auto;
+  margin: 0 auto 22px auto;
   text-align: left;
   position: relative;
 }
@@ -1265,6 +1265,11 @@ nav a,
 
 
 
+@keyframes pillarEnter {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .closing-pillars {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1275,6 +1280,8 @@ nav a,
   background: linear-gradient(160deg, rgba(22,27,34,0.9), rgba(15,13,30,0.85));
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: 14px;
+  text-align: center;
+  animation: pillarEnter 0.55s ease-out both;
   padding: 26px 22px 24px;
   position: relative;
   overflow: hidden;
@@ -1290,9 +1297,32 @@ nav a,
   border-radius: 14px 14px 0 0;
 }
 
+.closing-pillars .pillar:nth-child(1) { animation-delay: 0.05s; }
+.closing-pillars .pillar:nth-child(2) { animation-delay: 0.15s; }
+.closing-pillars .pillar:nth-child(3) { animation-delay: 0.25s; }
+.closing-pillars .pillar:nth-child(4) { animation-delay: 0.35s; }
+
 .pillar:hover {
   transform: translateY(-5px);
   box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+}
+
+/* Pandoc ::: añade <p> extra — resetear márgenes y heredar estilos */
+.pillar-num > p, .pillar-head > p {
+  margin: 0 !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+  letter-spacing: inherit !important;
+  line-height: inherit !important;
+}
+.pillar-body > p {
+  margin: 0 !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  color: inherit !important;
+  line-height: inherit !important;
 }
 
 .pillar-num {
@@ -1356,7 +1386,8 @@ nav a,
   position: relative;
 }
 
-.closing-policy-title {
+.closing-policy-title h3,
+h3.closing-policy-title {
   font-family: var(--font-body) !important;
   color: var(--gold) !important;
   font-size: 0.72rem !important;
@@ -1364,6 +1395,17 @@ nav a,
   text-transform: uppercase;
   letter-spacing: 0.22em;
   margin: 0 0 18px 0 !important;
+}
+/* Evita que text-transform cascadee a párrafos cuando Pandoc
+   aplica .closing-policy-title al <section> contenedor */
+.closing-policy-title p,
+.closing-policy-title strong,
+.closing-policy-title em {
+  text-transform: none !important;
+  font-size: 0.97rem !important;
+  font-weight: inherit;
+  font-style: inherit;
+  letter-spacing: normal;
 }
 .closing-policy p {
   font-family: var(--font-body);
