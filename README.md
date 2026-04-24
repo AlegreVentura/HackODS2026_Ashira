@@ -228,7 +228,7 @@ El equipo utilizó herramientas de IA como acelerador técnico para corrección 
 <table>
   <tr>
     <td align="center" width="33%">
-      <img width="80" height="80" src="https://ui-avatars.com/api/?name=Melisa+Arano&background=e94560&color=fff&size=80&bold=true&rounded=true" alt="Melisa"/>
+      <img width="120" height="120" style="border-radius:50%;object-fit:cover;" src="docs/team/melisa.jpeg" alt="Melisa Asharet Arano Bejarano"/>
       <br><br>
       <b>Melisa Asharet Arano Bejarano</b>
       <br>
@@ -239,7 +239,7 @@ El equipo utilizó herramientas de IA como acelerador técnico para corrección 
       <sub>ENIGH 2016–2024</sub>
     </td>
     <td align="center" width="33%">
-      <img width="80" height="80" src="https://ui-avatars.com/api/?name=Roberto+Alegre&background=f5a623&color=fff&size=80&bold=true&rounded=true" alt="Roberto"/>
+      <img width="120" height="120" style="border-radius:50%;object-fit:cover;" src="docs/team/jhoshua.jpeg" alt="Roberto Jhoshua Alegre Ventura"/>
       <br><br>
       <b>Roberto Jhoshua Alegre Ventura</b>
       <br>
@@ -250,7 +250,7 @@ El equipo utilizó herramientas de IA como acelerador técnico para corrección 
       <sub>PM CONEVAL 2024</sub>
     </td>
     <td align="center" width="33%">
-      <img width="80" height="80" src="https://ui-avatars.com/api/?name=Israel+Martinez&background=38bdf8&color=fff&size=80&bold=true&rounded=true" alt="Israel"/>
+      <img width="120" height="120" style="border-radius:50%;object-fit:cover;" src="docs/team/israel.jpeg" alt="Israel Martínez Jiménez"/>
       <br><br>
       <b>Israel Martínez Jiménez</b>
       <br>
