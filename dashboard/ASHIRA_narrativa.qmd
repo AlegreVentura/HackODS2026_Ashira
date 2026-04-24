@@ -1541,18 +1541,37 @@ Pobreza estructural
 </div>
 
 ::: {.ashira-footer}
+
 ::: {.ashira-footer-inner}
 
 ::: {.ashira-footer-brand}
 [ASHIRA]{.ashira-footer-logo}
-[HackODS UNAM 2026 · ODS 1 y ODS 10]{.ashira-footer-tag}
+[Análisis de pobreza y migración en México]{.ashira-footer-desc}
+[HackODS · UNAM · 2026]{.ashira-footer-tag}
+:::
+
+::: {.ashira-footer-team}
+[Equipo]{.ashira-footer-label}
+[Melisa Arano]{.footer-member}
+[Roberto Alegre]{.footer-member}
+[Israel Martínez]{.footer-member}
+<a href="mailto:asharet.b@gmail.com" class="footer-contact">asharet.b@gmail.com</a>
 :::
 
 ::: {.ashira-footer-sources}
 [Fuentes]{.ashira-footer-label}
-[ENIGH 2016–2024 · PM CONEVAL 2024 · Censo 2020 · ICE IMCO 2020 · Migración OD Censo 2020]{.source-line}
-[INEGI · CONEVAL · IMCO · Licencia CC BY-SA 4.0]{.source-line}
+[ENIGH 2016–2024]{.source-line}
+[Pobreza Multidimensional CONEVAL 2024]{.source-line}
+[Censo de Población y Vivienda 2020]{.source-line}
+[ICE IMCO 2020 · Migración OD INEGI]{.source-line}
 :::
 
 :::
+
+::: {.ashira-footer-bottom}
+[ODS 1 · Sin pobreza]{.footer-ods-pill}
+[ODS 10 · Reducción de desigualdades]{.footer-ods-pill}
+[· CC BY-SA 4.0 · Datos públicos oficiales ·]{.footer-bottom-text}
+:::
+
 :::
