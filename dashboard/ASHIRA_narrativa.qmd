@@ -455,7 +455,6 @@ fig.update_layout(
     ),
     title=dict(
         text="Porcentaje de pobreza multidimensional por estado · México 2024",
-        font_size=16,
     ),
     geo=dict(bgcolor="rgba(0,0,0,0)", lakecolor="rgba(0,0,0,0)", landcolor="rgba(0,0,0,0)"),
 )
@@ -796,7 +795,7 @@ fig.update_layout(
     height=560,
     margin=dict(l=90, r=40, t=160, b=70),
     title=dict(
-        text="Ocho años de datos. La distancia no cierra.<br><span style='color:#8b949e;'>Por cada paso que da el Sur, el Norte da dos.</span>",
+        text="Ocho años de datos. La distancia no cierra.<br><span style='color:#5a6e84;'>Por cada paso que da el Sur, el Norte da dos.</span>",
         y=0.97, yanchor="top",
     ),
     legend=dict(

@@ -708,7 +708,7 @@ nav[role="doc-toc"] ul li > a,
 nav[role="doc-toc"] ul li > a::before,
 #TOC ul li > a::before {
   content: counter(toc-item, decimal-leading-zero);
-  color: var(--text-5);
+  color: var(--text-4);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.05em;
