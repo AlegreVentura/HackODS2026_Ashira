@@ -1,16 +1,6 @@
-# Archivos de datos grandes (descargar según instrucciones en datos/README.md)
-*.xlsx
-*.csv
+# Archivos temporales o generados
 *.zip
 *.pdf
-
-# Excepción: shapefile de estados de México (180 KB — sí se commitea)
-!datos/shapefiles/*.geojson
-
-# Excepciones: metadatos pequeños que sí se commitean
-!datos/README.md
-!scripts/README.md
-!dashboard/README.md
 
 # Python
 __pycache__/
@@ -27,6 +17,9 @@ __pycache__/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Carpetas de exploración local (datos crudos sin procesar)
+exploracion_datos/
 
 # Carpetas de salida generadas
 imagenes/

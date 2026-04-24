@@ -69,6 +69,39 @@
   --mode-icon: '🌙';
 }
 
+/* ── GLOBE CARD & HEADER ─────────────────────────────────── */
+.ashira-globe-card   { background: #040c18; }
+.ashira-globe-header { background: #040c18; }
+.ashira-globe-title  { color: #c9d1d9; }
+.ashira-globe-subtitle { color: #8b949e; }
+.ashira-globe-intro  { color: var(--text-2); }
+
+:root.light-mode .ashira-globe-card   { background: #dde6f0; }
+:root.light-mode .ashira-globe-header { background: #dde6f0; }
+:root.light-mode .ashira-globe-title  { color: #1e3a5f; }
+:root.light-mode .ashira-globe-subtitle { color: #3d5278; }
+
+/* ── GLOBE LIGHT MODE ────────────────────────────────────── */
+:root.light-mode #globe-flujo-ashira {
+  background: #dde6f0 !important;
+}
+:root.light-mode #globe-loading-msg {
+  color: #5a7a9a !important;
+}
+:root.light-mode .ashira-globe-legend {
+  background: rgba(220,232,245,0.94) !important;
+  border-top-color: rgba(80,130,180,0.35) !important;
+}
+:root.light-mode .ashira-globe-legend-head {
+  color: #3a5278 !important;
+}
+:root.light-mode .ashira-globe-legend-text {
+  color: #254060 !important;
+}
+:root.light-mode .ashira-globe-legend-src {
+  color: #5a7898 !important;
+}
+
 /* ── THEME TOGGLE BUTTON ─────────────────────────────────── */
 #ashira-theme-toggle {
   position: fixed;

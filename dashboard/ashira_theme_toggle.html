@@ -26,8 +26,8 @@
     plot:           '#ffffff',
     font:           '#3d5068',
     title:          '#111318',
-    grid:           '#dce6f0',
-    zero:           '#c8d5e8',
+    grid:           '#eaeff6',
+    zero:           '#d8e3ee',
     hover_bg:       '#ffffff',
     hover_fg:       '#111318',
     hover_border:   '#c8d5e8',
@@ -135,9 +135,7 @@
   function init() {
     var saved = null;
     try { saved = localStorage.getItem('ashira-theme'); } catch(e) {}
-    var preferLight = saved
-      ? (saved === 'light')
-      : !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
+    var preferLight = saved ? (saved === 'light') : true;
 
     if (preferLight) document.documentElement.classList.add('light-mode');
 

@@ -4,7 +4,7 @@ lang: es
 format:
   html:
     include-after-body: ashira_theme_toggle.html
-    theme: darkly
+    theme: flatly
     toc: true
     toc-title: "El recorrido"
     toc-depth: 2
@@ -1335,7 +1335,7 @@ fig.show()
 ```
 
 ```{=html}
-<p style="color:#c9d1d9; font-size:1.08em; line-height:1.78; margin:20px 0 14px 0;">La migración neta dice <em>cuántos se van</em>. El origen-destino dice <strong>adónde van</strong>. El patrón es consistente: el Sur alimenta al Norte y a los centros turísticos, los únicos mercados laborales que todavía absorben trabajadores sin credenciales universitarias.</p>
+<p class="ashira-globe-intro" style="font-size:1.08em; line-height:1.78; margin:20px 0 14px 0;">La migración neta dice <em>cuántos se van</em>. El origen-destino dice <strong>adónde van</strong>. El patrón es consistente: el Sur alimenta al Norte y a los centros turísticos, los únicos mercados laborales que todavía absorben trabajadores sin credenciales universitarias.</p>
 ```
 
 ```{python}
@@ -1390,12 +1390,12 @@ _nodes_js = _json.dumps([
 _geo_js = _json.dumps(mx_geo, separators=(",",":"))
 
 _html_globe = f"""
-<div style="font-family:Inter,sans-serif;border-radius:14px;overflow:hidden;margin:8px 0 4px;background:#000;position:relative;">
-  <div style="padding:22px 30px 10px;background:#000;">
-    <h3 style="color:#c9d1d9;margin:0 0 5px;font-family:Fraunces,serif;font-size:1.25em;font-weight:600;">
+<div class="ashira-globe-card" style="font-family:Inter,sans-serif;border-radius:14px;overflow:hidden;margin:8px 0 4px;position:relative;">
+  <div class="ashira-globe-header" style="padding:22px 30px 10px;">
+    <h3 class="ashira-globe-title" style="margin:0 0 5px;font-family:Fraunces,serif;font-size:1.25em;font-weight:600;">
       &#191;Ad&#243;nde va la gente que se va?
     </h3>
-    <p style="color:#8b949e;margin:0;font-size:0.85em;">
+    <p class="ashira-globe-subtitle" style="margin:0;font-size:0.85em;">
       Flujos interestatales reales 2015&#8211;2020 &nbsp;&#183;&nbsp; Top 80 de 992 pares &nbsp;&#183;&nbsp;
       Arrastra para rotar &nbsp;&#183;&nbsp; Scroll para zoom &nbsp;&#183;&nbsp; Hover sobre arcos y estados
     </p>
@@ -1403,27 +1403,27 @@ _html_globe = f"""
   <div id="globe-flujo-ashira" style="width:100%;height:520px;background:#040c18;display:flex;align-items:center;justify-content:center;">
     <span id="globe-loading-msg" style="color:#484f58;font-size:13px;font-family:Inter,sans-serif;">Cargando globo WebGL...</span>
   </div>
-  <div style="position:absolute;bottom:0;left:0;right:0;z-index:20;background:rgba(4,12,24,0.92);padding:10px 22px 12px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;row-gap:8px;border-top:1px solid rgba(26,60,92,0.6);pointer-events:none;">
-    <span style="color:#3d5268;font-size:0.68em;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Puntos</span>
+  <div class="ashira-globe-legend" style="position:absolute;bottom:0;left:0;right:0;z-index:20;background:rgba(4,12,24,0.92);padding:10px 22px 12px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;row-gap:8px;border-top:1px solid rgba(26,60,92,0.6);pointer-events:none;">
+    <span class="ashira-globe-legend-head" style="color:#3d5268;font-size:0.68em;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Puntos</span>
     <span style="display:flex;align-items:center;gap:7px;">
       <span style="width:11px;height:11px;border-radius:50%;background:#26c6da;display:inline-block;box-shadow:0 0 5px #26c6da99;flex-shrink:0;"></span>
-      <span style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Receptor neto de migraci&#243;n</span>
+      <span class="ashira-globe-legend-text" style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Receptor neto de migraci&#243;n</span>
     </span>
     <span style="display:flex;align-items:center;gap:7px;">
       <span style="width:11px;height:11px;border-radius:50%;background:#ff5252;display:inline-block;box-shadow:0 0 5px #ff525299;flex-shrink:0;"></span>
-      <span style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Emisor neto de migraci&#243;n</span>
+      <span class="ashira-globe-legend-text" style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Emisor neto de migraci&#243;n</span>
     </span>
     <span style="width:1px;height:16px;background:rgba(26,60,92,0.8);display:inline-block;margin:0 2px;flex-shrink:0;"></span>
-    <span style="color:#3d5268;font-size:0.68em;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Arcos</span>
+    <span class="ashira-globe-legend-head" style="color:#3d5268;font-size:0.68em;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Arcos</span>
     <span style="display:flex;align-items:center;gap:7px;">
       <span style="width:22px;height:2px;background:linear-gradient(90deg,rgba(30,100,255,0.5),rgba(80,160,255,0.95));display:inline-block;border-radius:1px;flex-shrink:0;"></span>
-      <span style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Menor volumen</span>
+      <span class="ashira-globe-legend-text" style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Menor volumen</span>
     </span>
     <span style="display:flex;align-items:center;gap:7px;">
       <span style="width:22px;height:2px;background:linear-gradient(90deg,rgba(255,60,0,0.6),rgba(255,100,30,0.98));display:inline-block;border-radius:1px;flex-shrink:0;"></span>
-      <span style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Mayor volumen</span>
+      <span class="ashira-globe-legend-text" style="color:#8ba4be;font-size:0.79em;font-family:Inter,sans-serif;">Mayor volumen</span>
     </span>
-    <span style="margin-left:auto;color:#273848;font-size:0.68em;font-family:Inter,sans-serif;">INEGI &#183; Censo 2020</span>
+    <span class="ashira-globe-legend-src" style="margin-left:auto;color:#273848;font-size:0.68em;font-family:Inter,sans-serif;">INEGI &#183; Censo 2020</span>
   </div>
 </div>
 
@@ -1443,7 +1443,14 @@ var _gG={_geo_js};
   if(!el)return;
   if(_msg){{_msg.style.display='none';}}
   el.style.display='block';el.style.alignItems='';el.style.justifyContent='';
-  var ARC_COLORS=[
+  var _lm=document.documentElement.classList.contains('light-mode');
+  var ARC_COLORS=_lm?[
+    ['rgba(0,70,200,0.50)','rgba(40,120,255,0.90)'],
+    ['rgba(0,140,200,0.55)','rgba(0,190,235,0.92)'],
+    ['rgba(0,170,155,0.58)','rgba(0,210,185,0.95)'],
+    ['rgba(200,110,0,0.62)','rgba(245,165,10,0.95)'],
+    ['rgba(200,25,0,0.66)','rgba(245,65,10,0.98)']
+  ]:[
     ['rgba(30,100,255,0.12)','rgba(80,160,255,0.50)'],
     ['rgba(0,180,230,0.15)','rgba(0,220,255,0.58)'],
     ['rgba(0,230,200,0.18)','rgba(0,255,220,0.66)'],
@@ -1454,14 +1461,14 @@ var _gG={_geo_js};
   try{{
     var g=Globe()
       .globeImageUrl('')
-      .backgroundColor('#040c18')
+      .backgroundColor(_lm?'#dde6f0':'#040c18')
       .showAtmosphere(true)
-      .atmosphereColor('#0a2040')
+      .atmosphereColor(_lm?'#6aaad4':'#0a2040')
       .atmosphereAltitude(0.18)
       .polygonsData(_gG.features)
-      .polygonCapColor(function(){{return '#0c1825';}})
-      .polygonSideColor(function(){{return '#081218';}})
-      .polygonStrokeColor(function(){{return '#1a3a5c';}})
+      .polygonCapColor(function(){{return _lm?'#bfd0e0':'#0c1825';}})
+      .polygonSideColor(function(){{return _lm?'#aec2d4':'#081218';}})
+      .polygonStrokeColor(function(){{return _lm?'#5a90b8':'#1a3a5c';}})
       .polygonAltitude(0.008)
       .arcsData(_gA)
       .arcStartLat(function(d){{return d.srcLat;}})
