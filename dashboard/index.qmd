@@ -23,6 +23,7 @@ format:
     link-external-newwindow: true
     fig-cap-location: bottom
     css: ashira_custom.css
+    include-before-body: _dark-init.html
 execute:
   echo: false
   warning: false
@@ -111,7 +112,7 @@ BG      = "#0d1117"
 CARD    = "#161b22"
 ACCENT  = "#e94560"
 GOLD    = "#f5a623"
-TEAL    = "#38bdf8"   # Norte — azul cielo claro
+TEAL    = "#2ecc71"   # Norte — verde, consistente con mapa de pobreza y narrativa
 PURPLE  = "#e879f9"   # CDMX — fucsia, claramente distinto del azul
 GREEN   = "#6bcf8a"
 MUTED   = "#8b949e"
@@ -169,10 +170,12 @@ def wmedian(vals, weights):
         if cum >= wt / 2: return v
     return float("nan")
 
-_orig_fig_show = go.Figure.show
+if hasattr(go.Figure, '_orig_show'):
+    go.Figure.show = go.Figure._orig_show
+go.Figure._orig_show = go.Figure.show
 def _show_responsive(self, *args, **kwargs):
     kwargs.setdefault("config", {"responsive": True})
-    return _orig_fig_show(self, *args, **kwargs)
+    return go.Figure._orig_show(self, *args, **kwargs)
 go.Figure.show = _show_responsive
 ```
 
@@ -366,8 +369,22 @@ brecha_pts = chiapas_pob - bc_pob
 
 ## El mapa de la pobreza
 
-::: {.ashira-insight .accent-red}
-Cada estado coloreado por su porcentaje de pobreza multidimensional en 2024. El patrón es inmediato: [**el norte es verde**]{style="color:#2ecc71;"}, [**el sur es rojo.**]{style="color:#e94560;"} No hay excepciones.
+::: {.ashira-insight .accent-blue}
+
+En este mapa encontramos una verdad incómoda: México no es un solo país, sino una **fragmentación de tres realidades** que apenas se reconocen entre sí.
+
+> *Atravesar el país de [Tijuana]{.color-verde} a [Tapachula]{.color-rojo} no es solo un viaje de kilómetros; es un retroceso en el tiempo y una degradación cromática de la dignidad humana.*
+
+[**El Norte Verde: La Aspiración**]{.color-verde style="font-size:1.05em;"}
+
+[**El Centro Ámbar: La Paradoja**]{.color-ambar style="font-size:1.05em;"}
+
+[**El Sur Rojo: El Olvido**]{.color-rojo style="font-size:1.05em;"}
+
+::: {style="text-align:center; margin-top:0.4em; letter-spacing:0.04em;"}
+**Tres colores · tres realidades · un solo territorio.**
+:::
+
 :::
 
 ```{python}
@@ -426,7 +443,9 @@ fig.show()
 ```
 
 ::: {.ashira-insight .accent-blue style="padding:28px 36px; margin:32px 0 16px 0;"}
-El mapa de pobreza muestra dónde están las carencias. El mapa de ingreso muestra cuánto cambió el dinero disponible. [**Misma escala de color, ocho años de distancia.**]{style="color:#38bdf8;"} El patrón Norte–Sur se mantuvo: los estados que ya ganaban más en 2016 son los que más crecieron en términos absolutos.
+Los dos mapas que siguen muestran el ingreso promedio por estado en **2016** y en **2024**. Si el crecimiento hubiera sido equitativo, los colores habrían cambiado.
+
+[**No cambiaron.**]{style="color:#38bdf8;"} Quien nació en el [sur]{.color-rojo}, sigue en [rojo]{.color-rojo}.
 :::
 
 ```{python}
@@ -545,8 +564,15 @@ fig.show()
 
 ## Los dos Méxicos
 
-::: {.ashira-insight .accent-red}
-Chiapas y Baja California comparten bandera y constitución. No comparten el mismo México. En [**Chiapas**]{style="color:#e94560;"}, 66 de cada 100 personas viven en pobreza. En [**Baja California**]{style="color:#0f9b8e;"}, apenas 10. Esta diferencia no es mala suerte. Es estructura.
+::: {.ashira-insight .accent-blue}
+
+En [**Chiapas**]{.color-rojo}, [**66 de cada 100**]{.color-rojo} personas viven en pobreza.\
+En [**Baja California**]{.color-verde}, apenas [**10**]{.color-verde}.
+
+::: {style="text-align:center; margin-top:0.8em;"}
+Comparten bandera y constitución. **No comparten el mismo México.**
+:::
+
 :::
 
 ```{python}
@@ -561,6 +587,7 @@ fig = px.bar(
     color_discrete_map=REGION_COLORS, orientation="h",
     text=df_plot["pct_pobreza_2024"].apply(lambda x: f"{x:.1f}%"),
     custom_data=["region", "pct_pobreza_2024"],
+    category_orders={"region": ["Norte", "Centro", "Sur", "CDMX"]},
     labels={"pct_pobreza_2024":"Pobreza (%)", "estado":"", "region":"Región"},
 )
 fig.update_traces(
@@ -621,7 +648,7 @@ fig.add_annotation(
           "El desarrollo es profundamente desigual:<br>" +
           "la riqueza de estos sectores es selectiva<br>" +
           "y deja fuera a la mayoría.<br><br>" +
-          "<span style='color:#f5a623;'>En el Sur, ser un estado <i>\u2018rico en recursos\u2019</i><br>" +
+          "<span style='color:#e94560;'>En el Sur, ser un estado <i>\u2018rico en recursos\u2019</i><br>" +
           "no significa tener menos pobreza.</span>",
     xref="paper", yref="paper",
     x=0.99, y=0.42, xanchor="right", yanchor="middle",
@@ -656,7 +683,8 @@ fig.show()
 
 ::: {.callout-important}
 ## ~56 puntos porcentuales separan a Chiapas de Baja California
-Hablar de un "promedio nacional" en México es un error estadístico que oculta realidades opuestas: la distancia entre Chiapas y Baja California es mayor a la diferencia entre México y Alemania. Los niveles de pobreza en el Sur son inaceptables bajo estándares de la OCDE, el grupo de los países más desarrollados del mundo.
+
+Hablar de un **"promedio nacional"** en México es un **error estadístico** que oculta realidades opuestas: la distancia entre [**Chiapas**]{.color-rojo} y [**Baja California**]{.color-verde} es mayor a la diferencia entre **México y Alemania**.
 :::
 
 ---
@@ -666,7 +694,15 @@ Hablar de un "promedio nacional" en México es un error estadístico que oculta 
 ## La brecha que no cierra
 
 ::: {.ashira-insight .accent-gold}
-En ocho años, el ingreso en México subió para todos, pero de forma profundamente desigual. El Sur no está estancado, pero su ritmo no alcanza para seguirle el paso al Norte. La brecha no se cierra: por cada paso que da el Sur, el Norte da dos. [**El código postal sigue pesando más que el esfuerzo.**]{style="color:#f5a623;"}
+
+En ocho años, el ingreso en México subió para todos, pero de forma **desigual**.
+
+> *El Sur no está estancado, pero su ritmo no alcanza para seguirle el paso al Norte.*
+
+::: {style="text-align:center; margin-top:0.5em;"}
+[**El código postal sigue pesando más que el esfuerzo.**]{style="color:#38bdf8;"}
+:::
+
 :::
 
 ```{python}
@@ -713,17 +749,17 @@ fig.add_trace(go.Scatter(
 # Banda COVID 2020-2022
 fig.add_vrect(
     x0=2019.6, x1=2022.4,
-    fillcolor="rgba(245,166,35,0.10)",
+    fillcolor="rgba(233,69,96,0.10)",
     line_width=0,
     row=1, col=1,
 )
-fig.add_vline(x=2020, line_dash="dot", line_color="#f5a623", opacity=0.35, row=1, col=1)
+fig.add_vline(x=2020, line_dash="dot", line_color="#e94560", opacity=0.35, row=1, col=1)
 _y_top = float(norte_v.max())
 fig.add_annotation(
     x=2021, y=_y_top * 1.04, text=" COVID + transferencias ",
     showarrow=False,
-    font=dict(color="#0d1117", size=10),
-    bgcolor="#f5a623", bordercolor="#f5a623",
+    font=dict(color="white", size=10),
+    bgcolor="#e94560", bordercolor="#e94560",
     borderwidth=1, borderpad=3,
     xref="x1", yref="y1", xanchor="center", yanchor="middle",
 )
@@ -732,7 +768,7 @@ fig.add_annotation(
 fig.add_trace(go.Scatter(
     x=años, y=ratio_v, name="Ratio Norte/Sur",
     mode="lines+markers",
-    line=dict(color=GOLD, width=3.5),
+    line=dict(color="#38bdf8", width=3.5),
     marker=dict(size=12, symbol="diamond", line=dict(width=1.5, color="white")),
     text=[f"{r:.2f}x" for r in ratio_v],
     textposition="top center", textfont=dict(size=11, color="white"),
@@ -776,18 +812,14 @@ for ann in fig["layout"]["annotations"]:
 fig.show()
 ```
 
-::: {.callout-warning}
-## La brecha se duplica: 8 años sin convergencia
-Aunque el ingreso subió en ambas regiones, la distancia en pesos entre el Norte y el Sur se disparó. En 2016, la diferencia era de $1,400 mensuales; para 2024, esa brecha creció a $3,300. El Norte no solo gana más, sino que se aleja cada vez más rápido, dejando al Sur con una recuperación mucho más lenta tras la pandemia.
-:::
+::: {.ashira-insight .accent-blue}
 
-::: {.callout-tip}
-## ¿Mejora real o alivio temporal?
-Entre 2020 y 2022, la pobreza en el Sur bajó, pero la estructura productiva no cambió. Este avance se sostiene sobre tres pilares frágiles: programas sociales, remesas y aumentos al salario mínimo.
+El ingreso subió en ambas regiones, pero la brecha creció: la diferencia entre Norte y Sur pasó de **$1,400** a **$3,300** mensuales. El Sur avanzó, sí, pero con dinero prestado: transferencias, remesas y salario mínimo. Su estructura productiva no cambió.
 
-**El problema:** La brecha Norte–Sur sigue intacta porque no se está creando riqueza local, solo se está inyectando dinero externo.
+> *Lo que se sostiene con dinero externo puede desaparecer cuando ese dinero deja de llegar.*
 
-**El riesgo:** Sin una base económica propia, cualquier recorte en programas o baja en remesas devolverá al Sur a sus niveles críticos de pobreza. Es un alivio, no una solución.
+¿De qué vive realmente el Sur? Eso es lo que veremos a continuación.
+
 :::
 
 ---
@@ -821,6 +853,7 @@ fig = px.scatter(
     color="region", color_discrete_map=REGION_COLORS,
     hover_name="estado", trendline="ols", text="label",
     custom_data=["region","pct_indigena","pct_pobreza_2024"],
+    category_orders={"region": ["Norte", "Centro", "Sur", "CDMX"]},
     labels={"pct_indigena":"% Población indígena (Censo 2020)",
             "pct_pobreza_2024":"% Pobreza multidimensional (CONEVAL 2024)",
             "region":"Región"},
@@ -921,6 +954,7 @@ fig = px.scatter(
     color="region", color_discrete_map=REGION_COLORS,
     hover_name="estado", trendline="ols", text="label",
     custom_data=["region","ice_informalidad","ing_pc_mediana"],
+    category_orders={"region": ["Norte", "Centro", "Sur", "CDMX"]},
     labels={"ice_informalidad":"Informalidad laboral · ICE 2018 (%)",
             "ing_pc_mediana":"Ingreso mediano mensual (pesos)",
             "region":"Región"},
@@ -1009,6 +1043,7 @@ fig = px.bar(
     color_discrete_map=REGION_COLORS, orientation="h",
     text=df_inseg_alim["pct_inseg_alim"].apply(lambda x: f"{x:.1f}%"),
     custom_data=["region","pct_inseg_alim"],
+    category_orders={"region": ["Norte", "Centro", "Sur", "CDMX"]},
     labels={"pct_inseg_alim":"Inseguridad alimentaria (%)", "estado":"", "region":"Región"},
 )
 fig.update_traces(
@@ -1045,23 +1080,24 @@ fig.show()
 
 :::
 
-::: {.callout-important}
-## ¿Qué nos dicen estos datos?
-Los gráficos revelan una verdad incómoda: la pobreza en México está ligada a quiénes somos y dónde vivimos.
+::: {.ashira-insight .accent-blue}
 
-**Identidad:** Los estados con más raíces indígenas son sistemáticamente los más castigados por la pobreza.
+Las tres gráficas anteriores cuentan la misma historia desde ángulos distintos: más población indígena, más informalidad laboral, más hambre. Todo ocurre en los mismos estados del Sur.
 
-**Trabajo:** Mientras el Norte accede a empleos formales y mejores sueldos, el Sur sobrevive en la informalidad con ingresos que no alcanzan.
+> *No es coincidencia. Es la misma desigualdad estructural vista desde tres dimensiones distintas.*
 
-**Supervivencia:** Esta cadena termina en la mesa; el Sur enfrenta los niveles más altos de hambre en el país. No es falta de ganas, es falta de oportunidades estructurales.
 :::
 
 ---
 
 ## De qué vive el sur
 
-::: {.ashira-insight .accent-green}
-Cuando el ingreso laboral no alcanza, el sur sobrevive de dos maneras: programas gubernamentales y remesas. La mejora es real, pero frágil. Descansa en transferencias, no en trabajo formal.
+::: {.ashira-insight .accent-blue}
+
+Las tres gráficas anteriores muestran de dónde viene el ingreso en el Sur: trabajo, **apoyos del gobierno** y **remesas** de familiares que emigraron.
+
+> *La pobreza bajó, pero no porque el Sur creó mejores empleos. Bajó porque llegó dinero de afuera. Si ese dinero se corta, la mejora desaparece.*
+
 :::
 
 ::: {.panel-tabset}
@@ -1073,7 +1109,7 @@ Cuando el ingreso laboral no alcanza, el sur sobrevive de dos maneras: programas
 #| fig-cap: "Dependencia del ingreso proveniente de programas gubernamentales por región, 2016-2024.<br><span class='fig-source'>Fuente: Encuesta Nacional de Ingresos y Gastos de los Hogares (ENIGH), Instituto Nacional de Estadística y Geografía (INEGI).</span>"
 
 fig = go.Figure()
-for region in ["Sur","Centro","Norte"]:
+for region in ["Norte","Centro","Sur"]:
     serie = enigh_reg[enigh_reg["region"]==region].sort_values("anio")
     fig.add_trace(go.Scatter(
         x=serie["anio"], y=serie["pct_bene_gob"], name=region,
@@ -1114,6 +1150,7 @@ fig = px.bar(
     color_discrete_map=REGION_COLORS, orientation="h",
     text=df_remesas_2024["pct_remesas"].apply(lambda x: f"{x:.1f}%"),
     custom_data=["region","pct_remesas"],
+    category_orders={"region": ["Norte", "Centro", "Sur", "CDMX"]},
     labels={"pct_remesas":"Remesas (% del ingreso)", "estado":"", "region":"Región"},
 )
 fig.update_traces(
@@ -1151,10 +1188,10 @@ regiones_ord = ["Sur","Centro","Norte","CDMX"]
 comp_2024 = enigh_reg[enigh_reg["anio"]==2024].set_index("region")
 
 comps = [
-    ("pct_ingtrab",  "Ingreso laboral",       TEAL),
-    ("pct_bene_gob", "Prog. gubernamentales", GOLD),
-    ("pct_remesas",  "Remesas",               ACCENT),
-    ("pct_transfer", "Otras transferencias",  PURPLE),
+    ("pct_ingtrab",  "Ingreso laboral",       "#38bdf8"),  # azul cielo
+    ("pct_bene_gob", "Prog. gubernamentales", "#0284c7"),  # azul medio-oscuro
+    ("pct_remesas",  "Remesas",               "#075985"),  # azul navy
+    ("pct_transfer", "Otras transferencias",  "#bae6fd"),  # azul muy claro
 ]
 
 fig = go.Figure()
@@ -1189,10 +1226,14 @@ fig.show()
 
 ---
 
-## La exportación de talento por necesidad: la paradoja del migrante
+## La exportación de talento por necesidad
 
-::: {.ashira-insight .accent-red}
-El Sur está perdiendo lo más valioso que tiene: su gente. Los datos muestran una realidad cruda: a mayor pobreza, más emigración. Aunque el dinero que mandan los que se van **(remesas)** infla los números de ingreso y hace parecer que el estado mejora, la realidad es otra. [**No es progreso, es el resultado de jóvenes abandonando su hogar porque en su tierra no hay futuro.**]{style="color:#e94560;"}
+::: {.ashira-insight .accent-blue}
+
+Los estados más pobres del Sur son también los que más gente pierden. Los que se van mandan dinero de vuelta (eso son las remesas), y ese dinero hace que las estadísticas mejoren.
+
+> *Pero un estado que mejora porque su gente se fue no está progresando. Está vaciándose.*
+
 :::
 
 ```{python}
@@ -1218,6 +1259,7 @@ fig = px.scatter(
     color="region", color_discrete_map=REGION_COLORS,
     hover_name="estado", trendline="ols", text="label",
     custom_data=["region","pct_pobreza_2024","ice_migracion"],
+    category_orders={"region": ["Norte", "Centro", "Sur", "CDMX"]},
     labels={"pct_pobreza_2024":"Pobreza multidimensional 2024 (%)",
             "ice_migracion":"Migración neta · ICE 2018",
             "region":"Región"},
@@ -1301,38 +1343,33 @@ fig.show()
 ```
 
 ::: {.ashira-globe-intro}
-La migración neta dice *cuántos se van*. El origen-destino dice **adónde van**. El patrón es consistente: el Sur alimenta al Norte y a los centros turísticos, los únicos mercados laborales que todavía absorben trabajadores sin credenciales universitarias.
+El mapa de arriba muestra **cuánta gente sale** de cada estado. El mapa de abajo muestra **a dónde van**.
+
+La respuesta es siempre la misma: al Norte, o a las ciudades turísticas. Son los únicos lugares que ofrecen trabajo a quien no tiene título universitario.
 :::
 
 ::: {style="text-align:center; margin: 10px 0;"}
 <img src="untitled.GIF" alt="Flujos de migración interestatal 2015–2020" style="max-width:100%; border-radius:8px; display:block; margin:0 auto;">
 
-::: {.fig-caption style="font-size:0.85em; color:#5a6e84; margin-top:8px;"}
-Figura 12: Flujos de migración interestatal 2015–2020 · Top 40 pares por volumen. Puntos: balance neto (azul = receptor, rojo = emisor).
-[Fuente: Migración origen-destino, Censo de Población y Vivienda 2020, INEGI.]{.fig-source}
+::: {.figure-caption}
+Flujos de migración interestatal 2015–2020 · Top 40 pares por volumen · Puntos: balance neto (azul = receptor, rojo = emisor).[Fuente: Migración origen-destino, Censo de Población y Vivienda 2020, INEGI.]{.fig-source}
 :::
 :::
 
-::: {.ashira-paradoja}
-### ¿Por qué bajan los números pero no la pobreza?
+::: {.ashira-insight .accent-blue}
 
-Los estados del Sur cambian porque pierden gente, no porque ganen oportunidades. Cuando alguien migra buscando trabajo, su pobreza simplemente se muda de casa.
+Cuando alguien del Sur migra al Norte buscando trabajo, las cifras de pobreza en su estado de origen bajan. Pero esa persona sigue siendo pobre. Solo cambió de código postal.
 
-**La estadística engaña:** El Sur parece mejorar porque su base poblacional se reduce.
+**El número mejoró. La vida, no.**
 
-**La pobreza se esconde:** En ciudades ricas, la pobreza del migrante se vuelve invisible frente al promedio general.
+> *La estadística mide territorios. La dignidad se juega en personas.*
 
-**La verdadera meta:** No basta con "limpiar" las cifras de un estado; hay que generar riqueza donde la gente vive.
-
-::: {.paradoja-quote}
-La estadística mide territorios. La dignidad se juega en personas.
-:::
 :::
 
 ## El panorama completo
 
-::: {.ashira-insight .accent-teal}
-Cada indicador cuenta una parte. Juntos revelan el patrón: [**los mismos estados aparecen siempre arriba en pobreza, informalidad, remesas e inseguridad alimentaria.**]{style="color:#0f9b8e;"} No es azar. Es estructura.
+::: {.ashira-insight .accent-blue}
+Cada indicador cuenta una parte. Juntos revelan el patrón: [**los mismos estados aparecen siempre arriba en pobreza, informalidad, remesas e inseguridad alimentaria.**]{style="color:#38bdf8;"} No es azar. Es estructura.
 :::
 
 ```{python}
@@ -1499,10 +1536,14 @@ Pobreza estructural
 
 ## ¿Qué sigue?
 
-::: {.que-sigue-intro}
-### Esto no es inevitable
+::: {.callout-important .accent-blue}
+### El sur no está condenado
 
-En los últimos 20 años, Aguascalientes y Querétaro lograron reducir su pobreza y subir su ingreso mediano. Brasil redujo la pobreza extrema un 58% entre 2003 y 2014 con Bolsa Família. Colombia redujo la pobreza multidimensional de 30% a 18% con Familias en Acción. [**La convergencia es posible cuando las intervenciones son focalizadas, sostenidas y medidas públicamente.**]{style="color:#38bdf8;"}
+Este dashboard analizó los estados y sectores donde la pobreza persiste con más fuerza, y los que ya encontraron una salida.
+
+Aguascalientes, Querétaro, Brasil y Colombia lo lograron: redujeron su pobreza con programas focalizados, sostenidos y con rendición de cuentas pública. No fue magia, fue saber exactamente dónde invertir.
+
+> Lo que necesitamos no es más gasto general: es saber dónde tiene más impacto.
 :::
 
 ::: {.que-sigue-grid}
@@ -1562,7 +1603,7 @@ Descarga los gráficos en PNG y los datos en CSV desde nuestro repositorio. Los 
 ::: {.que-sigue-compromiso}
 #### Compromiso del equipo ASHIRA
 
-Este análisis se actualizará cuando INEGI publique ENIGH 2026. El código y los datos están disponibles en GitHub bajo licencia **Creative Commons CC BY 4.0**. Si detectas un error, quieres colaborar, o quieres usar estos datos como funcionario, investigador o periodista, escríbenos: [equipo ASHIRA](mailto:asharet.b@gmail.com).
+Este análisis se actualizará cuando INEGI publique ENIGH 2026. El código y los datos están disponibles en GitHub bajo licencia **Creative Commons CC BY 4.0**. Si detectas un error, quieres colaborar, o quieres usar estos datos como funcionario, investigador o periodista, escríbenos al [equipo ASHIRA]{.color-azul}.
 :::
 
 ::: {.cta-share}
@@ -1637,9 +1678,11 @@ Los estados más pobres pierden a sus jóvenes. Esa fuga de talento convierte la
 ::: {.closing-policy}
 ### ¿Qué implica para la política pública? {.closing-policy-title}
 
-Invertir en reducir pobreza sin desagregar por estado es ineficiente. Los recursos se diluyen donde ya hubo recuperación, mientras el sur permanece atrapado. La convergencia requiere intervenciones asimétricas, con metas estatales y rendición de cuentas pública.
+Invertir en reducir pobreza sin desagregar por estado es ineficiente. Los recursos se diluyen donde ya hubo recuperación, mientras el sur permanece atrapado. La convergencia requiere **intervenciones asimétricas**, con metas estatales y rendición de cuentas pública.
 
-La Agenda 2030 no pide promedios. Pide que nadie se quede atrás. [**Este análisis muestra que en México, el lugar donde naciste todavía decide si te quedas o te vas.**]{.closing-quote}
+La Agenda 2030 no pide promedios. **Pide que nadie se quede atrás.**
+
+[**Este análisis muestra que en México, el lugar donde naciste todavía decide si te quedas o te vas.**]{.closing-quote}
 :::
 
 ::: {.closing-cta}
@@ -1662,7 +1705,6 @@ La Agenda 2030 no pide promedios. Pide que nadie se quede atrás. [**Este análi
 [Melisa Arano]{.footer-member}
 [Roberto Alegre]{.footer-member}
 [Israel Martínez]{.footer-member}
-[asharet.b@gmail.com](mailto:asharet.b@gmail.com){.footer-contact}
 :::
 
 ::: {.ashira-footer-sources}

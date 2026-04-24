@@ -1230,7 +1230,7 @@ nav a,
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
 }
 
 .closing-eyebrow {
@@ -1776,14 +1776,6 @@ h3.closing-policy-title {
   text-align: left !important;
 }
 
-.que-sigue-card a {
-  color: #38bdf8 !important;
-  text-decoration: underline !important;
-}
-.que-sigue-card a:hover {
-  color: #7dd3fc !important;
-}
-
 .que-sigue-aliados,
 .que-sigue-compromiso {
   background: rgba(22,27,34,0.5);
@@ -1797,7 +1789,7 @@ h3.closing-policy-title {
 
 .que-sigue-aliados h4,
 .que-sigue-compromiso h4 {
-  color: #38bdf8 !important;
+  color: var(--gold) !important;
   font-size: 0.78rem !important;
   font-weight: 800 !important;
   letter-spacing: 0.18em;
@@ -1817,10 +1809,10 @@ h3.closing-policy-title {
 .que-sigue-aliados ul li a {
   display: inline-block !important;
   padding: 6px 14px;
-  background: rgba(56,189,248,0.08);
-  border: 1px solid rgba(56,189,248,0.25) !important;
+  background: rgba(245,166,35,0.08);
+  border: 1px solid rgba(245,166,35,0.25) !important;
   border-radius: 100px;
-  color: #38bdf8 !important;
+  color: var(--gold) !important;
   font-size: 0.82rem;
   font-weight: 600;
   border-bottom: none !important;
@@ -1828,7 +1820,7 @@ h3.closing-policy-title {
 }
 
 .que-sigue-aliados ul li a:hover {
-  background: rgba(56,189,248,0.18);
+  background: rgba(245,166,35,0.18);
 }
 
 .cta-share {
@@ -2361,19 +2353,18 @@ body.quarto-light .que-sigue-card {
   box-shadow: var(--shadow-sm) !important;
 }
 body.quarto-light .que-sigue-card:hover {
-  border-color: rgba(56,189,248,0.35) !important;
+  border-color: rgba(190,26,53,0.35) !important;
   box-shadow: var(--shadow-md) !important;
 }
 body.quarto-light .que-sigue-card-title { color: var(--text-1) !important; }
 body.quarto-light .que-sigue-card p { color: var(--text-3) !important; }
 body.quarto-light .que-sigue-card-icon {
-  background: rgba(56,189,248,0.07) !important;
-  border-color: rgba(56,189,248,0.2) !important;
-  color: #38bdf8 !important;
+  background: rgba(190,26,53,0.07) !important;
+  border-color: rgba(190,26,53,0.2) !important;
 }
 body.quarto-light .que-sigue-card:hover .que-sigue-card-icon {
-  background: rgba(56,189,248,0.13) !important;
-  box-shadow: 0 0 16px rgba(56,189,248,0.2) !important;
+  background: rgba(190,26,53,0.13) !important;
+  box-shadow: 0 0 16px rgba(190,26,53,0.2) !important;
 }
 body.quarto-light .que-sigue-aliados,
 body.quarto-light .que-sigue-compromiso {
@@ -2385,12 +2376,12 @@ body.quarto-light .que-sigue-aliados h4,
 body.quarto-light .que-sigue-compromiso h4 { color: var(--text-1) !important; }
 body.quarto-light .que-sigue-compromiso p { color: var(--text-2) !important; }
 body.quarto-light .que-sigue-aliados ul li a {
-  color: #38bdf8 !important;
-  background: rgba(56,189,248,0.07) !important;
-  border-color: rgba(56,189,248,0.25) !important;
+  color: var(--gold) !important;
+  background: rgba(146,98,10,0.07) !important;
+  border-color: rgba(146,98,10,0.25) !important;
 }
 body.quarto-light .que-sigue-aliados ul li a:hover {
-  background: rgba(56,189,248,0.15) !important;
+  background: rgba(146,98,10,0.15) !important;
 }
 
 /* ── Hallazgos clave / Closing ── */
