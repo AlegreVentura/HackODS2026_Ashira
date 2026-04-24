@@ -741,7 +741,7 @@ fig.add_trace(go.Scatter(
     x=list(años) + list(años[::-1]),
     y=list(norte_v) + list(sur_v[::-1]),
     fill="toself",
-    fillcolor="rgba(245,166,35,0.12)",
+    fillcolor="rgba(15,155,142,0.13)",
     line=dict(color="rgba(0,0,0,0)"),
     hoverinfo="skip", showlegend=False,
 ), row=1, col=1)
