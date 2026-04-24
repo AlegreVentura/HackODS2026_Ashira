@@ -672,8 +672,9 @@ fig.add_annotation(
 fig.update_layout(
     height=860,
     margin=dict(l=150, r=80, t=110, b=50),
-    xaxis=dict(title="Porcentaje de la población en pobreza multidimensional", ticksuffix="%", range=[0,92]),
-    yaxis=dict(categoryorder="total ascending", tickfont=dict(size=13), title=""),
+    xaxis=dict(title="Porcentaje de la población en pobreza multidimensional", ticksuffix="%", range=[0,92],
+               showgrid=True, gridwidth=0.5, gridcolor="rgba(100,120,150,0.15)"),
+    yaxis=dict(categoryorder="total ascending", tickfont=dict(size=13), title="", showgrid=False),
     title=dict(
         text="Pobreza multidimensional por estado · 2024",
         y=0.98, yanchor="top",
@@ -1062,8 +1063,9 @@ fig.update_layout(
     height=950,
     margin=dict(l=155, r=55, t=130, b=60),
     xaxis=dict(title=dict(text="Porcentaje de población con inseguridad alimentaria", standoff=12), ticksuffix="%",
-               range=[0, df_inseg_alim["pct_inseg_alim"].max() * 1.32]),
-    yaxis=dict(categoryorder="total ascending", tickfont=dict(size=13)),
+               range=[0, df_inseg_alim["pct_inseg_alim"].max() * 1.32],
+               showgrid=True, gridwidth=0.5, gridcolor="rgba(100,120,150,0.15)"),
+    yaxis=dict(categoryorder="total ascending", tickfont=dict(size=13), showgrid=False),
     title=dict(
         text="El hambre también tiene código postal",
         y=0.97, yanchor="top",
@@ -1159,8 +1161,9 @@ fig.update_layout(
     height=950,
     margin=dict(l=155, r=55, t=130, b=60),
     xaxis=dict(title=dict(text="Porcentaje del ingreso corriente que proviene de remesas", standoff=12), ticksuffix="%",
-               range=[0, df_remesas_2024["pct_remesas"].max() * 1.17]),
-    yaxis=dict(categoryorder="total ascending", tickfont=dict(size=13)),
+               range=[0, df_remesas_2024["pct_remesas"].max() * 1.17],
+               showgrid=True, gridwidth=0.5, gridcolor="rgba(100,120,150,0.15)"),
+    yaxis=dict(categoryorder="total ascending", tickfont=dict(size=13), showgrid=False),
     title=dict(
         text="¿Quién vive de los que se fueron?",
         y=0.97, yanchor="top",

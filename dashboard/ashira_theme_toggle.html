@@ -10,8 +10,8 @@
     plot:           '#161b22',
     font:           '#c9d1d9',
     title:          '#ffffff',
-    grid:           '#21262d',
-    zero:           '#21262d',
+    grid:           '#1e2530',
+    zero:           '#1e2530',
     hover_bg:       '#1a1a2e',
     hover_fg:       '#e6edf3',
     hover_border:   '#30363d',
@@ -90,8 +90,15 @@
         )) {
           return a;
         }
+        // Preservar font.color si es un color de marca (ACCENT, TEAL, GOLD)
+        var fc = a.font && a.font.color;
+        var fixedFont = fc && (
+          fc.includes('e94560') || fc.includes('233,69') ||
+          fc.includes('0f9b8e') || fc.includes('15,155') ||
+          fc.includes('f5a623') || fc.includes('245,166') || fc.includes('166,35')
+        );
         return Object.assign({}, a, {
-          font: Object.assign({}, a.font || {}, { color: p.font }),
+          font: Object.assign({}, a.font || {}, { color: fixedFont ? fc : p.font }),
           bgcolor: a.bgcolor ? p.annot_bg : a.bgcolor,
           bordercolor: a.bordercolor ? p.annot_border : a.bordercolor
         });

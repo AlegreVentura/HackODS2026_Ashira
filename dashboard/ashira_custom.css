@@ -232,6 +232,10 @@ strong, b { font-weight: 600; }
   box-shadow: 0 4px 32px rgba(0,0,0,0.07);
 }
 
+:root.light-mode .ashira-hero::after {
+  display: none;
+}
+
 .ashira-hero-inner {
   max-width: 1080px;
   margin: 0 auto;
